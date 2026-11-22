@@ -67,6 +67,14 @@ def note(midi):
     return 440 * 2 ** ((midi - 69) / 12)
 
 
+def _add(buf, start, x, gain=1.0):
+    """Add x into buf at start, clipping at the end of the buffer."""
+    if start >= len(buf):
+        return
+    n = min(len(x), len(buf) - start)
+    buf[start:start + n] += (gain * x[:n]).astype(np.float32)
+
+
 def music_bed(duration: float, seed: int = 0, bpm=None):
     rng = np.random.default_rng(seed)
     bpm = bpm or int(rng.choice([96, 100, 104, 110]))
@@ -90,25 +98,25 @@ def music_bed(duration: float, seed: int = 0, bpm=None):
         # bass: 16th-note pulse on chord root/fifth
         b = root + chord[0] + (12 if i % 8 == 6 else 0)
         seg = _saw(note(b), L) * _env(L, 0.003, step * 0.9)
-        out[s:s + L] += 0.22 * _lowpass(seg, 500).astype(np.float32)
+        _add(out, s, _lowpass(seg, 500), 0.22)
         # kick on beats
         if i % 4 == 0:
             kl = int(0.35 * SR)
             kt = np.arange(kl) / SR
             f = 45 + 80 * np.exp(-kt * 30)
             kick = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-kt * 9)
-            out[s:s + kl] += 0.5 * kick[: max(0, min(kl, n - s))]
+            _add(out, s, kick, 0.5)
         # snare/clap on 2 and 4
         if i % 16 in (4, 12):
             cl = int(0.18 * SR)
             clap = rng.standard_normal(cl) * np.exp(-np.arange(cl) / SR * 25)
             clap = clap - _lowpass(clap, 1500)
-            out[s:s + cl] += 0.18 * clap.astype(np.float32)
+            _add(out, s, clap, 0.18)
         # hats on offbeats
         if i % 2 == 1:
             hl = int(0.04 * SR)
             hat = rng.standard_normal(hl) * np.exp(-np.arange(hl) / SR * 120)
-            out[s:s + hl] += 0.05 * (hat - _lowpass(hat, 6000)).astype(np.float32)
+            _add(out, s, hat - _lowpass(hat, 6000), 0.05)
         # pad + arp on each beat
         if i % 4 == 0:
             for k, iv in enumerate(chord):
@@ -117,12 +125,12 @@ def music_bed(duration: float, seed: int = 0, bpm=None):
                 pl = int(beat * SR)
                 pad = (_saw(note(m), pl) + _saw(note(m) * 1.004, pl)) * 0.5
                 pad = _lowpass(pad, 1800) * np.minimum(1, np.arange(pl) / (0.05 * SR))
-                out[arp_s:arp_s + pl] += 0.035 * pad[: max(0, min(pl, n - arp_s))].astype(np.float32)
+                _add(out, arp_s, pad, 0.035)
         if i % 2 == 0:
             m = root + 36 + chord[(i // 2) % 3]
             al = int(step * SR * 1.5)
             arp = np.sin(2 * np.pi * note(m) * np.arange(al) / SR) * _env(al, 0.002, 0.08)
-            out[s:s + al] += 0.05 * arp[: max(0, min(al, n - s))].astype(np.float32)
+            _add(out, s, arp, 0.05)
         t += step
         i += 1
     out = out[: int(duration * SR)]
@@ -178,12 +186,12 @@ def mix(duration, voice_events, sfx_events, music_seed=0, music_gain=0.32, base_
     voice = np.zeros(n, np.float32)
     for st, a in voice_events:
         s = int(st * SR)
-        voice[s:s + len(a)] += a[: max(0, n - s)]
+        _add(voice, s, a)
     fx = np.zeros(n, np.float32)
     for k, (st, kind) in enumerate(sfx_events):
         a = sfx(kind, seed=k)
         s = int(st * SR)
-        fx[s:s + len(a)] += a[: max(0, n - s)]
+        _add(fx, s, a)
     mus = np.zeros(n, np.float32)
     if music_gain > 0:
         m = music_bed(duration + 0.1, seed=music_seed)

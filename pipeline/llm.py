@@ -18,14 +18,25 @@ def _extract_json(text: str):
 
 def _github(prompt, system, model):
     """GitHub Models: free, uses the workflow's own GITHUB_TOKEN (needs `models: read`)."""
-    r = requests.post(
-        "https://models.github.ai/inference/chat/completions",
-        headers={"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}", "Content-Type": "application/json"},
-        json={"model": model, "temperature": 0.9, "response_format": {"type": "json_object"},
-              "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]},
-        timeout=120)
-    r.raise_for_status()
-    return r.json()["choices"][0]["message"]["content"]
+    body = {"model": model, "temperature": 0.9,
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]}
+    errors = []
+    for url, m in (("https://models.github.ai/inference/chat/completions", model),
+                   ("https://models.inference.ai.azure.com/chat/completions", model.split("/")[-1])):
+        try:
+            r = requests.post(url, json={**body, "model": m}, timeout=120, headers={
+                "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}", "Content-Type": "application/json",
+                "Accept": "application/json"})
+            if r.status_code != 200 or not r.text.strip():
+                errors.append(f"{url} -> HTTP {r.status_code}: {r.text[:300]!r}")
+                continue
+            content = r.json()["choices"][0]["message"]["content"]
+            if content:
+                return content
+            errors.append(f"{url} -> empty content")
+        except Exception as ex:
+            errors.append(f"{url} -> {ex}")
+    raise RuntimeError(" | ".join(errors))
 
 
 def _gemini(prompt, system, model):
