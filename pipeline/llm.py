@@ -44,7 +44,7 @@ def _ollama(prompt, system, model):
     host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
     r = requests.post(f"{host}/api/chat", json={
         "model": model, "format": "json", "stream": False,
-        "options": {"temperature": 0.8, "num_ctx": 8192},
+        "options": {"temperature": 0.8, "num_ctx": 8192, "num_predict": 1200},
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]},
         timeout=600)
     r.raise_for_status()

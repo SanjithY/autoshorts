@@ -52,6 +52,17 @@ FORMAT_GUIDE = {
 }
 
 
+EXAMPLE_FOR = {"stat_shock": "01_stat_shock", "news_flash": "01_stat_shock", "versus": "02_versus",
+               "quiz": "03_quiz", "myth_or_fact": "03_quiz", "top_list": "04_top_list",
+               "gameplay_story": "04_top_list"}
+
+
+def _example(fmt):
+    from pathlib import Path
+    p = Path(__file__).resolve().parents[1] / "samples" / f"{EXAMPLE_FOR.get(fmt, '01_stat_shock')}.json"
+    return p.read_text() if p.exists() else ""
+
+
 def build_prompt(fmt, research, ideas, history_titles, topic):
     news = [{k: v for k, v in it.items() if k in ("title", "summary", "source", "published", "body")}
             for it in research["news"][:10]]
@@ -69,6 +80,10 @@ VERIFIED FACTS:
 LATEST NEWS ABOUT {topic}:
 {json.dumps(news, indent=1)[:7000]}
 
+EXAMPLE OF A PERFECT OUTPUT (copy this exact JSON structure and key names; write NEW content on a
+different angle, using only the facts/news above):
+{_example(fmt)}
+
 Return JSON: {{"format": "{fmt}", "kicker": "<{topic} label, max 4 words>", "title": "...",
 "description": "...", "hashtags": ["#..."], "used_idea": "<idea text or empty>",
 "source_urls": ["<urls of news you used>"], "scenes": [ ... ]}}"""
@@ -80,7 +95,67 @@ REQUIRED = {"hook": ["text", "say"], "text": ["text", "say"], "stat": ["value", 
             "quiz_a": ["question", "options", "answer", "say"], "outro": ["text", "say"]}
 
 
+TYPE_ALIASES = {"intro": "hook", "opening": "hook", "cta": "outro", "ending": "outro", "end": "outro",
+                "fact": "text", "point": "text", "statement": "text", "headline": "text", "news": "text",
+                "number": "stat", "statistic": "stat", "comparison": "versus", "list": "list_item",
+                "item": "list_item", "question": "quiz_q", "answer": "quiz_a", "chart": "bars"}
+SAY_KEYS = ("say", "narration", "voiceover", "voice_over", "voice", "script", "speech", "line", "spoken")
+TEXT_KEYS = ("text", "on_screen_text", "onscreen_text", "screen_text", "caption", "title", "headline")
+
+
+def normalize(script: dict) -> dict:
+    """Repair the usual ways small models drift from the schema."""
+    if not isinstance(script, dict):
+        raise ValueError("not an object")
+    scenes = script.get("scenes")
+    if not isinstance(scenes, list):
+        scenes = next((v for v in script.values() if isinstance(v, list) and v and isinstance(v[0], dict)), [])
+    out = []
+    for sc in scenes:
+        if not isinstance(sc, dict):
+            continue
+        t = str(sc.get("type") or sc.get("scene_type") or sc.get("kind") or "text").lower().strip()
+        t = TYPE_ALIASES.get(t, t)
+        if t not in REQUIRED:
+            t = "text"
+        sc["type"] = t
+        if not sc.get("say"):
+            sc["say"] = next((str(sc[k]) for k in SAY_KEYS if sc.get(k)), "")
+        if not sc.get("text") and t in ("hook", "text", "list_item", "stars", "outro"):
+            sc["text"] = next((str(sc[k]) for k in TEXT_KEYS if sc.get(k)), "")
+            if not sc["text"] and sc["say"]:
+                sc["text"] = " ".join(sc["say"].split()[:6])
+        if t == "stat":
+            try:
+                sc["value"] = float(str(sc.get("value", "")).replace(",", "").replace("$", "").strip("xX%"))
+                sc.setdefault("label", sc.get("text", ""))
+            except ValueError:  # not a usable number -> show as plain text instead
+                sc["type"] = "text"
+                sc["text"] = sc.get("text") or sc.get("label") or " ".join(sc["say"].split()[:6])
+        if t == "list_item":
+            sc.setdefault("n", len([x for x in out if x["type"] == "list_item"]) + 1)
+        if t == "stars":
+            sc["n"] = int(float(sc.get("n", 6) or 6))
+        for k in ("highlight",):
+            if k in sc and not isinstance(sc[k], list):
+                sc[k] = [str(sc[k])]
+        if sc["say"]:
+            out.append(sc)
+    if out and out[0]["type"] != "hook":
+        first = out[0]
+        out[0] = {"type": "hook", "say": first["say"],
+                  "text": first.get("text") or " ".join(first["say"].split()[:5])}
+    if out and out[-1]["type"] != "outro":
+        out.append({"type": "outro", "text": "What do you think?", "cta": "Comment below",
+                    "say": "What do you think? Tell me in the comments."})
+    script["scenes"] = out
+    if not script.get("title"):
+        script["title"] = (out[0].get("text", "GTA 6") if out else "GTA 6") + " #shorts"
+    return script
+
+
 def validate(script: dict):
+    script = normalize(script)
     sc = script.get("scenes") or []
     assert 3 <= len(sc) <= 9, "need 3-9 scenes"
     assert sc[0]["type"] == "hook", "first scene must be hook"
@@ -107,6 +182,7 @@ def write_script(fmt, research, ideas, history_titles, cfg):
     system = SYSTEM.replace("{topic}", cfg["topic"])
     prompt = build_prompt(fmt, research, ideas, history_titles, cfg["topic"])
     last = None
+    script = None
     for attempt in range(3):
         try:
             script = complete_json(prompt if not last else prompt + f"\n\nPrevious attempt was invalid: {last}. Fix it.",
@@ -114,7 +190,11 @@ def write_script(fmt, research, ideas, history_titles, cfg):
             return validate(script)
         except (AssertionError, KeyError, ValueError, TypeError) as ex:
             last = str(ex)
-            print(f"[writer] attempt {attempt + 1} invalid: {ex}")
+            print(f"[writer] attempt {attempt + 1} invalid: {ex!r}")
+            try:
+                print("[writer] model output was:", json.dumps(script)[:800])
+            except Exception:
+                pass
     raise RuntimeError(f"Could not get a valid script: {last}")
 
 
