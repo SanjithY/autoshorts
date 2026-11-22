@@ -80,8 +80,8 @@ VERIFIED FACTS:
 LATEST NEWS ABOUT {topic}:
 {json.dumps(news, indent=1)[:7000]}
 
-EXAMPLE OF A PERFECT OUTPUT (copy this exact JSON structure and key names; write NEW content on a
-different angle, using only the facts/news above):
+EXAMPLE OF THE JSON STRUCTURE (copy the key names and scene types ONLY. Do NOT reuse its title,
+hook, wording or topic. Your video must be about a DIFFERENT fact or headline from the lists above):
 {_example(fmt)}
 
 Return JSON: {{"format": "{fmt}", "kicker": "<{topic} label, max 4 words>", "title": "...",
@@ -187,7 +187,12 @@ def write_script(fmt, research, ideas, history_titles, cfg):
         try:
             script = complete_json(prompt if not last else prompt + f"\n\nPrevious attempt was invalid: {last}. Fix it.",
                                    system, cfg.get("llm", {}))
-            return validate(script)
+            script = validate(script)
+            ex_text = _example(fmt)
+            copied = [sc["say"] for sc in script["scenes"] if sc["say"] and sc["say"] in ex_text]
+            assert script["title"] not in ex_text, "title copied from the example; write a new one"
+            assert len(copied) <= 1, "scenes copied from the example; write new content"
+            return script
         except (AssertionError, KeyError, ValueError, TypeError) as ex:
             last = str(ex)
             print(f"[writer] attempt {attempt + 1} invalid: {ex!r}")

@@ -120,6 +120,8 @@ def main():
             st["used_ideas"].append(meta["used_idea"])
     (OUT / f"{stamp}-{fmt}.json").write_text(json.dumps(meta, indent=1))
     print(f"[run] rendered {video}: {meta.get('title')}")
+    for sc in meta.get("scenes", []):
+        print(f"[script] {sc.get('type'):9} | {sc.get('text') or sc.get('question') or sc.get('label') or ''} | {sc.get('say')}")
 
     results = []
     if not dry:
