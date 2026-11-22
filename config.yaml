@@ -20,13 +20,13 @@ formats:
   gameplay_story: 2  # narration over YOUR OWN gameplay footage in footage/
 
 # ─── LLM (all free; first one that works is used) ─────────────────────────
-# "github" = GitHub Models, free, uses the repo's built-in token: no key needed.
+# Default: an open-source model (Qwen 2.5) run by Ollama right on the GitHub
+# runner: no account or key. Gemini/Groq are used first only if you add a key.
 llm:
-  providers: [github, gemini, groq, ollama]
-  github_model: openai/gpt-4o-mini
+  providers: [gemini, groq, ollama]
   gemini_model: gemini-flash-latest
   groq_model: llama-3.3-70b-versatile
-  ollama_model: llama3.1
+  ollama_model: qwen2.5:3b
 
 # ─── Clips: ONLY creators who allow reuploads of their clips ──────────────
 # Reposting someone's stream without permission gets copyright strikes

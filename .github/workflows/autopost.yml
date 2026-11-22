@@ -15,7 +15,6 @@ on:
 
 permissions:
   contents: write   # lets the run save state/history.json back to the repo
-  models: read      # free GitHub Models AI for script writing (no API key needed)
 
 concurrency:
   group: autopost
@@ -51,9 +50,24 @@ jobs:
           [ -f models/kokoro.onnx ] || curl -sL -o models/kokoro.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx
           [ -f models/voices.bin ] || curl -sL -o models/voices.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
 
+      - name: Cache AI model
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-qwen2.5-3b
+
+      - name: Start local AI (Ollama, free, no account)
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh >/dev/null
+          sudo systemctl stop ollama 2>/dev/null || true   # run our own server so the model cache works
+          mkdir -p ~/.ollama/models
+          (OLLAMA_MODELS=$HOME/.ollama/models ollama serve >/tmp/ollama.log 2>&1 &)
+          for i in $(seq 1 20); do curl -s http://127.0.0.1:11434 >/dev/null && break; sleep 1; done
+          OLLAMA_MODELS=$HOME/.ollama/models ollama pull qwen2.5:3b >/dev/null
+
       - name: Make, render and publish one video
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OLLAMA_HOST: http://127.0.0.1:11434
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}

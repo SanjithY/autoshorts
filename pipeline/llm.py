@@ -1,4 +1,4 @@
-"""Free-tier LLM access: Gemini (free API key), Groq (free API key), or local Ollama."""
+"""Free LLM access: local Ollama (default, runs on the GitHub runner, no account), or Gemini/Groq keys."""
 from __future__ import annotations
 
 import json
@@ -14,33 +14,6 @@ def _extract_json(text: str):
     start = text.find("{")
     end = text.rfind("}")
     return json.loads(text[start:end + 1])
-
-
-def _github(prompt, system, model):
-    """GitHub Models: free, uses the workflow's own GITHUB_TOKEN (needs `models: read`)."""
-    body = {"model": model, "temperature": 0.9,
-            "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]}
-    errors = []
-    for url, m in (("https://models.github.ai/inference/chat/completions", model),
-                   ("https://models.inference.ai.azure.com/chat/completions", model.split("/")[-1])):
-        try:
-            r = requests.post(url, json={**body, "model": m}, timeout=120, headers={
-                "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}", "Content-Type": "application/json",
-                "Accept": "application/json"})
-            if r.status_code != 200 or not r.text.strip():
-                errors.append(f"{url} -> HTTP {r.status_code}: {r.text[:300]!r}")
-                continue
-            try:
-                content = r.json()["choices"][0]["message"]["content"]
-            except ValueError:
-                errors.append(f"{url} -> non-JSON 200 ({r.headers.get('content-type')}): {r.text[:300]!r}")
-                continue
-            if content:
-                return content
-            errors.append(f"{url} -> empty content")
-        except Exception as ex:
-            errors.append(f"{url} -> {ex}")
-    raise RuntimeError(" | ".join(errors))
 
 
 def _gemini(prompt, system, model):
@@ -71,6 +44,7 @@ def _ollama(prompt, system, model):
     host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
     r = requests.post(f"{host}/api/chat", json={
         "model": model, "format": "json", "stream": False,
+        "options": {"temperature": 0.8, "num_ctx": 8192},
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]},
         timeout=600)
     r.raise_for_status()
@@ -79,10 +53,8 @@ def _ollama(prompt, system, model):
 
 def complete_json(prompt: str, system: str, cfg: dict) -> dict:
     errors = []
-    for p in cfg.get("providers", ["github", "gemini", "groq", "ollama"]):
+    for p in cfg.get("providers", ["gemini", "groq", "ollama"]):
         try:
-            if p == "github" and os.environ.get("GITHUB_TOKEN"):
-                return _extract_json(_github(prompt, system, cfg.get("github_model", "openai/gpt-4o-mini")))
             if p == "gemini" and os.environ.get("GEMINI_API_KEY"):
                 return _extract_json(_gemini(prompt, system, cfg.get("gemini_model", "gemini-flash-latest")))
             if p == "groq" and os.environ.get("GROQ_API_KEY"):
@@ -91,4 +63,4 @@ def complete_json(prompt: str, system: str, cfg: dict) -> dict:
                 return _extract_json(_ollama(prompt, system, cfg.get("ollama_model", "llama3.1")))
         except Exception as ex:
             errors.append(f"{p}: {ex}")
-    raise RuntimeError("No LLM provider worked (GitHub Models / Gemini / Groq). " + "; ".join(errors))
+    raise RuntimeError("No LLM provider worked (Gemini / Groq / Ollama). " + "; ".join(errors))

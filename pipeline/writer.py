@@ -54,7 +54,7 @@ FORMAT_GUIDE = {
 
 def build_prompt(fmt, research, ideas, history_titles, topic):
     news = [{k: v for k, v in it.items() if k in ("title", "summary", "source", "published", "body")}
-            for it in research["news"][:15]]
+            for it in research["news"][:10]]
     return f"""FORMAT: {fmt} - {FORMAT_GUIDE[fmt]}
 
 CREATOR IDEAS (use one if it fits this format, otherwise ignore):
@@ -67,7 +67,7 @@ VERIFIED FACTS:
 {json.dumps(research['facts'], indent=1)}
 
 LATEST NEWS ABOUT {topic}:
-{json.dumps(news, indent=1)[:14000]}
+{json.dumps(news, indent=1)[:7000]}
 
 Return JSON: {{"format": "{fmt}", "kicker": "<{topic} label, max 4 words>", "title": "...",
 "description": "...", "hashtags": ["#..."], "used_idea": "<idea text or empty>",
