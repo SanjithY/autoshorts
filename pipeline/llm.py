@@ -30,7 +30,11 @@ def _github(prompt, system, model):
             if r.status_code != 200 or not r.text.strip():
                 errors.append(f"{url} -> HTTP {r.status_code}: {r.text[:300]!r}")
                 continue
-            content = r.json()["choices"][0]["message"]["content"]
+            try:
+                content = r.json()["choices"][0]["message"]["content"]
+            except ValueError:
+                errors.append(f"{url} -> non-JSON 200 ({r.headers.get('content-type')}): {r.text[:300]!r}")
+                continue
             if content:
                 return content
             errors.append(f"{url} -> empty content")
