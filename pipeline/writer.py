@@ -178,6 +178,33 @@ def validate(script: dict):
     return script
 
 
+def _numbers_in(text):
+    import re
+    return {n.replace(",", "") for n in re.findall(r"\d[\d,]*(?:\.\d+)?", text)}
+
+
+def fact_check(script, research):
+    """Every number shown on screen must appear somewhere in the facts/news we gave the model."""
+    corpus = json.dumps(research, ensure_ascii=False)
+    known = _numbers_in(corpus)
+    def ok(v):
+        v = str(v).replace(",", "").replace("$", "")
+        nums = _numbers_in(v)
+        return all(n in known or n.rstrip("0").rstrip(".") in known or n in ("1", "2", "3", "4", "5", "6")
+                   for n in nums)
+    for sc in script["scenes"]:
+        vals = []
+        if sc["type"] == "stat":
+            v = sc["value"]
+            vals.append(str(int(v)) if float(v).is_integer() else str(v))
+        if sc["type"] == "bars":
+            vals += [it.get("display", it["value"]) for it in sc["items"]]
+        if sc["type"] == "versus":
+            vals += [r.get("l", "") for r in sc["rows"]] + [r.get("r", "") for r in sc["rows"]]
+        for v in vals:
+            assert ok(v), f"number {v!r} is not in the provided facts/news; use only real numbers"
+
+
 def write_script(fmt, research, ideas, history_titles, cfg):
     system = SYSTEM.replace("{topic}", cfg["topic"])
     prompt = build_prompt(fmt, research, ideas, history_titles, cfg["topic"])
@@ -188,6 +215,7 @@ def write_script(fmt, research, ideas, history_titles, cfg):
             script = complete_json(prompt if not last else prompt + f"\n\nPrevious attempt was invalid: {last}. Fix it.",
                                    system, cfg.get("llm", {}))
             script = validate(script)
+            fact_check(script, research)
             ex_text = _example(fmt)
             copied = [sc["say"] for sc in script["scenes"] if sc["say"] and sc["say"] in ex_text]
             assert script["title"] not in ex_text, "title copied from the example; write a new one"

@@ -26,7 +26,7 @@ llm:
   providers: [gemini, groq, ollama]
   gemini_model: gemini-flash-latest
   groq_model: llama-3.3-70b-versatile
-  ollama_model: qwen2.5:3b
+  ollama_model: qwen2.5:7b
 
 # ─── Clips: ONLY creators who allow reuploads of their clips ──────────────
 # Reposting someone's stream without permission gets copyright strikes

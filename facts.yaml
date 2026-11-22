@@ -27,3 +27,5 @@ facts:
     source: "Rockstar"
   - fact: "Players found 44 easter eggs in Leonida within the first hours, including a possible Michael De Santa boat reference."
     source: "Quero Bolsa, VGTimes"
+  - fact: "GTA V launched in 2013 at $59.99 and had three playable leads (Michael, Franklin, Trevor)."
+    source: "Rockstar"

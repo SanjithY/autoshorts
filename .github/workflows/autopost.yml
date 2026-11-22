@@ -54,7 +54,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ollama/models
-          key: ollama-qwen2.5-3b
+          key: ollama-qwen2.5-7b
 
       - name: Start local AI (Ollama, free, no account)
         run: |
@@ -63,7 +63,7 @@ jobs:
           mkdir -p ~/.ollama/models
           (OLLAMA_MODELS=$HOME/.ollama/models ollama serve >/tmp/ollama.log 2>&1 &)
           for i in $(seq 1 20); do curl -s http://127.0.0.1:11434 >/dev/null && break; sleep 1; done
-          OLLAMA_MODELS=$HOME/.ollama/models ollama pull qwen2.5:3b >/dev/null
+          OLLAMA_MODELS=$HOME/.ollama/models ollama pull qwen2.5:7b >/dev/null
 
       - name: Make, render and publish one video
         env:
