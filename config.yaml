@@ -50,4 +50,4 @@ platforms:
 privacy: public        # public | unlisted | private (use private for a test week)
 label_ai_content: true # sets TikTok is_aigc / Instagram AI label; YouTube flag only for realistic content
 youtube_category: "20" # Gaming
-dry_run: false         # true = render only, never upload
+dry_run: true          # SAFE MODE until API keys are added: renders but never uploads. Set false to go live.
