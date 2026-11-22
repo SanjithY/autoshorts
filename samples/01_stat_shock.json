@@ -1,0 +1,19 @@
+{
+  "format": "stat_shock",
+  "kicker": "GTA 6 · launch record",
+  "title": "GTA 6 made HOW much on day one?! 🤯 #gta6 #shorts",
+  "description": "GTA 6's preorders + first-day sales hit $3.79 billion, per Take-Two. Here's how that stacks up against GTA V and GTA IV. Sources: Take-Two via Variety; GTA V/IV day-one figures as widely reported.",
+  "hashtags": ["#gta6", "#gtavi", "#grandtheftauto", "#rockstargames", "#gaming", "#shorts"],
+  "scenes": [
+    {"type": "hook", "text": "$3.79 BILLION", "highlight": ["$3.79"], "say": "GTA 6 just made three point seven nine billion dollars."},
+    {"type": "text", "text": "Preorders + day one", "sub": "per Take-Two", "say": "That's preorders plus first-day sales, according to Take-Two."},
+    {"type": "bars", "title": "Day-one sales", "highlight": 0, "items": [
+      {"label": "GTA VI (2026)", "value": 3790, "display": "$3.79B"},
+      {"label": "GTA V (2013)", "value": 815, "display": "$815M"},
+      {"label": "GTA IV (2008)", "value": 310, "display": "$310M"}
+    ], "say": "GTA 5 did about eight hundred fifteen million on day one. GTA 4? Three hundred ten million."},
+    {"type": "stat", "value": 4.6, "decimals": 1, "suffix": "x", "label": "GTA V's launch", "sub": "GTA 6 vs GTA 5, day one", "say": "So GTA 6 beat GTA 5's launch by more than four and a half times."},
+    {"type": "text", "text": "Biggest launch in history", "highlight": ["history"], "say": "Take-Two is calling it the biggest entertainment launch in history. Not just games. Anything."},
+    {"type": "outro", "text": "Did you buy it day one?", "cta": "Comment below", "say": "So be honest. Did you buy it day one?"}
+  ]
+}

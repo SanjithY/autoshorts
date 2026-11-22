@@ -1,0 +1,73 @@
+{
+  "format": "quiz",
+  "kicker": "GTA 6 quiz",
+  "title": "Only real GTA fans get this right \ud83e\udde0 #gta6 #shorts",
+  "description": "Quick GTA 6 quiz. Answer before the timer ends!",
+  "hashtags": [
+    "#gta6",
+    "#gtaquiz",
+    "#gtavi",
+    "#gaming",
+    "#shorts"
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "text": "Only real fans get 2/2",
+      "highlight": [
+        "2/2"
+      ],
+      "say": "Only real GTA fans get both of these right."
+    },
+    {
+      "type": "quiz_q",
+      "question": "Max wanted level in GTA 6?",
+      "options": [
+        "5 stars",
+        "6 stars",
+        "7 stars"
+      ],
+      "answer": 1,
+      "say": "What's the max wanted level in GTA 6?"
+    },
+    {
+      "type": "quiz_a",
+      "question": "Max wanted level in GTA 6?",
+      "options": [
+        "5 stars",
+        "6 stars",
+        "7 stars"
+      ],
+      "answer": 1,
+      "say": "It's six! GTA 5 stopped at five."
+    },
+    {
+      "type": "quiz_q",
+      "question": "Who are GTA 6's two leads?",
+      "options": [
+        "Jason & Lucia",
+        "Tommy & Vic",
+        "Niko & Roman"
+      ],
+      "answer": 0,
+      "say": "Bonus round. Who are the two main characters?"
+    },
+    {
+      "type": "quiz_a",
+      "question": "Who are GTA 6's two leads?",
+      "options": [
+        "Jason & Lucia",
+        "Tommy & Vic",
+        "Niko & Roman"
+      ],
+      "answer": 0,
+      "say": "Jason and Lucia. Easy, right?"
+    },
+    {
+      "type": "outro",
+      "text": "How many did you get?",
+      "cta": "Score in comments",
+      "say": "Drop your score. Zero, one, or two?"
+    }
+  ]
+}

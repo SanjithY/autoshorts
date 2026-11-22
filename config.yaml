@@ -1,0 +1,53 @@
+# ─── Channel ───────────────────────────────────────────────────────────────
+topic: "GTA 6"                       # what the channel is about
+news_queries: ["GTA 6", "GTA VI", "Grand Theft Auto VI"]
+voice: am_michael                    # Kokoro voices: am_michael, am_adam, am_onyx, af_heart, bm_george ...
+voice_speed: 1.12
+music_gain: 0.32
+
+# ─── Format rotation ──────────────────────────────────────────────────────
+# Relative weights. A format is never repeated back-to-back, and the last
+# 2 formats are avoided when possible. Clip/footage formats only run when
+# sources exist (see below), otherwise they're skipped automatically.
+formats:
+  stat_shock: 3      # one jaw-dropping number, counted up + context
+  top_list: 3        # "3 things you missed", countdown #3 → #1
+  versus: 2          # GTA V vs GTA VI style comparison table
+  quiz: 2            # timed quiz, drives comments
+  myth_or_fact: 2    # "TRUE or FALSE?" debunks
+  news_flash: 3      # today's biggest headline in 20s
+  clip_react: 2      # streamer clip + hook title + captions (allowlist only!)
+  gameplay_story: 2  # narration over YOUR OWN gameplay footage in footage/
+
+# ─── LLM (all have free tiers; first one with a key set is used) ──────────
+llm:
+  providers: [gemini, groq, ollama]
+  gemini_model: gemini-flash-latest
+  groq_model: llama-3.3-70b-versatile
+  ollama_model: llama3.1
+
+# ─── Clips: ONLY creators who allow reuploads of their clips ──────────────
+# Reposting someone's stream without permission gets copyright strikes
+# (3 strikes = channel deleted). Add a streamer only if they run a clipping
+# program / publicly allow clip channels, and set permission: true.
+twitch_clips:
+  game_name: "Grand Theft Auto VI"
+  lookback_hours: 48
+  min_views: 500
+  streamers:
+    # - login: some_streamer
+    #   permission: true
+    #   note: "allows clippers per their Discord #clipping rules"
+
+# ─── Your own gameplay recordings (mp4) for gameplay_story ────────────────
+footage_dir: footage
+
+# ─── Publishing ───────────────────────────────────────────────────────────
+platforms:
+  youtube: true
+  tiktok: true
+  instagram: false     # turn on after finishing Instagram setup in SETUP.md
+privacy: public        # public | unlisted | private (use private for a test week)
+label_ai_content: true # sets TikTok is_aigc / Instagram AI label; YouTube flag only for realistic content
+youtube_category: "20" # Gaming
+dry_run: false         # true = render only, never upload

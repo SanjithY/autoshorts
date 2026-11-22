@@ -1,0 +1,18 @@
+{
+  "format": "versus",
+  "kicker": "GTA V vs GTA VI",
+  "title": "GTA 5 vs GTA 6: the numbers don't lie #gta6 #shorts",
+  "description": "GTA V (2013) vs GTA VI (2026), side by side. Day-one figure for GTA VI is preorders + first-day sales per Take-Two.",
+  "hashtags": ["#gta6", "#gta5", "#gtavi", "#gaming", "#shorts"],
+  "scenes": [
+    {"type": "hook", "text": "GTA 5 is cooked", "highlight": ["cooked"], "say": "GTA 5 versus GTA 6. It's not even close."},
+    {"type": "versus", "left": "GTA V", "right": "GTA VI", "rows": [
+      {"label": "Max wanted stars", "l": "5", "r": "6"},
+      {"label": "Launch price", "l": "$59.99", "r": "$79.99"},
+      {"label": "Main characters", "l": "3", "r": "2"},
+      {"label": "Day-one $", "l": "$815M", "r": "$3.79B"}
+    ], "say": "Six wanted stars instead of five. Twenty bucks more at launch. Two leads, Jason and Lucia, instead of three. And day-one money? Not close."},
+    {"type": "stars", "n": 6, "text": "6 stars are back", "highlight": ["6"], "say": "The sixth star hasn't been in a main GTA since GTA 4."},
+    {"type": "outro", "text": "Which one is better?", "cta": "Vote in comments", "say": "So which one's better? GTA 5 or GTA 6?"}
+  ]
+}

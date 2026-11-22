@@ -1,0 +1,15 @@
+{
+  "format": "top_list",
+  "kicker": "GTA 6 · wanted system",
+  "title": "GTA 6 cops track THESE things 👮 #gta6 #shorts",
+  "description": "GTA 6's police tracking: icons under your wanted stars show what cops know about you. Sources: GamesRadar, Beebom, GTABase.",
+  "hashtags": ["#gta6", "#gtavi", "#gtatips", "#gaming", "#shorts"],
+  "scenes": [
+    {"type": "hook", "text": "The cops know your outfit", "highlight": ["outfit"], "say": "In GTA 6, the cops remember what you're wearing."},
+    {"type": "list_item", "n": 3, "text": "Your car", "highlight": ["car"], "say": "Number three. Your car. Get spotted, and cops know what you're driving."},
+    {"type": "list_item", "n": 2, "text": "Your clothes", "highlight": ["clothes"], "say": "Number two. Your clothes. Change your fit, lose the heat."},
+    {"type": "list_item", "n": 1, "text": "CCTV cameras", "highlight": ["CCTV"], "say": "Number one. Security cameras. If CCTV catches you, there's an icon for that."},
+    {"type": "stars", "n": 6, "text": "Up to 6 stars", "highlight": ["6"], "say": "And the wanted level goes all the way to six stars."},
+    {"type": "outro", "text": "What's your best escape?", "cta": "Tell me below", "say": "What's your best way to lose the cops?"}
+  ]
+}

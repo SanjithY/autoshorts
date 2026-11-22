@@ -1,0 +1,14 @@
+numpy
+scipy
+pillow
+soundfile
+kokoro-onnx
+pyyaml
+requests
+feedparser
+cryptography
+google-api-python-client
+google-auth
+google-auth-oauthlib
+yt-dlp
+faster-whisper
