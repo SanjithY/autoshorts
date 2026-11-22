@@ -4,7 +4,7 @@ Every 3 hours, GitHub runs this repo on its free servers and:
 
 1. **Researches**: Bing + Google News RSS, r/GTA6, plus your `facts.yaml`
 2. **Picks a format**: it never repeats the same format twice in a row. Formats: stat shock, top-3 list, versus, quiz, myth-or-fact, news flash, streamer clip, and gameplay story
-3. **Writes** a script with a free LLM (Gemini). The prompt has hook and retention rules built in, and it isn't allowed to invent facts
+3. **Writes** a script with a free LLM (GitHub Models, built into GitHub). The prompt has hook and retention rules built in, and it isn't allowed to invent facts
 4. **Renders** a 1080×1920 video: animated neon-Vice-City graphics, a free local AI voice (Kokoro), word-by-word captions, music it synthesizes itself (so there are no copyright claims), and sound effects
 5. **Posts** to YouTube Shorts, TikTok, and optionally Instagram Reels, then saves its history so it doesn't repeat itself
 
@@ -25,9 +25,9 @@ Add each of these under **Settings → Secrets and variables → Actions → New
 
 | Secret | Where to get it |
 |---|---|
-| `GEMINI_API_KEY` | aistudio.google.com → Get API key (free tier) |
+| *(none needed for the AI writer)* | Scripts are written with free **GitHub Models** using the repo's own token. `GEMINI_API_KEY` / `GROQ_API_KEY` are optional backups. |
 | `GROQ_API_KEY` *(optional backup)* | console.groq.com → API Keys (free) |
-| `TOKEN_KEY` | run `python scripts/make_token_key.py` |
+| `TOKEN_KEY` *(optional)* | run `python scripts/make_token_key.py`; if absent, a key is derived from your client secret |
 | `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN` | step 3 |
 | `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REFRESH_TOKEN` | step 4 |
 | `IG_USER_ID`, `IG_ACCESS_TOKEN` *(optional)* | step 5 |

@@ -16,6 +16,18 @@ def _extract_json(text: str):
     return json.loads(text[start:end + 1])
 
 
+def _github(prompt, system, model):
+    """GitHub Models: free, uses the workflow's own GITHUB_TOKEN (needs `models: read`)."""
+    r = requests.post(
+        "https://models.github.ai/inference/chat/completions",
+        headers={"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}", "Content-Type": "application/json"},
+        json={"model": model, "temperature": 0.9, "response_format": {"type": "json_object"},
+              "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]},
+        timeout=120)
+    r.raise_for_status()
+    return r.json()["choices"][0]["message"]["content"]
+
+
 def _gemini(prompt, system, model):
     key = os.environ["GEMINI_API_KEY"]
     r = requests.post(
@@ -52,8 +64,10 @@ def _ollama(prompt, system, model):
 
 def complete_json(prompt: str, system: str, cfg: dict) -> dict:
     errors = []
-    for p in cfg.get("providers", ["gemini", "groq", "ollama"]):
+    for p in cfg.get("providers", ["github", "gemini", "groq", "ollama"]):
         try:
+            if p == "github" and os.environ.get("GITHUB_TOKEN"):
+                return _extract_json(_github(prompt, system, cfg.get("github_model", "openai/gpt-4o-mini")))
             if p == "gemini" and os.environ.get("GEMINI_API_KEY"):
                 return _extract_json(_gemini(prompt, system, cfg.get("gemini_model", "gemini-flash-latest")))
             if p == "groq" and os.environ.get("GROQ_API_KEY"):
@@ -62,4 +76,4 @@ def complete_json(prompt: str, system: str, cfg: dict) -> dict:
                 return _extract_json(_ollama(prompt, system, cfg.get("ollama_model", "llama3.1")))
         except Exception as ex:
             errors.append(f"{p}: {ex}")
-    raise RuntimeError("No LLM provider worked. Set GEMINI_API_KEY or GROQ_API_KEY. " + "; ".join(errors))
+    raise RuntimeError("No LLM provider worked (GitHub Models / Gemini / Groq). " + "; ".join(errors))
