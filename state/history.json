@@ -78,6 +78,19 @@
    "format": "news_flash",
    "title": "'GTA 6' players can't stop doomscrolling in the game: 'Art really does imitate... #gta6 #shorts",
    "results": []
+  },
+  {
+   "time": "20261123-0758",
+   "format": "myth_or_fact",
+   "title": "TRUE or FALSE: GTA 6 edition \ud83e\udd14 #gta6 #shorts",
+   "results": [
+    {
+     "platform": "youtube",
+     "id": "vncQIuxmE_8",
+     "url": "https://youtube.com/shorts/vncQIuxmE_8",
+     "privacy": "public"
+    }
+   ]
   }
  ],
  "used_urls": [
@@ -97,6 +110,7 @@
   "GTA 6 vs GTA V: the numbers don't lie"
  ],
  "used_bank": [
-  "03_quiz"
+  "03_quiz",
+  "b05_myth_platforms"
  ]
 }
