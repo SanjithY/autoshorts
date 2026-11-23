@@ -103,14 +103,23 @@ def configure(cfg: dict):
             TTS_CFG[k] = cfg[k]
 
 
+_EDGE_FAILS = [0]
+
+
 def tts(text: str, voice=None, speed=None):
     """Returns (audio float32 @ SR, word timings list[{w,start,end}] relative to clip start)."""
-    if TTS_CFG.get("engine", "edge") == "edge":
-        try:
-            return _edge_tts(text, TTS_CFG["edge_voice"], TTS_CFG["edge_rate"])
-        except Exception as ex:  # service hiccup or blocked network -> local voice
-            print(f"[tts] edge voice unavailable ({type(ex).__name__}: {str(ex)[:120]}); using Kokoro")
-            TTS_CFG["engine"] = "kokoro"
+    if TTS_CFG.get("engine", "edge") == "edge" and _EDGE_FAILS[0] < 3:
+        import time as _t
+        for attempt in range(3):  # the free endpoint hiccups now and then; retry before giving up
+            try:
+                out = _edge_tts(text, TTS_CFG["edge_voice"], TTS_CFG["edge_rate"])
+                _EDGE_FAILS[0] = 0
+                return out
+            except Exception as ex:
+                err = ex
+                _t.sleep(2 + 3 * attempt)
+        _EDGE_FAILS[0] += 1
+        print(f"[tts] edge voice failed 3x ({type(err).__name__}: {str(err)[:100]}); using Kokoro for this line")
     return _kokoro_tts(text, voice or TTS_CFG["voice"], float(speed or TTS_CFG["voice_speed"]))
 
 
