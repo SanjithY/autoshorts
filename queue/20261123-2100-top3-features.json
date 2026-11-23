@@ -1,0 +1,59 @@
+{
+ "format": "top_list",
+ "kicker": "GTA 6 vs GTA 5",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "title": "3 things GTA 6 does that GTA 5 never could #gta6 #shorts",
+ "description": "Features per Rockstar's extended look and outlet reports (IGN, GameRant, VGC, Beebom).",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "GTA 5 could never",
+   "highlight": [
+    "never"
+   ],
+   "say": "Three things GTA 6 does that GTA 5 never could."
+  },
+  {
+   "type": "list_item",
+   "n": 3,
+   "text": "Social media phone",
+   "highlight": [
+    "phone"
+   ],
+   "say": "Number three. Your in-game phone has a full social feed with viral videos."
+  },
+  {
+   "type": "list_item",
+   "n": 2,
+   "text": "Cops remember you",
+   "highlight": [
+    "remember"
+   ],
+   "say": "Number two. Police track your face, outfit and car, and even CCTV."
+  },
+  {
+   "type": "list_item",
+   "n": 1,
+   "text": "Swap leads anytime",
+   "highlight": [
+    "anytime"
+   ],
+   "say": "Number one. Switch between Jason and Lucia while you explore."
+  },
+  {
+   "type": "outro",
+   "text": "Which one's your favorite?",
+   "cta": "Comment below",
+   "say": "Which one is your favorite?"
+  }
+ ],
+ "post_after": "2026-11-23T21:00"
+}

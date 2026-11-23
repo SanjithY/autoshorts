@@ -1,0 +1,129 @@
+{
+ "format": "stickman",
+ "kicker": "GTA 6 \u00b7 in-game phone",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "title": "GTA 6 players are doomscrolling... IN the game #gta6 #shorts",
+ "description": "GTA 6's in-game phone has a social feed with viral videos and influencers, and players report getting stuck scrolling it. Sources: VGC (retail listing), news reports.",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "a",
+   "title": "STUCK ON A FAKE PHONE",
+   "camera": "punch",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "phone",
+     "face": "happy",
+     "prop": "phone",
+     "hat": "cap",
+     "color": "#ff2e63"
+    }
+   ],
+   "say": "GTA 6 players are doomscrolling on a phone that isn't even real."
+  },
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "a",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.35,
+     "action": "phone",
+     "face": "smug",
+     "prop": "phone"
+    }
+   ],
+   "props": [
+    {
+     "kind": "tv",
+     "x": 0.62,
+     "text": "VIRAL VIDEOS",
+     "color": "#ff4fa0"
+    }
+   ],
+   "say": "The in-game phone has a social feed with viral videos and influencers."
+  },
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "b",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.32,
+     "action": "phone",
+     "face": "neutral",
+     "prop": "phone"
+    },
+    {
+     "id": "b",
+     "x": 0.75,
+     "action": "angry",
+     "face": "angry",
+     "hat": "police",
+     "facing": -1
+    }
+   ],
+   "props": [
+    {
+     "kind": "police_car",
+     "x": 0.95,
+     "facing": -1
+    }
+   ],
+   "fx": [
+    "police_lights"
+   ],
+   "bubble": {
+    "actor": "b",
+    "text": "HELLO?!"
+   },
+   "say": "Meanwhile the cops are right there, and you're still scrolling."
+  },
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "c",
+   "actors": [
+    {
+     "id": "c",
+     "x": 0.5,
+     "action": "facepalm",
+     "face": "sad",
+     "hat": "headset",
+     "color": "#00c8ff",
+     "prop": "controller"
+    }
+   ],
+   "say": "Players say they put down the real phone, just to pick up the fake one."
+  },
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "c",
+   "actors": [
+    {
+     "id": "c",
+     "x": 0.5,
+     "action": "shrug",
+     "face": "happy",
+     "prop": ""
+    }
+   ],
+   "say": "Art imitating life. How long have you scrolled in game?"
+  }
+ ],
+ "post_after": "2026-11-23T12:00"
+}

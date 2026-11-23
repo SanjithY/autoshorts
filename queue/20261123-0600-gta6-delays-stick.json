@@ -1,0 +1,124 @@
+{
+ "format": "stickman",
+ "kicker": "GTA 6 \u00b7 the wait",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "title": "GTA 6 fans waited through TWO delays #gta6 #shorts",
+ "description": "Stickman recap of GTA 6's road to launch: first planned for 2025, delayed to May 26 2026, then to Nov 19 2026. Sources: Wccftech, Geo News, Game8.",
+ "hashtags": [
+  "#gta6",
+  "#animation",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "a",
+   "title": "THE LONGEST WAIT",
+   "camera": "punch",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "talk",
+     "face": "happy",
+     "hat": "headset",
+     "color": "#00c8ff",
+     "prop": "controller"
+    }
+   ],
+   "say": "GTA 6 fans had to survive not one, but two delays."
+  },
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "a",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.35,
+     "action": "celebrate",
+     "face": "happy"
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "x": 0.75,
+     "text": "2025",
+     "color": "#ffdd33"
+    }
+   ],
+   "say": "First, it was supposed to come out in twenty twenty five."
+  },
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "a",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.35,
+     "action": "sad",
+     "face": "sad"
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "x": 0.75,
+     "text": "MAY 26, 2026",
+     "color": "#ff8888"
+    }
+   ],
+   "fx": [
+    "sweat"
+   ],
+   "say": "Then Rockstar pushed it to May twenty six, twenty twenty six."
+  },
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "a",
+   "camera": "shake",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.35,
+     "action": "facepalm",
+     "face": "angry"
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "x": 0.75,
+     "text": "NOV 19, 2026",
+     "color": "#ff5577"
+    }
+   ],
+   "say": "And then again, to November nineteenth, for extra polish."
+  },
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "a",
+   "camera": "zoom_in",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "dance",
+     "face": "happy"
+    }
+   ],
+   "fx": [
+    "hearts"
+   ],
+   "say": "But it's finally here. Was the wait worth it?"
+  }
+ ],
+ "post_after": "2026-11-23T06:00"
+}

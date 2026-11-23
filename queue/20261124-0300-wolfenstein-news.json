@@ -1,0 +1,52 @@
+{
+ "format": "news_flash",
+ "kicker": "Gaming news",
+ "theme": "news",
+ "topic_key": "news",
+ "stock_query": "retro game controller",
+ "title": "Wolfenstein 3 is officially happening #gaming #shorts",
+ "description": "Xbox announced a new Wolfenstein game from MachineGames, the studio behind Wolfenstein II. Source: Techloy Brief.",
+ "hashtags": [
+  "#wolfenstein",
+  "#xbox",
+  "#gaming",
+  "#news",
+  "#shorts"
+ ],
+ "post_after": "2026-11-24T03:00",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "Wolfenstein 3 is real",
+   "highlight": [
+    "real"
+   ],
+   "say": "Wolfenstein three is officially happening."
+  },
+  {
+   "type": "text",
+   "text": "Announced by Xbox",
+   "highlight": [
+    "Xbox"
+   ],
+   "sub": "via Techloy",
+   "say": "Xbox just announced a brand new Wolfenstein game."
+  },
+  {
+   "type": "text",
+   "text": "Same studio",
+   "say": "It's coming from MachineGames, the same studio behind Wolfenstein two."
+  },
+  {
+   "type": "text",
+   "text": "Fans waited years",
+   "say": "Fans have been begging for this sequel for years."
+  },
+  {
+   "type": "outro",
+   "text": "Are you hyped?",
+   "cta": "Comment below",
+   "say": "So be honest. Are you hyped for it, or nah?"
+  }
+ ]
+}

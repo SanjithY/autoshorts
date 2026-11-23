@@ -1,0 +1,52 @@
+{
+ "format": "news_flash",
+ "kicker": "Gaming news",
+ "theme": "news",
+ "topic_key": "news",
+ "stock_query": "video game controller",
+ "title": "God of War fans just got bad news #godofwar #shorts",
+ "description": "God of War Laufey has been delayed until May 2027. Source: TheSixthAxis.",
+ "hashtags": [
+  "#godofwar",
+  "#playstation",
+  "#gaming",
+  "#news",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "God of War delayed",
+   "highlight": [
+    "delayed"
+   ],
+   "say": "Bad news for God of War fans."
+  },
+  {
+   "type": "text",
+   "text": "Laufey slips to 2027",
+   "highlight": [
+    "2027"
+   ],
+   "sub": "via TheSixthAxis",
+   "say": "God of War Laufey has been delayed until May twenty twenty seven."
+  },
+  {
+   "type": "text",
+   "text": "More waiting",
+   "say": "So that's a lot more waiting for Kratos fans."
+  },
+  {
+   "type": "text",
+   "text": "Worth the wait?",
+   "say": "Delays usually mean more polish, just like GTA 6."
+  },
+  {
+   "type": "outro",
+   "text": "Would you rather wait?",
+   "cta": "Comment below",
+   "say": "Would you rather wait for a better game, or play it sooner?"
+  }
+ ],
+ "post_after": "2026-11-24T00:00"
+}

@@ -1,0 +1,56 @@
+{
+ "format": "stat_shock",
+ "kicker": "PlayStation \u00b7 milestone",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "title": "PS5 just hit a number nobody expected #ps5 #shorts",
+ "description": "Sony said the PS5 is around 100 million consoles, and Sensor Tower estimated about 75% of early GTA 6 sales were on PlayStation (estimate). Sources: ARY News, PlayDay, Sensor Tower via esports.gg.",
+ "hashtags": [
+  "#ps5",
+  "#playstation",
+  "#gta6",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "100 MILLION PS5s",
+   "highlight": [
+    "100"
+   ],
+   "say": "The PS5 is closing in on one hundred million consoles."
+  },
+  {
+   "type": "stat",
+   "value": 100,
+   "suffix": "M",
+   "label": "PS5 consoles",
+   "sub": "per Sony, November",
+   "say": "Sony says the PS5 is right around one hundred million units."
+  },
+  {
+   "type": "stat",
+   "value": 75,
+   "suffix": "%",
+   "label": "GTA 6 on PlayStation",
+   "sub": "Sensor Tower estimate",
+   "say": "And about seventy five percent of early GTA 6 copies were on PlayStation, by one estimate."
+  },
+  {
+   "type": "text",
+   "text": "GTA 6 effect?",
+   "highlight": [
+    "GTA"
+   ],
+   "say": "Launching the biggest game ever on your console doesn't hurt."
+  },
+  {
+   "type": "outro",
+   "text": "PS5 or Xbox?",
+   "cta": "Pick a side",
+   "say": "So which one do you play GTA 6 on?"
+  }
+ ],
+ "post_after": "2026-11-23T09:00"
+}

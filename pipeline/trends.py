@@ -60,7 +60,10 @@ def youtube_trending():
             try:
                 r = yt.videos().list(part="snippet,statistics", chart="mostPopular", regionCode="US",
                                      videoCategoryId=cat, maxResults=15).execute()
-            except Exception:
+            except Exception as ex:
+                if "insufficient" in str(ex).lower() or "403" in str(ex):
+                    print("[trends] YouTube trending needs read access; skipping (Google Trends + web research still used)")
+                    return out
                 continue
             for v in r.get("items", []):
                 sn = v["snippet"]

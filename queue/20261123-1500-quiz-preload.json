@@ -1,0 +1,76 @@
+{
+ "format": "quiz",
+ "kicker": "GTA 6 quiz",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "title": "Only day-one GTA 6 players know these #gta6 #shorts",
+ "description": "Preload date and Ultimate Edition upgrade price per Beebom; launch date per Rockstar.",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "Day-one players only",
+   "highlight": [
+    "only"
+   ],
+   "say": "Two questions only day one players will get."
+  },
+  {
+   "type": "quiz_q",
+   "question": "When did GTA 6 preloading start?",
+   "options": [
+    "Nov 12",
+    "Nov 17",
+    "Nov 19"
+   ],
+   "answer": 0,
+   "say": "When could you start preloading GTA 6?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "When did GTA 6 preloading start?",
+   "options": [
+    "Nov 12",
+    "Nov 17",
+    "Nov 19"
+   ],
+   "answer": 0,
+   "say": "November twelfth. A whole week early."
+  },
+  {
+   "type": "quiz_q",
+   "question": "Ultimate Edition upgrade price?",
+   "options": [
+    "$10",
+    "$20",
+    "$30"
+   ],
+   "answer": 1,
+   "say": "How much is the upgrade to the Ultimate Edition?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "Ultimate Edition upgrade price?",
+   "options": [
+    "$10",
+    "$20",
+    "$30"
+   ],
+   "answer": 1,
+   "say": "Twenty dollars, for standard edition owners."
+  },
+  {
+   "type": "outro",
+   "text": "How many did you get?",
+   "cta": "Score below",
+   "say": "Zero, one, or two? Be honest."
+  }
+ ],
+ "post_after": "2026-11-23T15:00"
+}

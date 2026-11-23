@@ -472,11 +472,17 @@ def draw_world_prop(c, pr, t, wt):
                  t, pr.get("_moving", False), police=kind == "police_car", facing=pr.get("facing", 1),
                  driver=pr.get("driver"), world_t=wt)
     elif kind == "sign":
-        y = GROUND - 330
-        c.drawLine(x, GROUND, x, y + 100, paint((90, 70, 50), 14))
-        c.drawRoundRect(skia.Rect.MakeXYWH(x - 180, y - 40, 360, 150), 18, 18, paint(pr.get("color", "#ffffff"), fill=True))
-        c.drawRoundRect(skia.Rect.MakeXYWH(x - 180, y - 40, 360, 150), 18, 18, paint((20, 20, 28), 7))
-        draw_text_center(c, pr.get("text", ""), x, y + 35, 60, (20, 20, 28), 320)
+        pop = ease_back(min(1, t / 0.35))
+        y = GROUND - 640
+        c.drawLine(x, GROUND, x, y + 120, paint((90, 70, 50), 18))
+        c.save()
+        c.translate(x, y + 60)
+        c.scale(pop, pop)
+        c.rotate(-3 + 3 * math.sin(t * 2))
+        c.drawRoundRect(skia.Rect.MakeXYWH(-195, -105, 390, 210), 22, 22, paint(pr.get("color", "#ffffff"), fill=True))
+        c.drawRoundRect(skia.Rect.MakeXYWH(-195, -105, 390, 210), 22, 22, paint((20, 20, 28), 9))
+        draw_text_center(c, pr.get("text", ""), 0, 0, 76, (20, 20, 28), 350)
+        c.restore()
     elif kind == "tv":  # wall screen high above the actors' heads
         y = GROUND - 1010
         c.drawRoundRect(skia.Rect.MakeXYWH(x - 300, y, 600, 340), 24, 24, paint((25, 25, 35), fill=True))
@@ -623,7 +629,8 @@ def _beach(c, t, cam):
 
 @setting("room")
 def _room(c, t, cam):
-    c.drawRect(skia.Rect.MakeXYWH(-400, -400, W + 800, GROUND + 400), paint((250, 232, 200), fill=True))
+    c.drawRect(skia.Rect.MakeXYWH(-400, -400, W + 800, GROUND + 400), paint((255, 214, 170), fill=True))
+    c.drawRect(skia.Rect.MakeXYWH(-400, GROUND - 120, W + 800, 120), paint((240, 190, 140), fill=True))
     c.drawRoundRect(skia.Rect.MakeXYWH(660 - cam * 0.3, 420, 300, 330), 10, 10, paint((150, 210, 250), fill=True))
     c.drawRoundRect(skia.Rect.MakeXYWH(660 - cam * 0.3, 420, 300, 330), 10, 10, paint((120, 90, 70), 14))
     c.drawLine(810 - cam * 0.3, 420, 810 - cam * 0.3, 750, paint((120, 90, 70), 10))
@@ -849,7 +856,7 @@ class World:
         c.scale(zoom, zoom)
         c.translate(-W / 2 - pan, -(GROUND - 300))
         SETTINGS.get(sc.get("setting", "city_night"), _city_night)(c, lt, pan)
-        if sc.get("setting", "city_night") not in ("void",):  # haze so characters read clearly
+        if sc.get("setting", "city_night") in ("city_night", "gaming", "news_desk", "stage"):  # haze so characters read clearly
             c.drawRect(skia.Rect.MakeXYWH(-400, -400, W + 800, GROUND + 400), paint((20, 10, 40), fill=True, alpha=60))
         # props
         for pr in sc.get("props", []):

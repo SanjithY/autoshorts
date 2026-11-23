@@ -1,0 +1,72 @@
+{
+ "format": "myth_or_fact",
+ "kicker": "GTA 6 \u00b7 true or false",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "title": "TRUE or FALSE: GTA 6 facts that sound fake #gta6 #shorts",
+ "description": "Character switching per IGN/GameRant reports; original 2025 window per Rockstar's first trailer.",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "True or false?",
+   "highlight": [
+    "false"
+   ],
+   "say": "These GTA 6 facts sound fake. Are they?"
+  },
+  {
+   "type": "quiz_q",
+   "question": "You can swap between Jason and Lucia",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 0,
+   "say": "You can switch between Jason and Lucia while exploring. True or false?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "You can swap between Jason and Lucia",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 0,
+   "say": "True. You can swap between the two leads in the open world."
+  },
+  {
+   "type": "quiz_q",
+   "question": "GTA 6 was first set for 2025",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 0,
+   "say": "GTA 6 was originally supposed to launch in twenty twenty five. True or false?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "GTA 6 was first set for 2025",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 0,
+   "say": "True. The first trailer said twenty twenty five, then it got delayed twice."
+  },
+  {
+   "type": "outro",
+   "text": "Did you get both?",
+   "cta": "Comment below",
+   "say": "Did you get both right?"
+  }
+ ],
+ "post_after": "2026-11-23T18:00"
+}

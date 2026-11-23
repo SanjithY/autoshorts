@@ -98,4 +98,4 @@ jobs:
           git add state/ queue/
           git diff --cached --quiet && exit 0
           git commit -m "autopost: update history [skip ci]"
-          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
+          for i in 1 2 3; do git pull --rebase --autostash -q && git push -q && break; sleep 5; done
