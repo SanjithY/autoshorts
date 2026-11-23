@@ -3,6 +3,7 @@ name: autopost
 on:
   schedule:
     - cron: "17 */3 * * *"   # every 3 hours (8 videos/day, about 3-4 min per run)
+    - cron: "47 */3 * * *"   # backup 30 min later in case GitHub drops the first; the 60-min guard prevents double posts
   workflow_dispatch:          # "Run workflow" button for manual tests
     inputs:
       dry_run:
