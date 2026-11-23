@@ -50,7 +50,7 @@ def news_from_headline(research: dict, cfg: dict, used_urls: set):
             scenes.append({"type": "text", "text": "And there's more", "say": detail[1]})
         scenes.append({"type": "outro", "text": "What do you think?", "cta": "Comment below",
                        "say": "What do you think about this? Tell me in the comments."})
-        return {"format": "news_flash", "kicker": "GTA 6 news", "title": (title[:80] + " #gta6 #shorts"),
+        return {"format": "news_flash", "kicker": "GTA 6 news", "title": ((title if len(title) <= 80 else title[:80].rsplit(" ", 1)[0] + "...") + " #gta6 #shorts"),
                 "description": f"Source: {source} - {it.get('url', '')}",
                 "hashtags": ["#gta6", "#gtavi", "#gtanews", "#gaming", "#shorts"],
                 "source_urls": [it.get("url", "")], "scenes": scenes}
