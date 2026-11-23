@@ -20,11 +20,17 @@ HELIX = "https://api.twitch.tv/helix"
 
 
 def _twitch_headers():
-    cid, sec = os.environ.get("TWITCH_CLIENT_ID"), os.environ.get("TWITCH_CLIENT_SECRET")
+    cid = (os.environ.get("TWITCH_CLIENT_ID") or "").strip()
+    sec = (os.environ.get("TWITCH_CLIENT_SECRET") or "").strip()
     if not (cid and sec):
+        print("[twitch] TWITCH_CLIENT_ID / TWITCH_CLIENT_SECRET not set")
         return None
     tok = requests.post("https://id.twitch.tv/oauth2/token", data={
         "client_id": cid, "client_secret": sec, "grant_type": "client_credentials"}, timeout=20).json()
+    if "access_token" not in tok:
+        # shows Twitch's reason only (e.g. "invalid client secret"), never the keys
+        print(f"[twitch] login failed: {tok.get('message', tok)} (client id length {len(cid)}, secret length {len(sec)})")
+        return None
     return {"Client-Id": cid, "Authorization": f"Bearer {tok['access_token']}"}
 
 
