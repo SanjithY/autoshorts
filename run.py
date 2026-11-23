@@ -80,15 +80,15 @@ def main():
     dry = args.dry_run or cfg.get("dry_run", False)
     st = load_state()
     OUT.mkdir(exist_ok=True)
-    # Two timers (GitHub's schedule + a backup) can both fire: never post twice within ~2.5 hours.
+    # Two timers (GitHub's schedule + a backup) can both fire: never post twice within an hour.
     if not dry and not args.force:
         last = [p for p in st["posts"] if any("id" in r for r in p.get("results", []))]
         if last:
             import datetime as _dt
             t_last = _dt.datetime.strptime(last[-1]["time"], "%Y%m%d-%H%M")
             mins = (_dt.datetime.utcnow() - t_last).total_seconds() / 60
-            if mins < 150:
-                print(f"[run] last post was {mins:.0f} min ago; skipping this run so videos stay ~3h apart")
+            if mins < 60:
+                print(f"[run] last post was {mins:.0f} min ago; skipping this run (another timer already posted)")
                 return
     seed = int(time.time()) % 100000
     random.seed(seed)
