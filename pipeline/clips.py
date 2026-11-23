@@ -78,12 +78,28 @@ def transcribe_words(path):
     pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-f", "f32le", "-ac", "1", "-ar", "16000", "pipe:1"],
                          capture_output=True, check=True).stdout
     audio = np.frombuffer(pcm, np.float32).copy()
-    segs, _ = model.transcribe(audio, word_timestamps=True, vad_filter=True)
-    words = []
-    for s in segs:
-        for w in s.words or []:
-            words.append({"w": w.word.strip(), "start": w.start, "end": w.end})
-    return words
+    try:
+        segs, _ = model.transcribe(audio, word_timestamps=True, vad_filter=True)
+        words = []
+        for sg in segs:
+            for w in sg.words or []:
+                words.append({"w": w.word.strip(), "start": w.start, "end": w.end})
+        return words
+    except Exception as ex:  # faster-whisper's word aligner sometimes trips on odd clips
+        print(f"[captions] word timing failed ({type(ex).__name__}); using sentence timing")
+    try:
+        segs, _ = model.transcribe(audio, word_timestamps=False, vad_filter=True)
+        words = []
+        for sg in segs:
+            ws = sg.text.split()
+            if not ws:
+                continue
+            step = (sg.end - sg.start) / len(ws)
+            words += [{"w": w, "start": sg.start + i * step, "end": sg.start + (i + 1) * step} for i, w in enumerate(ws)]
+        return words
+    except Exception as ex:
+        print(f"[captions] transcription failed ({type(ex).__name__}); clip will have no captions")
+        return []
 
 
 def render_clip(video_path, hook, credit, out_path, words=None, badge=None, start=0.0, max_len=None):
