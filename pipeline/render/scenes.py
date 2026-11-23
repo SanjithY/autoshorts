@@ -239,13 +239,32 @@ def build_timeline(script: dict, voice: str, speed: float):
     return timeline, voice_events, sfx_events, t
 
 
+def _footage_audio(rel, total, gain):
+    """Game sound from the clip, looped to the video length and kept under the narration."""
+    import subprocess
+    import numpy as np
+    from .backgrounds import FOOTAGE
+    try:
+        pcm = subprocess.run(["ffmpeg", "-v", "error", "-stream_loop", "-1", "-i", str(FOOTAGE / rel), "-t", str(total + 0.5),
+                              "-f", "f32le", "-ac", "1", "-ar", str(A.SR), "pipe:1"], capture_output=True, check=True).stdout
+        a = np.frombuffer(pcm, np.float32).copy()
+        return a / (np.abs(a).max() + 1e-6) * gain
+    except Exception as ex:
+        print(f"[render] no footage audio: {ex}")
+        return None
+
+
 def render_animated(script: dict, out_path: str, cfg: dict, background_video: str | None = None,
                     bg_start: float = 0.0, seed: int = 0):
     A.configure(cfg)
     timeline, vev, sev, total = build_timeline(script, None, None)
     words = [w for seg in timeline for w in seg["words"]]
     chunks = caption_chunks(words)
-    mixed = A.mix(total, vev, sev, music_seed=seed, music_gain=cfg.get("music_gain", 0.32))
+    base = None
+    if script.get("footage") and script.get("footage_audio", 0.35):
+        base = _footage_audio(script["footage"], total, float(script.get("footage_audio", 0.35)))
+    mixed = A.mix(total, vev, sev, music_seed=seed,
+                  music_gain=cfg.get("music_gain", 0.32) * (0.5 if base is not None else 1.0), base_audio=base)
     tmp = Path(tempfile.mkdtemp())
     wav = str(tmp / "mix.wav")
     A.write_wav(wav, mixed)

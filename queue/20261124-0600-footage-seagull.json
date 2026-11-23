@@ -1,0 +1,56 @@
+{
+ "format": "footage_story",
+ "post_after": "2026-11-24T06:00",
+ "kicker": "GTA 6 \u00b7 beach chase",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "footage": "gta6/seagull_bird_hits_truck_funny.mp4",
+ "footage_audio": 0.35,
+ "title": "Even the seagulls are against me in GTA 6 #gta6 #shorts",
+ "description": "My own GTA 6 gameplay from a Vice City Beach police chase. (Champs Network)",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#gaming",
+  "#funny",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "Watch the seagull",
+   "highlight": [
+    "seagull"
+   ],
+   "say": "Keep your eyes on the seagull."
+  },
+  {
+   "type": "text",
+   "text": "Full speed on the sand",
+   "say": "I'm flying down Vice City Beach with the cops right behind me."
+  },
+  {
+   "type": "text",
+   "text": "Then THIS happens",
+   "highlight": [
+    "THIS"
+   ],
+   "say": "And then this seagull decides it's his moment."
+  },
+  {
+   "type": "text",
+   "text": "Direct hit",
+   "highlight": [
+    "hit"
+   ],
+   "sub": "he chose violence",
+   "say": "Direct hit. He did not care about my wanted level."
+  },
+  {
+   "type": "outro",
+   "text": "Seagull or cops: who's worse?",
+   "cta": "Vote below",
+   "say": "Who's the bigger threat, the cops or the seagulls?"
+  }
+ ]
+}

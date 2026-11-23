@@ -33,6 +33,7 @@ formats:
   clip_react: 2      # streamer clip + hook title + captions (allowlist only!)
   gameplay_story: 2  # narration over YOUR OWN gameplay footage in footage/
   stickman: 3        # animated stickman skits that act out the topic
+  footage_story: 0   # videos about one gameplay clip; written by the daily writer (1 in 5), not picked here
   top5_streamer: 2   # "Top 5 <streamer> moments" compilation (allowlist only!)
 
 compilation:

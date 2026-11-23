@@ -174,6 +174,10 @@ def validate(script: dict):
             s["answer"] = int(s["answer"])
             assert 0 <= s["answer"] < len(s["options"])
     assert 35 <= words <= 140, f"spoken words {words} out of range"
+    if script.get("footage"):
+        from pathlib import Path
+        assert (Path(__file__).resolve().parents[1] / "footage" / script["footage"]).exists(), \
+            f"footage {script['footage']} not found in footage/"
     assert script.get("title")
     return script
 

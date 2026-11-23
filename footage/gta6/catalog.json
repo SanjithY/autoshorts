@@ -1,0 +1,327 @@
+{
+ "note": "Each clip is the channel owner's own GTA 6 gameplay, cropped to 9:16 with the subtitle area softened. Use 'footage' + format 'footage_story' for videos ABOUT a clip; other GTA videos pick clips automatically by tags.",
+ "clips": [
+  {
+   "file": "gta6/ocean_drive_street_sports_cars_tourists_day.mp4",
+   "seconds": 20.0,
+   "what_happens": "Walking down Ocean Drive past parked supercars and tourists under pink umbrellas",
+   "tags": [
+    "ocean",
+    "drive",
+    "street",
+    "sports",
+    "cars",
+    "tourists",
+    "day"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/steal_orange_supercar_ocean_drive.mp4",
+   "seconds": 30.0,
+   "what_happens": "Checking out and climbing into an orange supercar on Ocean Drive",
+   "tags": [
+    "steal",
+    "orange",
+    "supercar",
+    "ocean",
+    "drive"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/pickup_truck_police_chase_starts_street.mp4",
+   "seconds": 20.0,
+   "what_happens": "Red pickup truck tearing down the street as cops yell to stop the engine",
+   "tags": [
+    "pickup",
+    "truck",
+    "police",
+    "chase",
+    "starts",
+    "street"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/truck_offroad_park_palms_to_beach.mp4",
+   "seconds": 25.0,
+   "what_happens": "Pickup cutting through a palm-lined park toward the beach",
+   "tags": [
+    "truck",
+    "offroad",
+    "park",
+    "palms",
+    "to",
+    "beach"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/truck_driving_on_beach_sand_ocean.mp4",
+   "seconds": 25.0,
+   "what_happens": "Truck drifting across the sand along Vice City's beach",
+   "tags": [
+    "truck",
+    "driving",
+    "on",
+    "beach",
+    "sand",
+    "ocean"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/beach_drive_lifeguard_tower_washington_beach.mp4",
+   "seconds": 20.0,
+   "what_happens": "Driving past lifeguard towers on Washington Beach",
+   "tags": [
+    "beach",
+    "drive",
+    "lifeguard",
+    "tower",
+    "washington",
+    "beach"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/beach_rampage_tourists_running.mp4",
+   "seconds": 20.0,
+   "what_happens": "Truck rampaging down a crowded beach as tourists scatter",
+   "tags": [
+    "beach",
+    "rampage",
+    "tourists",
+    "running"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/seagull_bird_hits_truck_funny.mp4",
+   "seconds": 15.0,
+   "what_happens": "A seagull smacks into the truck mid-drive",
+   "tags": [
+    "seagull",
+    "bird",
+    "hits",
+    "truck",
+    "funny"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/beach_umbrellas_smash_chairs.mp4",
+   "seconds": 20.0,
+   "what_happens": "Plowing through rows of beach umbrellas and chairs",
+   "tags": [
+    "beach",
+    "umbrellas",
+    "smash",
+    "chairs"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/umbrellas_explode_cops_call_air_support.mp4",
+   "seconds": 20.0,
+   "what_happens": "Umbrellas explode everywhere as cops call in air support",
+   "tags": [
+    "umbrellas",
+    "explode",
+    "cops",
+    "call",
+    "air",
+    "support"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/jump_out_steal_beach_enforcement_truck.mp4",
+   "seconds": 12.0,
+   "what_happens": "Jumping out on foot and stealing a beach patrol truck",
+   "tags": [
+    "jump",
+    "out",
+    "steal",
+    "beach",
+    "enforcement",
+    "truck"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/beach_chase_police_helicopter_overhead.mp4",
+   "seconds": 25.0,
+   "what_happens": "Beach chase with a police helicopter overhead",
+   "tags": [
+    "beach",
+    "chase",
+    "police",
+    "helicopter",
+    "overhead"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/truck_crash_wrecked_beach_chairs_smoke.mp4",
+   "seconds": 25.0,
+   "what_happens": "Smoking, wrecked truck crashing through beach chairs",
+   "tags": [
+    "truck",
+    "crash",
+    "wrecked",
+    "beach",
+    "chairs",
+    "smoke"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/shoreline_drive_waves_water_splash.mp4",
+   "seconds": 20.0,
+   "what_happens": "Driving along the shoreline through the waves",
+   "tags": [
+    "shoreline",
+    "drive",
+    "waves",
+    "water",
+    "splash"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/shoreline_helicopter_chase_beach.mp4",
+   "seconds": 15.0,
+   "what_happens": "Helicopter closing in along the shoreline",
+   "tags": [
+    "shoreline",
+    "helicopter",
+    "chase",
+    "beach"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/truck_crash_rocks_jetty_ocean.mp4",
+   "seconds": 22.0,
+   "what_happens": "Truck slams into the rocky jetty at the water's edge",
+   "tags": [
+    "truck",
+    "crash",
+    "rocks",
+    "jetty",
+    "ocean"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/truck_in_ocean_water_city_skyline_police.mp4",
+   "seconds": 15.0,
+   "what_happens": "Truck driving through the ocean with the city skyline and cops behind",
+   "tags": [
+    "truck",
+    "in",
+    "ocean",
+    "water",
+    "city",
+    "skyline",
+    "police"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/sand_dunes_offroad_jump_crash.mp4",
+   "seconds": 17.0,
+   "what_happens": "Flying off sand dunes and crashing",
+   "tags": [
+    "sand",
+    "dunes",
+    "offroad",
+    "jump",
+    "crash"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/dunes_grass_offroad_damaged_truck_police.mp4",
+   "seconds": 16.0,
+   "what_happens": "Battered truck grinding through dune grass with police nearby",
+   "tags": [
+    "dunes",
+    "grass",
+    "offroad",
+    "damaged",
+    "truck",
+    "police"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/steal_ambulance_beach_police_cars.mp4",
+   "seconds": 17.0,
+   "what_happens": "Running to steal an ambulance on the beach",
+   "tags": [
+    "steal",
+    "ambulance",
+    "beach",
+    "police",
+    "cars"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/ambulance_rampage_beach_crowd_running.mp4",
+   "seconds": 15.0,
+   "what_happens": "Ambulance tearing across a packed beach as people run",
+   "tags": [
+    "ambulance",
+    "rampage",
+    "beach",
+    "crowd",
+    "running"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/ambulance_police_chase_lifeguard_tower_wasted.mp4",
+   "seconds": 18.0,
+   "what_happens": "Ambulance chase past lifeguard towers right before getting wasted",
+   "tags": [
+    "ambulance",
+    "police",
+    "chase",
+    "lifeguard",
+    "tower",
+    "wasted"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/wasted_screen_death_end.mp4",
+   "seconds": 7.0,
+   "what_happens": "The pink WASTED screen",
+   "tags": [
+    "wasted",
+    "screen",
+    "death",
+    "end"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  },
+  {
+   "file": "gta6/jason_standing_arms_crossed_street_sunglasses.mp4",
+   "seconds": 17.0,
+   "what_happens": "Character standing on the street, arms crossed, in sunglasses",
+   "tags": [
+    "jason",
+    "standing",
+    "arms",
+    "crossed",
+    "street",
+    "sunglasses"
+   ],
+   "source": "Champs Network (channel owner's own gameplay)"
+  }
+ ]
+}

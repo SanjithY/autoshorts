@@ -27,10 +27,24 @@ something they didn't do.
 
 ## 3. Vary the formats (per day)
 
-At least 2 `stickman`, then a mix of `stat_shock`, `top_list`, `versus`, `quiz`,
+At least 2 `stickman`, about 1 in 5 `footage_story` (while GTA 6 is the focus), then a mix of `stat_shock`, `top_list`, `versus`, `quiz`,
 `myth_or_fact` and `news_flash`. Never the same format back to back.
 Only queue a `top5_streamer` when `config.yaml → twitch_clips.streamers` has someone with
 `permission: true` (the poster builds that video itself from Twitch; set `streamer` to their login).
+
+### Gameplay footage (GTA 6)
+
+`footage/gta6/catalog.json` lists the channel owner's own GTA 6 clips (Champs Network gameplay),
+each with its length and what happens in it. Every graphic-format GTA video (stat, list, versus,
+quiz, myth, news) automatically gets matching clips as its background. Add `"bg_hint"` to a scene to steer it.
+
+**About 1 in 5 videos should be a `footage_story`:** a video *about* one clip. Set
+`"format": "footage_story"`, `"footage": "gta6/<file>.mp4"` (from the catalog), and
+`"footage_audio": 0.35` (game sound under the narration). Narrate what happens in the clip in first person ("I"),
+like a funny gamer recap, using the hook, text, stars and outro scene types. Keep the narration within about the clip's
+length; a short clip loops. Don't reuse a clip that had its own footage_story in the last 7 days, and
+keep it light (no glorifying violence against people; focus on chases, crashes, cops and funny moments).
+Credit "(Champs Network)" in the description.
 
 ## 4. Retention rules
 

@@ -1,0 +1,56 @@
+{
+ "format": "footage_story",
+ "post_after": "2026-11-24T15:00",
+ "kicker": "GTA 6 \u00b7 last stand",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "footage": "gta6/ambulance_police_chase_lifeguard_tower_wasted.mp4",
+ "footage_audio": 0.35,
+ "title": "Stealing an ambulance in GTA 6 did not end well #gta6 #shorts",
+ "description": "My own GTA 6 gameplay: an ambulance escape down Vice City Beach. (Champs Network)",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#gaming",
+  "#wasted",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "Worst getaway car ever",
+   "highlight": [
+    "worst"
+   ],
+   "say": "I picked the worst getaway car in Vice City."
+  },
+  {
+   "type": "text",
+   "text": "A stolen ambulance",
+   "highlight": [
+    "ambulance"
+   ],
+   "say": "A stolen ambulance, on the sand, with the cops right behind me."
+  },
+  {
+   "type": "stars",
+   "n": 5,
+   "text": "Five stars",
+   "highlight": [
+    "Five"
+   ],
+   "say": "Five stars and the whole beach watching."
+  },
+  {
+   "type": "text",
+   "text": "Lifeguard tower dodge",
+   "say": "Dodging lifeguard towers like it's a racing game."
+  },
+  {
+   "type": "outro",
+   "text": "Guess how it ends",
+   "cta": "Comment below",
+   "say": "Guess how this ended. Wrong answers only."
+  }
+ ]
+}

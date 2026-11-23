@@ -255,6 +255,16 @@ class SceneBackgrounds:
         used = set()
         self.per_scene = []
         stock_query = script.get("stock_query")
+        fixed = script.get("footage")  # a video *about* one specific clip: play it straight through
+        if fixed:
+            fp = FOOTAGE / fixed
+            d = _duration(str(fp)) or 1.0
+            self.per_scene = [(str(fp), seg["start"] % d) for seg in timeline]
+            self.theme_bg = SynthwaveBackground
+            self.seed, self.theme, self.cache = seed, theme, {}
+            self.dim = 0.15
+            return
+        self.dim = 0.4
         for seg in timeline:
             sc = seg["scene"]
             text = " ".join(str(sc.get(k, "")) for k in ("say", "text", "question", "label", "bg_hint"))
@@ -277,11 +287,14 @@ class SceneBackgrounds:
         path, start = self.per_scene[idx]
         key = (idx, path)
         if key not in self.cache:
-            self.cache = {}  # one live decoder at a time
+            for old in self.cache.values():  # one live decoder at a time
+                getattr(old, "close", lambda: None)()
+                getattr(getattr(old, "video", None), "close", lambda: None)()
+            self.cache = {}
             if path and self.theme == "news":
                 self.cache[key] = NewsTape(self.seed, path, start)
             elif path:
-                self.cache[key] = VideoBackground(path, start, dim=0.4)
+                self.cache[key] = VideoBackground(path, start, dim=self.dim)
             elif self.theme_bg is SynthwaveBackground:
                 self.cache[key] = SynthwaveBackground(seed=self.seed, hue_shift=(self.seed % 3) / 3)
             elif self.theme_bg is Spotlight:

@@ -236,11 +236,18 @@ class VideoBackground:
 
     def __init__(self, path: str, start: float = 0.0, dim=0.45):
         self.dim = dim
-        cmd = ["ffmpeg", "-v", "error", "-ss", str(start), "-i", path, "-an",
+        cmd = ["ffmpeg", "-v", "quiet", "-ss", str(start), "-i", path, "-an",
                "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS}",
                "-f", "rawvideo", "-pix_fmt", "rgb24", "-"]
-        self.p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        self.p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
         self.last = Image.new("RGB", (W, H), NIGHT)
+
+    def close(self):
+        try:
+            self.p.kill()
+            self.p.wait(timeout=5)
+        except Exception:
+            pass
 
     def frame(self, t: float) -> Image.Image:
         buf = self.p.stdout.read(W * H * 3)
