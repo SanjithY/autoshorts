@@ -1,0 +1,128 @@
+{
+ "format": "stickman",
+ "kicker": "GTA 6 \u00b7 explained",
+ "theme": "gaming",
+ "title": "GTA 6 cops remember your OUTFIT \ud83d\udc40 #gta6 #shorts",
+ "description": "Stickman explainer. GTA 6 police track your face, clothing, vehicle and CCTV (GamesRadar, Beebom).",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#animation",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "a",
+   "title": "COPS GOT SMARTER",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.35,
+     "action": "talk",
+     "face": "smug",
+     "hat": "cap",
+     "color": "#ff2e63",
+     "prop": "money"
+    }
+   ],
+   "camera": "punch",
+   "say": "In GTA 6, the cops actually remember you."
+  },
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "a",
+   "actors": [
+    {
+     "id": "a",
+     "action": "run",
+     "to": 0.85,
+     "face": "shock",
+     "stars": 3
+    }
+   ],
+   "props": [
+    {
+     "kind": "police_car",
+     "x": -0.35,
+     "move_to": 0.3,
+     "move_time": 2.2
+    }
+   ],
+   "fx": [
+    "police_lights",
+    "speed_lines"
+   ],
+   "say": "Get spotted, and they know your car."
+  },
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "b",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.7,
+     "action": "sneak",
+     "to": 0.55,
+     "face": "neutral",
+     "hat": "sunglasses"
+    },
+    {
+     "id": "b",
+     "x": 0.22,
+     "action": "point",
+     "face": "angry",
+     "hat": "police"
+    }
+   ],
+   "bubble": {
+    "actor": "b",
+    "text": "RED CAP. THAT'S HIM."
+   },
+   "say": "They know your outfit too. So a quick change can actually save you."
+  },
+  {
+   "type": "stick",
+   "setting": "news_desk",
+   "speaker": "a",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "shocked",
+     "face": "shock"
+    }
+   ],
+   "props": [
+    {
+     "kind": "tv",
+     "x": 0.5,
+     "text": "CCTV: SPOTTED"
+    }
+   ],
+   "fx": [
+    "exclaim"
+   ],
+   "camera": "zoom_in",
+   "say": "And if a security camera catches you, there's an icon for that."
+  },
+  {
+   "type": "stick",
+   "setting": "city_night",
+   "speaker": "a",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "shrug",
+     "face": "happy",
+     "stars": 6
+    }
+   ],
+   "say": "All the way up to six stars. What's your escape plan?"
+  }
+ ]
+}

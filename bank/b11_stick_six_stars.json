@@ -1,0 +1,22 @@
+{"format": "stickman", "kicker": "GTA 6 · explained", "title": "How to get 6 stars in GTA 6 (stickman edition) #gta6 #shorts",
+ "description": "Stickman explainer. Six-star wanted level confirmed; PC Gamer only reached six stars by stealing a tank.",
+ "hashtags": ["#gta6", "#gtavi", "#animation", "#shorts"],
+ "scenes": [
+  {"type": "stick", "setting": "city_night", "speaker": "a", "title": "6 STARS IS INSANE",
+   "actors": [{"id": "a", "x": 0.5, "action": "talk", "face": "happy", "hat": "cap", "color": "#ff2e63"}],
+   "camera": "punch", "say": "Getting six stars in GTA 6 is way harder than you think."},
+  {"type": "stick", "setting": "city_night", "speaker": "a",
+   "actors": [{"id": "a", "x": 0.15, "action": "run", "to": 0.85, "face": "shock", "stars": 5}],
+   "props": [{"kind": "police_car", "x": -0.3, "move_to": 0.45, "move_time": 2.4}],
+   "fx": ["police_lights", "speed_lines"], "say": "Five stars? The cops are on you, but that's nothing."},
+  {"type": "stick", "setting": "city_night", "speaker": "a",
+   "actors": [{"id": "a", "x": 0.3, "action": "explain", "face": "smug", "prop": ""}],
+   "props": [{"kind": "sign", "x": 0.72, "text": "MILITARY BASE", "color": "#9be15d"}],
+   "bubble": {"actor": "a", "text": "STEAL A TANK"}, "say": "PC Gamer only hit six stars after stealing a tank from a military base."},
+  {"type": "stick", "setting": "city_night", "speaker": "a",
+   "actors": [{"id": "a", "x": 0.5, "action": "celebrate", "face": "happy", "stars": 6}],
+   "fx": ["impact", "police_lights"], "camera": "shake", "say": "Then blowing up everything in sight. Six stars, unlocked."},
+  {"type": "stick", "setting": "city_night", "speaker": "b",
+   "actors": [{"id": "a", "x": 0.3, "action": "shrug", "face": "neutral"}, {"id": "b", "x": 0.72, "action": "talk", "face": "happy", "hat": "police", "facing": -1}],
+   "bubble": {"actor": "b", "text": "HOW LONG CAN YOU LAST?"}, "say": "So how long can you survive at six stars? Comment below."}
+ ]}

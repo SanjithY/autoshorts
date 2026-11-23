@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import math
 import os
 import random
 import subprocess
@@ -75,17 +76,22 @@ def transcribe_words(path):
     return words
 
 
-def render_clip(video_path, hook, credit, out_path, words=None):
+def render_clip(video_path, hook, credit, out_path, words=None, badge=None, start=0.0, max_len=None):
     """Blurred-fill 9:16 frame, original clip centered, hook title on top, captions, credit tag."""
     tmp = Path(tempfile.mkdtemp())
     wav = str(tmp / "a.wav")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", video_path, "-vn", "-ac", "2", "-ar", "44100", wav], check=True)
-    dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
-                                         "-of", "default=nw=1:nk=1", video_path]))
+    full = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                                          "-of", "default=nw=1:nk=1", video_path]))
+    dur = min(full - start, max_len) if max_len else full - start
+    cut = ["-ss", str(start), "-t", str(dur)]
+    subprocess.run(["ffmpeg", "-v", "error", "-y", *cut, "-i", video_path, "-vn", "-ac", "2", "-ar", "44100", wav], check=True)
+    if words:
+        words = [{**w, "start": w["start"] - start, "end": w["end"] - start} for w in words
+                 if start <= w["start"] < start + dur]
     vf = (f"[0:v]fps={FPS},split[a][b];"
           f"[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:2,eq=brightness=-0.15[bg];"
           f"[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2-40,format=rgb24")
-    dec = subprocess.Popen(["ffmpeg", "-v", "error", "-i", video_path, "-filter_complex", vf, "-an",
+    dec = subprocess.Popen(["ffmpeg", "-v", "error", *cut, "-i", video_path, "-filter_complex", vf, "-an",
                             "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
     enc = Encoder(out_path, wav)
     chunks = caption_chunks(words or [])
@@ -93,6 +99,10 @@ def render_clip(video_path, hook, credit, out_path, words=None):
     cred = text_sprite(credit, "bold", 36, WHITE, 0, BLACK, 800, False)
     cred_box = rounded_box(cred.width + 40, cred.height + 16, (0, 0, 0, 170), 20)
     cred_box.paste(cred, (20, 8), cred)
+    badge_spr = None
+    if badge:
+        bt = text_sprite(badge, "display", 130, YELLOW, 10, BLACK, 300)
+        badge_spr = bt
     fi = 0
     while True:
         buf = dec.stdout.read(W * H * 3)
@@ -101,6 +111,8 @@ def render_clip(video_path, hook, credit, out_path, words=None):
         t = fi / FPS
         frame = Image.fromarray(np.frombuffer(buf, np.uint8).reshape(H, W, 3)).copy()
         paste(frame, hook_spr, W / 2, 330, 0.6 + 0.4 * ease_out_back(t / 0.3))
+        if badge:
+            paste(frame, badge_spr, W / 2, 530, 1 + 0.08 * math.sin(t * 5))
         paste(frame, cred_box, W / 2, 1180, 1)
         draw_caption(frame, chunks, t, y=1380)
         draw_progress(frame, t, dur)

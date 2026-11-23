@@ -1,4 +1,4 @@
-"""Free audio: Kokoro TTS (local), synthesized music bed and sound effects (no licensing issues)."""
+"""Free audio: Edge neural voice (with Kokoro local fallback), synthesized music bed and sound effects."""
 from __future__ import annotations
 
 import os
@@ -21,30 +21,97 @@ def _kokoro():
 
 
 def speak_text_prep(text: str) -> str:
-    """Make numbers/abbreviations read naturally."""
-    t = text.replace("GTA VI", "G T A six").replace("GTA 6", "G T A six")
-    t = t.replace("GTA V ", "G T A five ").replace("GTA 5", "G T A five").replace("GTA IV", "G T A four")
-    t = re.sub(r"\$(\d+(?:\.\d+)?)B\b", r"\1 billion dollars", t)
-    t = re.sub(r"\$(\d+(?:\.\d+)?)M\b", r"\1 million dollars", t)
+    """Make names/numbers read naturally. Keep "GTA" as one token: both voices spell it G-T-A
+    correctly, while "G T A" makes the A sound like the word "a"."""
+    t = re.sub(r"\bGTA\s*VI\b", "GTA 6", text)
+    t = re.sub(r"\bGTA\s*IV\b", "GTA 4", t)
+    t = re.sub(r"\bGTA\s*V\b", "GTA 5", t)
+    t = re.sub(r"\bG\s+T\s+A\b", "GTA", t)
+    t = re.sub(r"\$(\d+(?:\.\d+)?)\s*B\b", r"\1 billion dollars", t)
+    t = re.sub(r"\$(\d+(?:\.\d+)?)\s*M\b", r"\1 million dollars", t)
+    t = re.sub(r"\$(\d+(?:\.\d+)?)\s*K\b", r"\1 thousand dollars", t)
+    t = t.replace("&", " and ").replace(" vs ", " versus ").replace(" vs. ", " versus ")
     return t
 
 
-def tts(text: str, voice="am_michael", speed=1.12):
-    """Returns (audio float32 @ SR, word timings list[{w,start,end}] relative to clip start)."""
-    samples, sr = _kokoro().create(speak_text_prep(text), voice=voice, speed=speed, lang="en-us")
-    samples = np.asarray(samples, np.float32)
-    # trim leading/trailing silence
+def _trim(samples, sr):
     nz = np.where(np.abs(samples) > 0.01)[0]
     if len(nz):
         samples = samples[max(0, nz[0] - int(0.02 * sr)): nz[-1] + int(0.05 * sr)]
-    audio = resample_poly(samples, SR, sr).astype(np.float32)
-    dur = len(audio) / SR
+    return samples
+
+
+def _even_timings(text, dur):
     words = text.split()
-    # distribute word timings by character weight (good enough for captions)
     weights = np.array([len(re.sub(r"[^\w$%]", "", w)) + 2 for w in words], float)
     edges = np.concatenate([[0], np.cumsum(weights) / weights.sum()]) * dur
-    timed = [{"w": w, "start": float(edges[i]), "end": float(edges[i + 1])} for i, w in enumerate(words)]
+    return [{"w": w, "start": float(edges[i]), "end": float(edges[i + 1])} for i, w in enumerate(words)]
+
+
+def _edge_tts(text: str, voice: str, rate: str):
+    """Microsoft Edge neural voice (free, no key, very natural) + exact word timings."""
+    import asyncio
+    import subprocess
+    import edge_tts
+
+    async def run():
+        com = edge_tts.Communicate(speak_text_prep(text), voice, rate=rate, boundary="WordBoundary")
+        audio, marks = bytearray(), []
+        async for ch in com.stream():
+            if ch["type"] == "audio":
+                audio.extend(ch["data"])
+            elif ch["type"] == "WordBoundary":
+                marks.append((ch["offset"] / 1e7, (ch["offset"] + ch["duration"]) / 1e7, ch["text"]))
+        return bytes(audio), marks
+
+    mp3, marks = asyncio.run(run())
+    if not mp3:
+        raise RuntimeError("edge-tts returned no audio")
+    pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", "pipe:0", "-f", "f32le", "-ac", "1", "-ar", str(SR), "pipe:1"],
+                         input=mp3, capture_output=True, check=True).stdout
+    audio = np.frombuffer(pcm, np.float32).copy()
+    lead = 0.0
+    nz = np.where(np.abs(audio) > 0.01)[0]
+    if len(nz):
+        lead = max(0, nz[0] - int(0.02 * SR)) / SR
+        audio = audio[int(lead * SR): nz[-1] + int(0.05 * SR)]
+    # map the spoken words back onto the original (display) words for captions
+    disp = text.split()
+    if marks and len(marks) == len(disp):
+        timed = [{"w": disp[i], "start": max(0.0, a - lead), "end": max(0.0, b - lead)} for i, (a, b, _) in enumerate(marks)]
+    elif marks:
+        timed = [{"w": w, "start": max(0.0, a - lead), "end": max(0.0, b - lead)} for a, b, w in marks]
+    else:
+        timed = _even_timings(text, len(audio) / SR)
     return audio, timed
+
+
+def _kokoro_tts(text: str, voice: str, speed: float):
+    samples, sr = _kokoro().create(speak_text_prep(text), voice=voice, speed=speed, lang="en-us")
+    samples = _trim(np.asarray(samples, np.float32), sr)
+    audio = resample_poly(samples, SR, sr).astype(np.float32)
+    return audio, _even_timings(text, len(audio) / SR)
+
+
+TTS_CFG = {"engine": "edge", "edge_voice": "en-US-AndrewMultilingualNeural", "edge_rate": "+8%",
+           "voice": "am_michael", "voice_speed": 1.05}
+
+
+def configure(cfg: dict):
+    for k in TTS_CFG:
+        if k in cfg:
+            TTS_CFG[k] = cfg[k]
+
+
+def tts(text: str, voice=None, speed=None):
+    """Returns (audio float32 @ SR, word timings list[{w,start,end}] relative to clip start)."""
+    if TTS_CFG.get("engine", "edge") == "edge":
+        try:
+            return _edge_tts(text, TTS_CFG["edge_voice"], TTS_CFG["edge_rate"])
+        except Exception as ex:  # service hiccup or blocked network -> local voice
+            print(f"[tts] edge voice unavailable ({type(ex).__name__}: {str(ex)[:120]}); using Kokoro")
+            TTS_CFG["engine"] = "kokoro"
+    return _kokoro_tts(text, voice or TTS_CFG["voice"], float(speed or TTS_CFG["voice_speed"]))
 
 
 # ---------------------------------------------------------------- synthesis helpers

@@ -1,9 +1,23 @@
 # ─── Channel ───────────────────────────────────────────────────────────────
 topic: "GTA 6"                       # what the channel is about
 news_queries: ["GTA 6", "GTA VI", "Grand Theft Auto VI"]
-voice: am_michael                    # Kokoro voices: am_michael, am_adam, am_onyx, af_heart, bm_george ...
-voice_speed: 1.12
+# Voice: "edge" = Microsoft neural voices (most natural, free, no key; unofficial
+# endpoint, so it falls back to the local Kokoro voice automatically if it fails).
+engine: edge
+edge_voice: en-US-AndrewMultilingualNeural   # also great: en-US-BrianMultilingualNeural, en-US-AvaMultilingualNeural
+edge_rate: "+8%"
+voice: am_michael                    # Kokoro fallback voice
+voice_speed: 1.05
 music_gain: 0.32
+
+# ─── Topic focus ───────────────────────────────────────────────────────────
+# Until this date most videos are about the focus topic; after it, the daily writer
+# follows what's trending (Google Trends + YouTube trending, filtered for a broad audience).
+focus:
+  topic: "GTA 6"
+  topic_key: gta6        # footage/gta6/ clips are used as backgrounds for these videos
+  until: "2026-11-30"
+  share: 0.75            # share of videos on the focus topic while it's active
 
 # ─── Format rotation ──────────────────────────────────────────────────────
 # Relative weights. A format is never repeated back-to-back, and the last
@@ -18,6 +32,12 @@ formats:
   news_flash: 3      # today's biggest headline in 20s
   clip_react: 2      # streamer clip + hook title + captions (allowlist only!)
   gameplay_story: 2  # narration over YOUR OWN gameplay footage in footage/
+  stickman: 3        # animated stickman skits that act out the topic
+  top5_streamer: 2   # "Top 5 <streamer> moments" compilation (allowlist only!)
+
+compilation:
+  count: 5
+  lookback_days: 7
 
 # ─── LLM (optional) ───────────────────────────────────────────────────────
 # With no key, videos come from live news headlines + the fact-checked scripts

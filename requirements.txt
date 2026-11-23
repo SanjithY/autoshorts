@@ -12,3 +12,5 @@ google-auth
 google-auth-oauthlib
 yt-dlp
 faster-whisper
+edge-tts
+skia-python

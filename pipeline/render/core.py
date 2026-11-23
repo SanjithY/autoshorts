@@ -226,6 +226,11 @@ class SynthwaveBackground:
         return img
 
 
+class BlankBackground:
+    def frame(self, t):
+        return Image.new("RGB", (W, H), NIGHT)
+
+
 class VideoBackground:
     """Uses the user's own gameplay footage, cropped to 9:16, dimmed, streamed via ffmpeg."""
 

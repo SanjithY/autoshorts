@@ -50,6 +50,16 @@ jobs:
           [ -f models/kokoro.onnx ] || curl -sL -o models/kokoro.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx
           [ -f models/voices.bin ] || curl -sL -o models/voices.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
 
+      - name: Get gameplay/B-roll footage (from the "footage" release)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p footage
+          gh release download footage --repo "$GITHUB_REPOSITORY" --dir footage/_release --clobber 2>/dev/null || echo "no footage release yet"
+          # files named like gta6__police_chase.mp4 go into footage/gta6/police_chase.mp4
+          for f in footage/_release/*; do [ -f "$f" ] || continue; b=$(basename "$f"); t="${b%%__*}"; n="${b#*__}"
+            if [ "$t" != "$b" ]; then mkdir -p "footage/$t"; mv "$f" "footage/$t/$n"; fi; done
+
       - name: Make, render and publish one video
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -65,6 +75,7 @@ jobs:
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
           TOKEN_KEY: ${{ secrets.TOKEN_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
           ARGS=""
           [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
@@ -84,7 +95,7 @@ jobs:
         run: |
           git config user.name "autopost-bot"
           git config user.email "autopost-bot@users.noreply.github.com"
-          git add state/
+          git add state/ queue/
           git diff --cached --quiet && exit 0
           git commit -m "autopost: update history [skip ci]"
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done

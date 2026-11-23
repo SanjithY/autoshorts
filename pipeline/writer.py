@@ -89,7 +89,7 @@ Return JSON: {{"format": "{fmt}", "kicker": "<{topic} label, max 4 words>", "tit
 "source_urls": ["<urls of news you used>"], "scenes": [ ... ]}}"""
 
 
-REQUIRED = {"hook": ["text", "say"], "text": ["text", "say"], "stat": ["value", "label", "say"],
+REQUIRED = {"stick": ["say"], "hook": ["text", "say"], "text": ["text", "say"], "stat": ["value", "label", "say"],
             "bars": ["items", "say"], "versus": ["rows", "say"], "list_item": ["n", "text", "say"],
             "stars": ["n", "text", "say"], "quiz_q": ["question", "options", "answer", "say"],
             "quiz_a": ["question", "options", "answer", "say"], "outro": ["text", "say"]}
@@ -121,7 +121,7 @@ def normalize(script: dict) -> dict:
         sc["type"] = t
         if not sc.get("say"):
             sc["say"] = next((str(sc[k]) for k in SAY_KEYS if sc.get(k)), "")
-        if not sc.get("text") and t in ("hook", "text", "list_item", "stars", "outro"):
+        if not sc.get("text") and t in ("hook", "text", "list_item", "stars", "outro"):  # stick scenes use "title"
             sc["text"] = next((str(sc[k]) for k in TEXT_KEYS if sc.get(k)), "")
             if not sc["text"] and sc["say"]:
                 sc["text"] = " ".join(sc["say"].split()[:6])
@@ -141,11 +141,11 @@ def normalize(script: dict) -> dict:
                 sc[k] = [str(sc[k])]
         if sc["say"]:
             out.append(sc)
-    if out and out[0]["type"] != "hook":
+    if out and out[0]["type"] not in ("hook", "stick"):
         first = out[0]
         out[0] = {"type": "hook", "say": first["say"],
                   "text": first.get("text") or " ".join(first["say"].split()[:5])}
-    if out and out[-1]["type"] != "outro":
+    if out and out[-1]["type"] not in ("outro", "stick"):
         out.append({"type": "outro", "text": "What do you think?", "cta": "Comment below",
                     "say": "What do you think? Tell me in the comments."})
     script["scenes"] = out
@@ -158,7 +158,7 @@ def validate(script: dict):
     script = normalize(script)
     sc = script.get("scenes") or []
     assert 3 <= len(sc) <= 9, "need 3-9 scenes"
-    assert sc[0]["type"] == "hook", "first scene must be hook"
+    assert sc[0]["type"] in ("hook", "stick"), "first scene must be a hook (or a stickman scene)"
     words = 0
     for s in sc:
         assert s.get("type") in REQUIRED, f"bad type {s.get('type')}"

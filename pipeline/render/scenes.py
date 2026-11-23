@@ -8,14 +8,14 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 from .. import audio as A
-from .core import (BLACK, CAPTION_Y, GREEN, H, HOT, ORANGE, PINK, TEAL, W, WHITE, YELLOW, FPS,
+from .core import (BlankBackground, BLACK, CAPTION_Y, GREEN, H, HOT, ORANGE, PINK, TEAL, W, WHITE, YELLOW, FPS,
                    Encoder, SynthwaveBackground, VideoBackground, caption_chunks, draw_caption,
                    draw_progress, ease_out_back, ease_out_cubic, paste, prog, rounded_box, star_points,
                    text_sprite)
 
 CENTER_Y = 720
 MIN_DUR = {"stat": 2.6, "bars": 3.4, "versus": 3.6, "stars": 3.0, "hook": 1.6, "quiz_a": 2.2}
-SCENE_SFX = {"hook": "boom", "stat": "whoosh", "bars": "whoosh", "versus": "whoosh",
+SCENE_SFX = {"stick": "whoosh", "hook": "boom", "stat": "whoosh", "bars": "whoosh", "versus": "whoosh",
              "list_item": "whoosh", "stars": "siren", "quiz_q": "whoosh", "quiz_a": "ding",
              "text": "whoosh", "outro": "pop"}
 
@@ -194,7 +194,18 @@ def draw_outro(f, s, lt, d):
         paste(f, box, W / 2, CENTER_Y + 200, 1 + 0.05 * math.sin(lt * 6), prog(lt, 0.3, 0.2))
 
 
-DRAW = {"hook": draw_hook, "text": draw_text, "stat": draw_stat, "bars": draw_bars,
+def draw_stick(f, s, lt, d):
+    from PIL import Image as _I
+    from .stick import World
+    world = s.setdefault("_world_ref", {}).get("w")
+    if world is None:
+        world = World()
+        s["_world_ref"]["w"] = world
+    arr = world.frame(s, lt, d, s.get("_key"))
+    f.paste(_I.fromarray(arr))
+
+
+DRAW = {"stick": draw_stick, "hook": draw_hook, "text": draw_text, "stat": draw_stat, "bars": draw_bars,
         "versus": draw_versus, "list_item": draw_list_item, "stars": draw_stars,
         "quiz_q": draw_quiz_q, "quiz_a": draw_quiz_a, "outro": draw_outro}
 
@@ -230,17 +241,28 @@ def build_timeline(script: dict, voice: str, speed: float):
 
 def render_animated(script: dict, out_path: str, cfg: dict, background_video: str | None = None,
                     bg_start: float = 0.0, seed: int = 0):
-    voice = cfg.get("voice", "am_michael")
-    speed = float(cfg.get("voice_speed", 1.12))
-    timeline, vev, sev, total = build_timeline(script, voice, speed)
+    A.configure(cfg)
+    timeline, vev, sev, total = build_timeline(script, None, None)
     words = [w for seg in timeline for w in seg["words"]]
     chunks = caption_chunks(words)
     mixed = A.mix(total, vev, sev, music_seed=seed, music_gain=cfg.get("music_gain", 0.32))
     tmp = Path(tempfile.mkdtemp())
     wav = str(tmp / "mix.wav")
     A.write_wav(wav, mixed)
-    bg = VideoBackground(background_video, bg_start) if background_video else \
-        SynthwaveBackground(seed=seed, hue_shift=(seed % 3) / 3)
+    # one shared stickman world per video so characters carry across scenes
+    shared = {}
+    for i, seg in enumerate(timeline):
+        if seg["scene"]["type"] == "stick":
+            seg["scene"]["_world_ref"] = shared
+            seg["scene"]["_key"] = i
+    all_stick = all(seg["scene"]["type"] == "stick" for seg in timeline)
+    if all_stick:
+        bg = BlankBackground()
+    elif background_video:
+        bg = VideoBackground(background_video, bg_start)
+    else:
+        from .backgrounds import SceneBackgrounds
+        bg = SceneBackgrounds(script, timeline, seed, cfg)
     enc = Encoder(out_path, wav)
     kicker = script.get("kicker", "GTA 6")
     n_frames = int(total * FPS)
@@ -251,9 +273,9 @@ def render_animated(script: dict, out_path: str, cfg: dict, background_video: st
         lt, d = t - seg["start"], seg["end"] - seg["start"]
         _kicker(frame, kicker, t)
         DRAW[seg["scene"]["type"]](frame, seg["scene"], lt, d)
-        draw_caption(frame, chunks, t)
+        draw_caption(frame, chunks, t, y=1505 if all_stick else CAPTION_Y)
         draw_progress(frame, t, total)
-        if lt < 0.1:  # flash cut between scenes
+        if lt < 0.1 and not all_stick:  # flash cut between scenes
             frame = Image.blend(frame, Image.new("RGB", (W, H), WHITE), 0.35 * (1 - lt / 0.1))
         enc.write(frame)
     enc.close()

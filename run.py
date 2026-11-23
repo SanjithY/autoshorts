@@ -44,6 +44,22 @@ def load_ideas(st):
     return [i for i in ideas if i not in st["used_ideas"]]
 
 
+def next_queued():
+    """Oldest script the daily writer left in queue/ whose post_after time has passed."""
+    q = ROOT / "queue"
+    if not q.exists():
+        return None
+    now = time.strftime("%Y-%m-%dT%H:%M", time.gmtime())
+    for p in sorted(q.glob("*.json")):
+        try:
+            d = json.loads(p.read_text())
+        except Exception:
+            continue
+        if d.get("post_after", "") <= now:
+            return p, d
+    return None
+
+
 def pick_format(cfg, st, available):
     weights = {f: w for f, w in cfg["formats"].items() if f in available and w > 0}
     recent = [p["format"] for p in st["posts"][-2:]]
@@ -69,10 +85,15 @@ def main():
 
     from pipeline import clips, research, writer
     from pipeline.render.scenes import render_animated
+    from pipeline import trends as trends_mod
+    try:
+        trends_mod.refresh()
+    except Exception as ex:
+        print(f"[run] trends refresh failed: {ex}")
 
-    available = set(cfg["formats"]) - {"clip_react", "gameplay_story"}
+    available = set(cfg["formats"]) - {"clip_react", "gameplay_story", "top5_streamer"}
     if clips.allowed_streamers(cfg):
-        available.add("clip_react")
+        available |= {"clip_react", "top5_streamer"}
     footage, fstart = clips.pick_footage(cfg)
     if footage:
         available.add("gameplay_story")
@@ -83,7 +104,45 @@ def main():
 
     video = str(OUT / f"{stamp}-{fmt}.mp4")
     meta = {}
-    if args.script:
+    queued = None if args.script or args.format else next_queued()
+    if queued:
+        qpath, meta = queued
+        fmt = meta.get("format", "queued")
+        video = str(OUT / f"{stamp}-{fmt}.mp4")
+        print(f"[run] using queued script {qpath.name}: {meta.get('title')}")
+        try:
+            if meta.get("format") == "top5_streamer":
+                from pipeline import compilation
+                m = compilation.build(cfg, video, st)
+                if not m:
+                    raise RuntimeError("no allowed streamer clips available")
+                meta = {**meta, **m}
+                st["used_clip_ids"] += m.get("clip_ids", [])
+            else:
+                meta = writer.validate(meta)
+                render_animated(meta, video, cfg, seed=seed)
+            done = ROOT / "queue" / "done"
+            done.mkdir(parents=True, exist_ok=True)
+            qpath.rename(done / qpath.name)
+        except Exception as ex:
+            print(f"[run] queued script failed ({ex}); moving it to queue/failed and continuing")
+            bad = ROOT / "queue" / "failed"
+            bad.mkdir(parents=True, exist_ok=True)
+            qpath.rename(bad / qpath.name)
+            meta = {}
+    if meta:
+        pass
+    elif fmt == "top5_streamer":
+        from pipeline import compilation
+        m = compilation.build(cfg, video, st)
+        if m:
+            meta = m
+            st["used_clip_ids"] += m.get("clip_ids", [])
+        else:
+            fmt = "stat_shock"
+    if meta:
+        pass
+    elif args.script:
         meta = json.loads(Path(args.script).read_text())
         render_animated(meta, video, cfg, seed=seed)
     elif fmt == "clip_react":
