@@ -1,103 +1,92 @@
 {
- "ts": 1795413031.5368335,
- "updated": "2026-11-23 05:50 UTC",
+ "ts": 1795457287.3695364,
+ "updated": "2026-11-23 18:08 UTC",
  "google_trends": [
   {
-   "query": "king tides flooding",
-   "traffic": "20000+",
-   "news": [
-    {
-     "title": "California prepares for flooding, rain and wind as Thanksgiving approaches",
-     "url": "https://www.nbcnews.com/news/us-news/california-prepares-flooding-rain-wind-thanksgiving-approaches-rcna610537",
-     "source": "NBC News"
-    }
-   ]
-  },
-  {
-   "query": "mattia gta 6",
+   "query": "ap top 25 basketball",
    "traffic": "200+",
    "news": [
     {
-     "title": "GTA 6 Day Release walkthrough",
-     "url": "https://www.eurogamer.net/gta-6-day-release-walkthrough",
-     "source": "Eurogamer.net"
+     "title": "WCBK AP Top 25: South Carolina Remains No. 1 Before Rematch With No. 7 UConn",
+     "url": "https://www.foxsports.com/stories/womens-college-basketball/associated-press-rankings-south-carolina-gamecocks-uconn-huskies-duke-blue-devils",
+     "source": "FOX Sports"
     }
    ]
   },
   {
-   "query": "earthquake los angeles right now",
-   "traffic": "1000+",
-   "news": [
-    {
-     "title": "Another quake rattles Southern California, this time off the coast of San Pedro",
-     "url": "https://www.latimes.com/california/story/2026-11-21/another-quake-rattles-southern-california-this-time-off-coast-of-san-pedro",
-     "source": "Los Angeles Times"
-    }
-   ]
-  },
-  {
-   "query": "earthquake now",
-   "traffic": "20000+",
-   "news": [
-    {
-     "title": "A 5.0-magnitude earthquake near Pinnacles National Park shakes South County.",
-     "url": "https://www.montereycountynow.com/blogs/news_blog/a-5-0-magnitude-earthquake-near-pinnacles-national-park-shakes-south-county/article_be080b2b-3182-435b-918b-fd42e2d50d5b.html",
-     "source": "Monterey County Weekly"
-    }
-   ]
-  },
-  {
-   "query": "los angeles earthquake",
-   "traffic": "5000+",
-   "news": [
-    {
-     "title": "3.3-magnitude earthquake strikes off Manhattan Beach coast, USGS reports",
-     "url": "https://www.cbsnews.com/losangeles/news/manhattan-beach-earthquake-3-3-magnitude/",
-     "source": "CBS News"
-    }
-   ]
-  },
-  {
-   "query": "lucia voice actor",
+   "query": "kasey kahne",
    "traffic": "500+",
    "news": [
     {
-     "title": "See the \u2018GTA 6\u2019 Voice Actors Side-by-Side with the Characters They Play",
-     "url": "https://people.com/gta-6-voice-actors-side-by-side-with-characters-12265464",
-     "source": "People.com"
+     "title": "Former HMS Star's NASCAR Comeback Has Kyle Larson Rethinking His Truck Series Decision",
+     "url": "https://www.newsbreak.com/essentially-sports-363861119/5024538102403-former-hms-star-s-nascar-comeback-has-kyle-larson-rethinking-his-truck-series-decision",
+     "source": "NewsBreak: Local News & Alerts"
     }
    ]
   },
   {
-   "query": "new zealand vs india",
-   "traffic": "5000+",
-   "news": [
-    {
-     "title": "Stats - Pant's six-feast in India's highest away Test total",
-     "url": "https://www.espn.com/cricket/story/_/id/50559412/nz-vs-ind-1st-test-stats-rishabh-pant-six-hitting-record-india-highest-total-away-test",
-     "source": "ESPN"
-    }
-   ]
-  },
-  {
-   "query": "quien salio de la mansion vip 2",
+   "query": "radnor high school",
    "traffic": "1000+",
    "news": [
     {
-     "title": "As\u00ed van las votaciones de La Mansi\u00f3n VIP; esta es la encuesta que revelar\u00eda al segundo eliminado",
-     "url": "https://heraldodemexico.com.mx/espectaculos/2026/11/22/asi-van-las-votaciones-de-la-mansion-vip-esta-es-la-encuesta-que-revelaria-al-segundo-eliminado-2922352.html",
-     "source": "El Heraldo de M\u00e9xico"
+     "title": "Police respond to Radnor High School amid \u2018precautionary' lockdown",
+     "url": "https://www.nbcphiladelphia.com/news/local/radnor-high-school-lockdown-delaware-county-pennsylvania/4501858/",
+     "source": "NBC10 Philadelphia"
     }
    ]
   },
   {
-   "query": "jensen huang nvidia wealth breakdown",
-   "traffic": "200+",
+   "query": "brad gerstner",
+   "traffic": "500+",
    "news": [
     {
-     "title": "Jensen Huang moves 59 million Nvidia shares to a family trust as two GRATs end",
-     "url": "https://pasqualepillitteri.it/en/news/34430/jensen-huang-moves-59-million-nvidia-shares",
-     "source": "Pasquale Pillitteri"
+     "title": "Anthropic\u2019s Debut Shows the Disconnect Between Wall Street and Silicon Valley",
+     "url": "https://www.nytimes.com/2026/11/21/business/anthropics-debut-shows-the-disconnect-between-wall-street-and-silicon-valley.html",
+     "source": "The New York Times"
+    }
+   ]
+  },
+  {
+   "query": "nigeria",
+   "traffic": "2000+",
+   "news": [
+    {
+     "title": "Osun FA hails indigenous firm over reconstruction of warri city Stadium",
+     "url": "https://www.thehopenewspaper.com/osun-fa-hails-indigenous-firm-over-reconstruction-of-warri-city-stadium/",
+     "source": "The Hope Newspaper"
+    }
+   ]
+  },
+  {
+   "query": "honda",
+   "traffic": "5000+",
+   "news": [
+    {
+     "title": "More than 300,000 Toyota, Lexus vehicles recalled over faulty Takata airbags",
+     "url": "https://www.wdbj7.com/2026/11/21/more-than-300000-toyota-lexus-vehicles-recalled-over-faulty-takata-airbags/",
+     "source": "WDBJ7"
+    }
+   ]
+  },
+  {
+   "query": "ben stiller",
+   "traffic": "5000+",
+   "news": [
+    {
+     "title": "Oscar Winner\u2019s Comedy Franchise Hits Rock Bottom",
+     "url": "https://www.yahoo.com/news/videos/oscar-winner-comedy-franchise-hits-170000638.html",
+     "source": "Yahoo"
+    }
+   ]
+  },
+  {
+   "query": "charlie cox",
+   "traffic": "1000+",
+   "news": [
+    {
+     "title": "Charlie Cox reveals brutal feedback after being rejected for Bond",
+     "url": "https://www.usatoday.com/story/entertainment/movies/2026/11/23/charlie-cox-james-bond-daredevil-audition/92925259007/",
+     "source": "USA Today"
     }
    ]
   }
