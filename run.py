@@ -73,15 +73,26 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--format")
     ap.add_argument("--script")
+    ap.add_argument("--force", action="store_true", help="post even if the last post was recent")
     args = ap.parse_args()
 
     cfg = yaml.safe_load((ROOT / "config.yaml").read_text())
     dry = args.dry_run or cfg.get("dry_run", False)
     st = load_state()
     OUT.mkdir(exist_ok=True)
+    # Two timers (GitHub's schedule + a backup) can both fire: never post twice within ~2.5 hours.
+    if not dry and not args.force:
+        last = [p for p in st["posts"] if any("id" in r for r in p.get("results", []))]
+        if last:
+            import datetime as _dt
+            t_last = _dt.datetime.strptime(last[-1]["time"], "%Y%m%d-%H%M")
+            mins = (_dt.datetime.utcnow() - t_last).total_seconds() / 60
+            if mins < 150:
+                print(f"[run] last post was {mins:.0f} min ago; skipping this run so videos stay ~3h apart")
+                return
     seed = int(time.time()) % 100000
     random.seed(seed)
-    stamp = time.strftime("%Y%m%d-%H%M")
+    stamp = time.strftime("%Y%m%d-%H%M", time.gmtime())
 
     from pipeline import clips, research, writer
     from pipeline.render.scenes import render_animated

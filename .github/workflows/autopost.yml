@@ -12,6 +12,10 @@ on:
       format:
         description: "Force a format (optional)"
         required: false
+      force:
+        description: "Post even if the last post was under 2.5 hours ago"
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # lets the run save state/history.json back to the repo
@@ -80,6 +84,7 @@ jobs:
           ARGS=""
           [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
           [ -n "${{ inputs.format }}" ] && ARGS="$ARGS --format ${{ inputs.format }}"
+          [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
           python run.py $ARGS
 
       - name: Keep the video as a downloadable artifact (7 days)
