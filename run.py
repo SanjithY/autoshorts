@@ -121,14 +121,16 @@ def main():
             else:
                 meta = writer.validate(meta)
                 render_animated(meta, video, cfg, seed=seed)
-            done = ROOT / "queue" / "done"
-            done.mkdir(parents=True, exist_ok=True)
-            qpath.rename(done / qpath.name)
+            if not dry:  # test runs leave the queue untouched
+                done = ROOT / "queue" / "done"
+                done.mkdir(parents=True, exist_ok=True)
+                qpath.rename(done / qpath.name)
         except Exception as ex:
             print(f"[run] queued script failed ({ex}); moving it to queue/failed and continuing")
-            bad = ROOT / "queue" / "failed"
-            bad.mkdir(parents=True, exist_ok=True)
-            qpath.rename(bad / qpath.name)
+            if not dry:
+                bad = ROOT / "queue" / "failed"
+                bad.mkdir(parents=True, exist_ok=True)
+                qpath.rename(bad / qpath.name)
             meta = {}
     if meta:
         pass
