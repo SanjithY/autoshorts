@@ -44,11 +44,13 @@ def concat(parts, out):
                     "-b:a", "192k", "-movflags", "+faststart", out], check=True)
 
 
-def build(cfg, out_path, state):
+def build(cfg, out_path, state, prefer=None):
     streamers = clips.allowed_streamers(cfg)
     if not streamers:
         return None
     random.shuffle(streamers)
+    if prefer:  # a queued script can ask for a specific streamer first
+        streamers.sort(key=lambda s: s["login"].lower() != str(prefer).lower())
     for st in streamers:
         cl = top_clips(cfg, st, int(cfg.get("compilation", {}).get("count", 5)), set(state.get("used_clip_ids", [])))
         if len(cl) < 3:

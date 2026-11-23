@@ -124,7 +124,7 @@ def main():
         try:
             if meta.get("format") == "top5_streamer":
                 from pipeline import compilation
-                m = compilation.build(cfg, video, st)
+                m = compilation.build(cfg, video, st, prefer=meta.get("streamer"))
                 if not m:
                     raise RuntimeError("no allowed streamer clips available")
                 meta = {**meta, **m}

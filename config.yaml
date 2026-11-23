@@ -60,9 +60,14 @@ twitch_clips:
   lookback_hours: 48
   min_views: 500
   streamers:
-    # - login: some_streamer
-    #   permission: true
-    #   note: "allows clippers per their Discord #clipping rules"
+    - login: kaicenat
+      permission: true
+      note: "owner confirmed Kai Cenat allows clipping (2026-11-23)"
+    - login: xqc
+      permission: true
+      note: "owner confirmed xQc allows clipping (2026-11-23)"
+    # IShowSpeed, Nick Eh 30, Typical Gamer and MrBeast are allowed too (owner confirmed),
+    # but as far as we know they publish mainly on YouTube, which this Twitch-only clip source can't pull from.
 
 # ─── Your own gameplay recordings (mp4) for gameplay_story ────────────────
 footage_dir: footage
