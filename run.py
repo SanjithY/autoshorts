@@ -105,11 +105,19 @@ def main():
         res = research.gather(cfg["news_queries"], set(st["used_urls"]))
         ideas = load_ideas(st)
         from pipeline import fallback
-        try:
-            meta = writer.write_script(fmt, res, ideas, [p["title"] for p in st["posts"]], cfg)
-        except RuntimeError as ex:
-            print(f"[run] AI script failed ({ex}); using a no-AI fallback")
-            meta = fallback.news_from_headline(res, cfg, set(st["used_urls"]))
+        import os
+        has_ai = any(os.environ.get(k) for k in ("GEMINI_API_KEY", "GROQ_API_KEY")) or \
+            ("ollama" in cfg.get("llm", {}).get("providers", []) and os.environ.get("OLLAMA_HOST"))
+        meta = None
+        if has_ai:
+            try:
+                meta = writer.write_script(fmt, res, ideas, [p["title"] for p in st["posts"]], cfg)
+            except RuntimeError as ex:
+                print(f"[run] AI script failed ({ex}); using a no-AI fallback")
+        if not meta:
+            # no AI: alternate between today's headline and a fact-checked bank script
+            want_news = fmt == "news_flash" or random.random() < 0.5
+            meta = fallback.news_from_headline(res, cfg, set(st["used_urls"])) if want_news else None
             if not meta:
                 meta = fallback.pick_bank(st.setdefault("used_bank", []))
                 st["used_bank"].append(meta["bank_id"])

@@ -19,11 +19,13 @@ formats:
   clip_react: 2      # streamer clip + hook title + captions (allowlist only!)
   gameplay_story: 2  # narration over YOUR OWN gameplay footage in footage/
 
-# ─── LLM (all free; first one that works is used) ─────────────────────────
-# Default: an open-source model (Qwen 2.5) run by Ollama right on the GitHub
-# runner: no account or key. Gemini/Groq are used first only if you add a key.
+# ─── LLM (optional) ───────────────────────────────────────────────────────
+# With no key, videos come from live news headlines + the fact-checked scripts
+# in bank/ (accurate, no AI). Add a GEMINI_API_KEY or GROQ_API_KEY secret to
+# let a strong AI write fresh scripts. The small local model (ollama) wrote
+# inaccurate scripts in testing, so it's off; add "ollama" here to try it.
 llm:
-  providers: [gemini, groq, ollama]
+  providers: [gemini, groq]
   gemini_model: gemini-flash-latest
   groq_model: llama-3.3-70b-versatile
   ollama_model: qwen2.5:3b
