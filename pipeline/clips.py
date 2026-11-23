@@ -74,7 +74,11 @@ def download_clip(clip, out_dir):
 def transcribe_words(path):
     from faster_whisper import WhisperModel
     model = WhisperModel(os.environ.get("WHISPER_MODEL", "base.en"), compute_type="int8")
-    segs, _ = model.transcribe(path, word_timestamps=True, vad_filter=True)
+    # decode with ffmpeg ourselves (avoids PyAV version clashes inside faster-whisper)
+    pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-f", "f32le", "-ac", "1", "-ar", "16000", "pipe:1"],
+                         capture_output=True, check=True).stdout
+    audio = np.frombuffer(pcm, np.float32).copy()
+    segs, _ = model.transcribe(audio, word_timestamps=True, vad_filter=True)
     words = []
     for s in segs:
         for w in s.words or []:
