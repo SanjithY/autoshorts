@@ -1,0 +1,62 @@
+{
+ "format": "versus",
+ "kicker": "GTA IV vs GTA VI",
+ "title": "GTA 4 vs GTA 6 day one is insane #gta6 #shorts",
+ "description": "GTA IV day-one figures per GameSpot; GTA VI per Take-Two and a Sensor Tower estimate.",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "18 years of growth",
+   "highlight": [
+    "18"
+   ],
+   "say": "GTA 4 versus GTA 6 on day one. Look at this jump."
+  },
+  {
+   "type": "versus",
+   "left": "GTA IV",
+   "right": "GTA VI",
+   "rows": [
+    {
+     "label": "Release",
+     "l": "2008",
+     "r": "2026"
+    },
+    {
+     "label": "Day-one $",
+     "l": "$310M",
+     "r": "$3.79B"
+    },
+    {
+     "label": "Max stars",
+     "l": "6",
+     "r": "6"
+    }
+   ],
+   "say": "GTA 4 made three hundred ten million on day one. GTA 6? Three point seven nine billion, counting preorders. And both go up to six wanted stars."
+  },
+  {
+   "type": "stars",
+   "n": 6,
+   "text": "Six stars both times",
+   "highlight": [
+    "six"
+   ],
+   "say": "GTA 5 was the only one stuck at five."
+  },
+  {
+   "type": "outro",
+   "text": "Which GTA was your first?",
+   "cta": "Tell me below",
+   "say": "Which GTA was your first?"
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

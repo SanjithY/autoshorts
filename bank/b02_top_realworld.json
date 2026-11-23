@@ -1,0 +1,57 @@
+{
+ "format": "top_list",
+ "kicker": "GTA 6 \u00b7 real world",
+ "title": "GTA 6 launch week got out of hand \ud83d\ude33 #gta6 #shorts",
+ "description": "Real-world GTA 6 launch stories as reported by Dexerto, FOX 5 and others.",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "The real world paused for GTA 6",
+   "highlight": [
+    "paused"
+   ],
+   "say": "GTA 6 launch week got completely out of hand."
+  },
+  {
+   "type": "list_item",
+   "n": 3,
+   "text": "No homework week",
+   "highlight": [
+    "homework"
+   ],
+   "say": "Number three. A professor reportedly canceled homework and exams for launch week."
+  },
+  {
+   "type": "list_item",
+   "n": 2,
+   "text": "Army days off",
+   "highlight": [
+    "army"
+   ],
+   "say": "Number two. An army unit reportedly offered four days off as a reenlistment incentive to play it."
+  },
+  {
+   "type": "list_item",
+   "n": 1,
+   "text": "1.5M sick days",
+   "highlight": [
+    "1.5M"
+   ],
+   "say": "Number one. Reports estimated one and a half million people would skip work for it."
+  },
+  {
+   "type": "outro",
+   "text": "Did you skip anything?",
+   "cta": "Confess below",
+   "say": "Be honest. What did you skip to play it?"
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

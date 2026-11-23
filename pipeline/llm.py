@@ -46,7 +46,7 @@ def _ollama(prompt, system, model):
         "model": model, "format": "json", "stream": False,
         "options": {"temperature": 0.8, "num_ctx": 8192, "num_predict": 1200},
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}]},
-        timeout=600)
+        timeout=300)
     r.raise_for_status()
     return r.json()["message"]["content"]
 

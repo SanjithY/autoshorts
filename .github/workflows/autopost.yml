@@ -2,7 +2,7 @@ name: autopost
 
 on:
   schedule:
-    - cron: "17 */3 * * *"   # every 3 hours (UTC). GitHub may start it a few minutes late.
+    - cron: "17 */4 * * *"   # every 4 hours (6 videos/day; fits the free 2,000 private-repo minutes)
   workflow_dispatch:          # "Run workflow" button for manual tests
     inputs:
       dry_run:
@@ -54,7 +54,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ollama/models
-          key: ollama-qwen2.5-7b
+          key: ollama-qwen2.5-3b
 
       - name: Start local AI (Ollama, free, no account)
         run: |
@@ -63,7 +63,7 @@ jobs:
           mkdir -p ~/.ollama/models
           (OLLAMA_MODELS=$HOME/.ollama/models ollama serve >/tmp/ollama.log 2>&1 &)
           for i in $(seq 1 20); do curl -s http://127.0.0.1:11434 >/dev/null && break; sleep 1; done
-          OLLAMA_MODELS=$HOME/.ollama/models ollama pull qwen2.5:7b >/dev/null
+          OLLAMA_MODELS=$HOME/.ollama/models ollama pull qwen2.5:3b >/dev/null
 
       - name: Make, render and publish one video
         env:

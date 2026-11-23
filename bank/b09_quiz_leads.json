@@ -1,0 +1,74 @@
+{
+ "format": "quiz",
+ "kicker": "GTA 6 quiz",
+ "title": "GTA 6 quiz: were you paying attention? #gta6 #shorts",
+ "description": "GTA 6 quiz: leads per Rockstar; preorder date per Variety.",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "Can you get both?",
+   "highlight": [
+    "both"
+   ],
+   "say": "Two questions. Let's see if you were paying attention."
+  },
+  {
+   "type": "quiz_q",
+   "question": "Which city returns in GTA 6?",
+   "options": [
+    "Liberty City",
+    "Vice City",
+    "Los Santos"
+   ],
+   "answer": 1,
+   "say": "Which classic city is back in GTA 6?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "Which city returns in GTA 6?",
+   "options": [
+    "Liberty City",
+    "Vice City",
+    "Los Santos"
+   ],
+   "answer": 1,
+   "say": "Vice City! It's part of the state of Leonida."
+  },
+  {
+   "type": "quiz_q",
+   "question": "When did preorders open?",
+   "options": [
+    "June 25",
+    "Sept 1",
+    "Nov 19"
+   ],
+   "answer": 0,
+   "say": "When did GTA 6 preorders open?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "When did preorders open?",
+   "options": [
+    "June 25",
+    "Sept 1",
+    "Nov 19"
+   ],
+   "answer": 0,
+   "say": "June twenty fifth. November nineteenth was launch day."
+  },
+  {
+   "type": "outro",
+   "text": "Drop your score",
+   "cta": "0, 1 or 2?",
+   "say": "Zero, one, or two? Be honest."
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

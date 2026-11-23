@@ -1,0 +1,59 @@
+{
+ "format": "stat_shock",
+ "kicker": "GTA 6 \u00b7 records",
+ "title": "The day-one record keeps getting crushed #gta6 #shorts",
+ "description": "Black Ops II $500M (FOX 5), GTA V ~$815M, GTA VI $3.79B preorders + first day (Take-Two).",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "Every record, destroyed",
+   "highlight": [
+    "destroyed"
+   ],
+   "say": "Watch the day one record get destroyed again and again."
+  },
+  {
+   "type": "bars",
+   "title": "Day-one record holders",
+   "highlight": 0,
+   "items": [
+    {
+     "label": "GTA VI (2026)",
+     "value": 3790,
+     "display": "$3.79B"
+    },
+    {
+     "label": "GTA V (2013)",
+     "value": 815,
+     "display": "$815M"
+    },
+    {
+     "label": "Black Ops II",
+     "value": 500,
+     "display": "$500M"
+    }
+   ],
+   "say": "Black Ops 2 held it with five hundred million. GTA 5 beat it with about eight hundred fifteen million. Then GTA 6 hit three point seven nine billion."
+  },
+  {
+   "type": "text",
+   "text": "Preorders included",
+   "sub": "per Take-Two",
+   "say": "That GTA 6 number includes preorders, according to Take-Two."
+  },
+  {
+   "type": "outro",
+   "text": "Will anything beat this?",
+   "cta": "Comment below",
+   "say": "Will any game ever beat this?"
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

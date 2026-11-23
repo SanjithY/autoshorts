@@ -104,14 +104,15 @@ def main():
     if not meta:
         res = research.gather(cfg["news_queries"], set(st["used_urls"]))
         ideas = load_ideas(st)
+        from pipeline import fallback
         try:
             meta = writer.write_script(fmt, res, ideas, [p["title"] for p in st["posts"]], cfg)
         except RuntimeError as ex:
-            if not dry:
-                raise
-            # test runs work before any AI key is added: fall back to a bundled sample script
-            print(f"[run] {ex}\n[run] dry run -> using a sample script instead")
-            meta = json.loads(random.choice(sorted((ROOT / "samples").glob("*.json"))).read_text())
+            print(f"[run] AI script failed ({ex}); using a no-AI fallback")
+            meta = fallback.news_from_headline(res, cfg, set(st["used_urls"]))
+            if not meta:
+                meta = fallback.pick_bank(st.setdefault("used_bank", []))
+                st["used_bank"].append(meta["bank_id"])
             fmt = meta["format"]
         bg = footage if fmt == "gameplay_story" else None
         render_animated(meta, video, cfg, background_video=bg, bg_start=fstart, seed=seed)

@@ -1,0 +1,61 @@
+{
+ "format": "versus",
+ "kicker": "GTA V vs GTA VI \u00b7 cops",
+ "title": "GTA 6 cops are way smarter than GTA 5 #gta6 #shorts",
+ "description": "GTA 6 police track face, clothing, vehicle and CCTV (GamesRadar, Beebom).",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "The cops got smarter",
+   "highlight": [
+    "smarter"
+   ],
+   "say": "The cops in GTA 6 are a whole different level."
+  },
+  {
+   "type": "versus",
+   "left": "GTA V",
+   "right": "GTA VI",
+   "rows": [
+    {
+     "label": "Max stars",
+     "l": "5",
+     "r": "6"
+    },
+    {
+     "label": "Track outfit",
+     "l": "No",
+     "r": "Yes"
+    },
+    {
+     "label": "CCTV icon",
+     "l": "No",
+     "r": "Yes"
+    }
+   ],
+   "say": "Six stars instead of five. Cops can track your outfit and your car, and there's even an icon when CCTV catches you."
+  },
+  {
+   "type": "text",
+   "text": "Change clothes, lose heat",
+   "highlight": [
+    "clothes"
+   ],
+   "say": "So switching outfits actually matters now."
+  },
+  {
+   "type": "outro",
+   "text": "Harder or more fun?",
+   "cta": "Comment below",
+   "say": "Does that make it harder, or more fun?"
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

@@ -1,0 +1,57 @@
+{
+ "format": "top_list",
+ "kicker": "GTA 6 \u00b7 six stars",
+ "title": "How people are hitting 6 stars in GTA 6 \ud83d\udea8 #gta6 #shorts",
+ "description": "PC Gamer only reached six stars by stealing a tank from a military base.",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "6 stars is not easy",
+   "highlight": [
+    "6"
+   ],
+   "say": "Getting six stars in GTA 6 is way harder than you think."
+  },
+  {
+   "type": "stars",
+   "n": 5,
+   "text": "5 stars isn't enough",
+   "highlight": [
+    "5"
+   ],
+   "say": "Five stars? That's nothing."
+  },
+  {
+   "type": "text",
+   "text": "Steal a tank",
+   "highlight": [
+    "tank"
+   ],
+   "sub": "per PC Gamer",
+   "say": "PC Gamer only hit six stars after stealing a tank from a military base."
+  },
+  {
+   "type": "stars",
+   "n": 6,
+   "text": "Then chaos",
+   "highlight": [
+    "chaos"
+   ],
+   "say": "Then they blew up other tanks and vehicles. That's what it takes."
+  },
+  {
+   "type": "outro",
+   "text": "Longest you've survived?",
+   "cta": "Comment below",
+   "say": "What's the longest you've survived at six stars?"
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

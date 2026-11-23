@@ -26,7 +26,7 @@ llm:
   providers: [gemini, groq, ollama]
   gemini_model: gemini-flash-latest
   groq_model: llama-3.3-70b-versatile
-  ollama_model: qwen2.5:7b
+  ollama_model: qwen2.5:3b
 
 # ─── Clips: ONLY creators who allow reuploads of their clips ──────────────
 # Reposting someone's stream without permission gets copyright strikes
@@ -47,9 +47,9 @@ footage_dir: footage
 # ─── Publishing ───────────────────────────────────────────────────────────
 platforms:
   youtube: true
-  tiktok: true
+  tiktok: false      # off until TikTok approves the app (see SETUP.md)
   instagram: false     # turn on after finishing Instagram setup in SETUP.md
 privacy: public        # public | unlisted | private (use private for a test week)
 label_ai_content: true # sets TikTok is_aigc / Instagram AI label; YouTube flag only for realistic content
 youtube_category: "20" # Gaming
-dry_run: true          # SAFE MODE until API keys are added: renders but never uploads. Set false to go live.
+dry_run: false         # true = render only, never upload

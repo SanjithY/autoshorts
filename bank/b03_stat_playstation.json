@@ -1,0 +1,55 @@
+{
+ "format": "stat_shock",
+ "kicker": "GTA 6 \u00b7 sales",
+ "title": "Most GTA 6 players chose THIS console #gta6 #shorts",
+ "description": "Sensor Tower's launch-morning estimate (third-party, not official): about 19 million copies, roughly 75% on PlayStation.",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "3 out of 4 picked this",
+   "highlight": [
+    "3"
+   ],
+   "say": "Three out of four GTA 6 buyers picked the same console."
+  },
+  {
+   "type": "stat",
+   "value": 75,
+   "suffix": "%",
+   "label": "Sales on PlayStation",
+   "sub": "Sensor Tower estimate",
+   "say": "About seventy five percent of early copies were on PlayStation, according to Sensor Tower."
+  },
+  {
+   "type": "stat",
+   "value": 19.05,
+   "decimals": 2,
+   "suffix": "M",
+   "label": "Copies by launch morning",
+   "sub": "estimate, not official",
+   "say": "That's out of roughly nineteen million copies before launch day even started."
+  },
+  {
+   "type": "text",
+   "text": "Xbox got the rest",
+   "highlight": [
+    "Xbox"
+   ],
+   "say": "Xbox Series X and S got the other quarter."
+  },
+  {
+   "type": "outro",
+   "text": "PlayStation or Xbox?",
+   "cta": "Pick a side",
+   "say": "So which side are you on? PlayStation or Xbox?"
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

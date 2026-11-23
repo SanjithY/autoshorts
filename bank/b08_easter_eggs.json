@@ -1,0 +1,50 @@
+{
+ "format": "news_flash",
+ "kicker": "GTA 6 \u00b7 easter eggs",
+ "title": "GTA 6 players found 44 secrets already \ud83d\udc40 #gta6 #shorts",
+ "description": "Players reported 44 easter eggs within the first hours, including a possible Michael De Santa boat reference (VGTimes, Quero Bolsa).",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "44 secrets in hours",
+   "highlight": [
+    "44"
+   ],
+   "say": "Players found forty four GTA 6 secrets within hours."
+  },
+  {
+   "type": "stat",
+   "value": 44,
+   "label": "Easter eggs found",
+   "sub": "in the first hours",
+   "say": "Forty four easter eggs, all over Leonida, before most people finished the first mission."
+  },
+  {
+   "type": "text",
+   "text": "Michael's boat?",
+   "highlight": [
+    "Michael's"
+   ],
+   "say": "One of them looks like a boat matching the one Michael owns in GTA 5."
+  },
+  {
+   "type": "text",
+   "text": "Rockstar loves this",
+   "say": "Rockstar always hides callbacks to older games."
+  },
+  {
+   "type": "outro",
+   "text": "Found any yourself?",
+   "cta": "Share below",
+   "say": "Found any yourself? Tell me where."
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

@@ -1,0 +1,74 @@
+{
+ "format": "quiz",
+ "kicker": "GTA 6 quiz",
+ "title": "Do you actually know GTA 6? \ud83e\udde0 #gta6 #shorts",
+ "description": "Quick GTA 6 quiz. Price per Variety; setting per Rockstar.",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "Only real fans get 2/2",
+   "highlight": [
+    "2/2"
+   ],
+   "say": "Two GTA 6 questions. Only real fans get both."
+  },
+  {
+   "type": "quiz_q",
+   "question": "Price of GTA 6 standard edition?",
+   "options": [
+    "$69.99",
+    "$79.99",
+    "$99.99"
+   ],
+   "answer": 1,
+   "say": "How much is the standard edition of GTA 6?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "Price of GTA 6 standard edition?",
+   "options": [
+    "$69.99",
+    "$79.99",
+    "$99.99"
+   ],
+   "answer": 1,
+   "say": "Seventy nine ninety nine. The ultimate edition is ninety nine ninety nine."
+  },
+  {
+   "type": "quiz_q",
+   "question": "What state is GTA 6 set in?",
+   "options": [
+    "San Andreas",
+    "Leonida",
+    "Liberty"
+   ],
+   "answer": 1,
+   "say": "Bonus. What state is GTA 6 set in?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "What state is GTA 6 set in?",
+   "options": [
+    "San Andreas",
+    "Leonida",
+    "Liberty"
+   ],
+   "answer": 1,
+   "say": "Leonida! Home of Vice City."
+  },
+  {
+   "type": "outro",
+   "text": "How many did you get?",
+   "cta": "Score below",
+   "say": "Drop your score in the comments."
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}

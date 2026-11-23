@@ -1,0 +1,70 @@
+{
+ "format": "myth_or_fact",
+ "kicker": "GTA 6 \u00b7 true or false",
+ "title": "TRUE or FALSE: GTA 6 edition \ud83e\udd14 #gta6 #shorts",
+ "description": "GTA 6 launched Nov 19, 2026 on PS5 and Xbox Series X|S; six-star wanted level confirmed.",
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "True or false?",
+   "highlight": [
+    "false"
+   ],
+   "say": "True or false. Let's see how much you really know about GTA 6."
+  },
+  {
+   "type": "quiz_q",
+   "question": "GTA 6 launched on PC",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 1,
+   "say": "GTA 6 launched on PC. True or false?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "GTA 6 launched on PC",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 1,
+   "say": "False. It launched on PS5 and Xbox Series X and S."
+  },
+  {
+   "type": "quiz_q",
+   "question": "The wanted level goes to 6 stars",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 0,
+   "say": "The wanted level goes up to six stars. True or false?"
+  },
+  {
+   "type": "quiz_a",
+   "question": "The wanted level goes to 6 stars",
+   "options": [
+    "TRUE",
+    "FALSE"
+   ],
+   "answer": 0,
+   "say": "True! The sixth star is back for the first time since GTA 4."
+  },
+  {
+   "type": "outro",
+   "text": "Did you get both?",
+   "cta": "Comment below",
+   "say": "Did you get both right?"
+  }
+ ],
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#grandtheftauto",
+  "#gaming",
+  "#shorts"
+ ],
+ "source_urls": []
+}
