@@ -52,14 +52,14 @@ FORMAT_GUIDE = {
 }
 
 
-EXAMPLE_FOR = {"stat_shock": "01_stat_shock", "news_flash": "01_stat_shock", "versus": "02_versus",
-               "quiz": "03_quiz", "myth_or_fact": "03_quiz", "top_list": "04_top_list",
-               "gameplay_story": "04_top_list"}
+EXAMPLE_FOR = {"stat_shock": "example_stat", "news_flash": "example_stat", "versus": "example_versus",
+               "quiz": "example_quiz", "myth_or_fact": "example_quiz", "top_list": "example_list",
+               "gameplay_story": "example_list"}
 
 
 def _example(fmt):
     from pathlib import Path
-    p = Path(__file__).resolve().parents[1] / "samples" / f"{EXAMPLE_FOR.get(fmt, '01_stat_shock')}.json"
+    p = Path(__file__).resolve().parents[1] / "samples" / "examples" / f"{EXAMPLE_FOR.get(fmt, 'example_stat')}.json"
     return p.read_text() if p.exists() else ""
 
 
@@ -78,10 +78,10 @@ VERIFIED FACTS:
 {json.dumps(research['facts'], indent=1)}
 
 LATEST NEWS ABOUT {topic}:
-{json.dumps(news, indent=1)[:7000]}
+{json.dumps(news, indent=1)[:5000]}
 
-EXAMPLE OF THE JSON STRUCTURE (copy the key names and scene types ONLY. Do NOT reuse its title,
-hook, wording or topic. Your video must be about a DIFFERENT fact or headline from the lists above):
+EXAMPLE OF THE JSON STRUCTURE. It is about a DIFFERENT game on purpose: copy only the key names and
+scene types. Every fact, number and word in YOUR video must come from the {topic} facts/news above:
 {_example(fmt)}
 
 Return JSON: {{"format": "{fmt}", "kicker": "<{topic} label, max 4 words>", "title": "...",
@@ -187,11 +187,23 @@ def fact_check(script, research):
     """Every number shown on screen must appear somewhere in the facts/news we gave the model."""
     corpus = json.dumps(research, ensure_ascii=False)
     known = _numbers_in(corpus)
+    kn = sorted({float(k) for k in known if k.replace(".", "", 1).isdigit()} - {0.0})
+
+    def num_ok(n):
+        if n in known or n.rstrip("0").rstrip(".") in known or n in ("1", "2", "3", "4", "5", "6"):
+            return True
+        x = float(n)
+        for k in kn:  # same number in other units (3.79 billion == 3790 million)
+            if any(abs(x - k * f) <= 0.01 * max(x, 1e-9) for f in (1000, 0.001, 1e6, 1e-6)):
+                return True
+        if x < 100:  # a ratio like "4.6x" between two real numbers (also across billion/million)
+            pool = kn + [k * 1000 for k in kn if k < 100]
+            return any(abs(a / b - x) <= 0.03 * x for a in pool for b in pool if b and a > b)
+        return False
+
     def ok(v):
         v = str(v).replace(",", "").replace("$", "")
-        nums = _numbers_in(v)
-        return all(n in known or n.rstrip("0").rstrip(".") in known or n in ("1", "2", "3", "4", "5", "6")
-                   for n in nums)
+        return all(num_ok(n) for n in _numbers_in(v))
     for sc in script["scenes"]:
         vals = []
         if sc["type"] == "stat":
@@ -210,7 +222,7 @@ def write_script(fmt, research, ideas, history_titles, cfg):
     prompt = build_prompt(fmt, research, ideas, history_titles, cfg["topic"])
     last = None
     script = None
-    for attempt in range(3):
+    for attempt in range(2):
         try:
             script = complete_json(prompt if not last else prompt + f"\n\nPrevious attempt was invalid: {last}. Fix it.",
                                    system, cfg.get("llm", {}))

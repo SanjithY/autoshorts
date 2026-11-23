@@ -1,0 +1,9 @@
+{"format": "quiz", "kicker": "Minecraft quiz",
+ "title": "Only real Minecraft fans get this #shorts",
+ "description": "Example only (different game) to show the structure.",
+ "hashtags": ["#minecraft", "#quiz", "#shorts"], "used_idea": "", "source_urls": [],
+ "scenes": [
+  {"type": "hook", "text": "Only real fans get 1/1", "highlight": ["real"], "say": "Only real Minecraft fans get this."},
+  {"type": "quiz_q", "question": "What year did Minecraft release?", "options": ["2009", "2011", "2013"], "answer": 1, "say": "What year did Minecraft fully release?"},
+  {"type": "quiz_a", "question": "What year did Minecraft release?", "options": ["2009", "2011", "2013"], "answer": 1, "say": "Twenty eleven! The beta came earlier."},
+  {"type": "outro", "text": "Did you get it?", "cta": "Comment below", "say": "Did you get it right?"}]}

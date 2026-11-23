@@ -1,0 +1,11 @@
+{"format": "versus", "kicker": "Minecraft vs Terraria",
+ "title": "Minecraft vs Terraria: not even close #shorts",
+ "description": "Example only (different games) to show the structure.",
+ "hashtags": ["#minecraft", "#terraria", "#shorts"], "used_idea": "", "source_urls": [],
+ "scenes": [
+  {"type": "hook", "text": "Terraria fans won't like this", "highlight": ["this"], "say": "Minecraft versus Terraria. Let's settle it."},
+  {"type": "versus", "left": "Minecraft", "right": "Terraria", "rows": [
+    {"label": "Release year", "l": "2011", "r": "2011"},
+    {"label": "Dimensions", "l": "3D", "r": "2D"}], "say": "Same release year, but one is 3D and one is 2D."},
+  {"type": "text", "text": "Both are legends", "say": "Honestly, both are legends."},
+  {"type": "outro", "text": "Which side are you on?", "cta": "Vote below", "say": "So which side are you on?"}]}

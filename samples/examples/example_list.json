@@ -1,0 +1,10 @@
+{"format": "top_list", "kicker": "Minecraft · tips",
+ "title": "3 Minecraft tricks pros never tell you #shorts",
+ "description": "Example only (different game) to show the structure.",
+ "hashtags": ["#minecraft", "#gaming", "#shorts"], "used_idea": "", "source_urls": [],
+ "scenes": [
+  {"type": "hook", "text": "Number 1 is illegal", "highlight": ["illegal"], "say": "Number one on this list feels illegal."},
+  {"type": "list_item", "n": 3, "text": "Boats beat horses", "highlight": ["boats"], "say": "Number three. On ice, boats are faster than any horse."},
+  {"type": "list_item", "n": 2, "text": "Beds explode", "highlight": ["explode"], "say": "Number two. Beds explode in the Nether."},
+  {"type": "list_item", "n": 1, "text": "Free elytra", "highlight": ["free"], "say": "Number one. End cities hand you wings for free."},
+  {"type": "outro", "text": "Which one did you know?", "cta": "Tell me below", "say": "Which one did you already know?"}]}

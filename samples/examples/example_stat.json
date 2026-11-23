@@ -1,0 +1,12 @@
+{"format": "stat_shock", "kicker": "Minecraft · milestone",
+ "title": "Minecraft hit a number nobody expected #shorts",
+ "description": "Example only (different game) to show the structure.",
+ "hashtags": ["#minecraft", "#gaming", "#shorts"], "used_idea": "", "source_urls": ["https://example.com/article"],
+ "scenes": [
+  {"type": "hook", "text": "300 MILLION COPIES", "highlight": ["300"], "say": "Minecraft just passed three hundred million copies."},
+  {"type": "text", "text": "Best-selling game ever", "sub": "per Microsoft", "say": "That makes it the best-selling game ever, according to Microsoft."},
+  {"type": "bars", "title": "Copies sold", "highlight": 0, "items": [
+    {"label": "Minecraft", "value": 300, "display": "300M"},
+    {"label": "Example Game B", "value": 200, "display": "200M"}], "say": "The next closest game is way behind."},
+  {"type": "stat", "value": 1.5, "decimals": 1, "suffix": "x", "label": "Lead over #2", "say": "That's one and a half times the runner-up."},
+  {"type": "outro", "text": "First block you ever placed?", "cta": "Comment below", "say": "What was the first thing you ever built?"}]}
