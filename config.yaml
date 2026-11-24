@@ -19,6 +19,10 @@ focus:
   until: "2026-11-23"    # GTA week ended early: owner asked for a broader mix
   share: 0.0             # share of videos on the focus topic while it's active
 
+# Posts go out every 3 hours at :15 past 1,4,7,10 AM/PM Central. Any run less than this many
+# minutes after the last post skips, so the retry timers never double-post or bunch videos up.
+min_gap_minutes: 170
+
 # ─── Format rotation ──────────────────────────────────────────────────────
 # Relative weights. A format is never repeated back-to-back, and the last
 # 2 formats are avoided when possible. Clip/footage formats only run when

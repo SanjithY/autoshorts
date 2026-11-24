@@ -2,8 +2,8 @@ name: autopost
 
 on:
   schedule:
-    - cron: "17 */3 * * *"   # every 3 hours (8 videos/day, about 3-4 min per run)
-    - cron: "47 */3 * * *"   # backup 30 min later in case GitHub drops the first; the 60-min guard prevents double posts
+    - cron: "15 1-22/3 * * *"   # every 3 hours = 1:15, 4:15, 7:15, 10:15 AM/PM US Central
+    - cron: "40 1-22/3 * * *"   # retry 25 min later in case GitHub drops the first; min_gap_minutes prevents double posts
   workflow_dispatch:          # "Run workflow" button for manual tests
     inputs:
       dry_run:
@@ -14,12 +14,16 @@ on:
         description: "Force a format (optional)"
         required: false
       force:
-        description: "Post even if the last post was under an hour ago"
+        description: "Post even if the last post was recent"
         type: boolean
         default: false
+      artifact_run_id:
+        description: "Upload the exact video from this past run's artifact instead of making a new one"
+        required: false
 
 permissions:
   contents: write   # lets the run save state/history.json back to the repo
+  actions: read     # lets a run download a past run's video artifact
 
 concurrency:
   group: autopost
@@ -65,6 +69,14 @@ jobs:
           for f in footage/_release/*; do [ -f "$f" ] || continue; b=$(basename "$f"); t="${b%%__*}"; n="${b#*__}"
             if [ "$t" != "$b" ]; then mkdir -p "footage/$t"; mv "$f" "footage/$t/$n"; fi; done
 
+      - name: Fetch a past run's video (when artifact_run_id is set)
+        if: ${{ inputs.artifact_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.artifact_run_id }}
+          github-token: ${{ github.token }}
+          path: prebuilt/
+
       - name: Make, render and publish one video
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -86,6 +98,7 @@ jobs:
           [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
           [ -n "${{ inputs.format }}" ] && ARGS="$ARGS --format ${{ inputs.format }}"
           [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
+          [ -n "${{ inputs.artifact_run_id }}" ] && ARGS="$ARGS --prebuilt prebuilt"
           python run.py $ARGS
 
       - name: Keep the video as a downloadable artifact (7 days)

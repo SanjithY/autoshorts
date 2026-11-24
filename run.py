@@ -74,6 +74,7 @@ def main():
     ap.add_argument("--format")
     ap.add_argument("--script")
     ap.add_argument("--force", action="store_true", help="post even if the last post was recent")
+    ap.add_argument("--prebuilt", help="folder with an already-rendered .mp4 + .json (e.g. a past run's artifact) to upload as-is")
     args = ap.parse_args()
 
     cfg = yaml.safe_load((ROOT / "config.yaml").read_text())
@@ -87,12 +88,24 @@ def main():
             import datetime as _dt
             t_last = _dt.datetime.strptime(last[-1]["time"], "%Y%m%d-%H%M")
             mins = (_dt.datetime.utcnow() - t_last).total_seconds() / 60
-            if mins < 60:
+            if mins < cfg.get("min_gap_minutes", 60):
                 print(f"[run] last post was {mins:.0f} min ago; skipping this run (another timer already posted)")
                 return
     seed = int(time.time()) % 100000
     random.seed(seed)
     stamp = time.strftime("%Y%m%d-%H%M", time.gmtime())
+
+    if args.prebuilt:
+        pre = Path(args.prebuilt)
+        vids = sorted(pre.rglob("*.mp4"))
+        if not vids:
+            sys.exit(f"[run] no .mp4 found in {pre}")
+        video = str(vids[0])
+        meta = json.loads(vids[0].with_suffix(".json").read_text())
+        fmt = meta.get("format", "prebuilt")
+        print(f"[run] uploading prebuilt video {vids[0].name}: {meta.get('title')}")
+        st["used_clip_ids"] += [c for c in meta.get("clip_ids", []) if c not in st["used_clip_ids"]]
+        return _publish(cfg, dry, st, stamp, fmt, video, meta)
 
     from pipeline import clips, research, writer
     from pipeline.render.scenes import render_animated
@@ -205,6 +218,10 @@ def main():
     for sc in meta.get("scenes", []):
         print(f"[script] {sc.get('type'):9} | {sc.get('text') or sc.get('question') or sc.get('label') or ''} | {sc.get('say')}")
 
+    return _publish(cfg, dry, st, stamp, fmt, video, meta)
+
+
+def _publish(cfg, dry, st, stamp, fmt, video, meta):
     results = []
     if not dry:
         from pipeline.publish import instagram, tiktok, youtube
@@ -219,6 +236,8 @@ def main():
             except Exception as ex:  # one platform failing never blocks the others
                 traceback.print_exc()
                 results.append({"platform": name, "error": str(ex)[:300]})
+    if dry:  # test renders never touch history (they used to mark clips as used)
+        return
     st["posts"].append({"time": stamp, "format": fmt, "title": meta.get("title", ""), "results": results})
     save_state(st)
     if results and all("error" in r for r in results):
