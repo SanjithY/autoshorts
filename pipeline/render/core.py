@@ -298,7 +298,7 @@ class Encoder:
         if audio_path:
             cmd += ["-i", audio_path, "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", "44100",
                     "-c:a", "aac", "-b:a", "192k", "-shortest"]
-        cmd += ["-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
+        cmd += ["-c:v", "libx264", "-preset", "fast", "-crf", "19", "-pix_fmt", "yuv420p",
                 "-movflags", "+faststart", out_path]
         self.p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 

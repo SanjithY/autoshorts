@@ -168,8 +168,9 @@ def main():
             src = clips.download_clip(clip, tempfile.mkdtemp())
             words = clips.transcribe_words(src)
             pkg = writer.write_clip_package(clip, " ".join(w["w"] for w in words), cfg)
-            credit = f"Clip: twitch.tv/{clip['broadcaster_name']}"
-            clips.render_clip(src, pkg["hook"], credit, video, words)
+            from pipeline.render.moments import render_moment
+            render_moment(src, video, title=pkg.get("hook") or clip["title"], streamer=clip["broadcaster_name"],
+                          credit=f"twitch.tv/{clip['broadcaster_name']}", rank=None, words=words)
             meta = {**pkg, "format": fmt, "clip_id": clip["id"],
                     "description": pkg.get("description", "") + f"\n\nClip by {clip['broadcaster_name']}: {clip['url']}"}
             st["used_clip_ids"].append(clip["id"])

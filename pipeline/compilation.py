@@ -14,7 +14,7 @@ from pathlib import Path
 import requests
 
 from . import clips
-from .render.scenes import render_animated
+from .render.moments import render_card, render_moment
 
 HELIX = "https://api.twitch.tv/helix"
 
@@ -39,8 +39,8 @@ def concat(parts, out):
     lst = Path(tempfile.mkdtemp()) / "list.txt"
     lst.write_text("".join(f"file '{p}'\n" for p in parts))
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst),
-                    "-vf", "fps=30,scale=1080:1920,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast",
-                    "-crf", "20", "-af", "aresample=44100,loudnorm=I=-14:TP=-1.5:LRA=11", "-c:a", "aac",
+                    "-vf", "fps=30,scale=1080:1920:flags=lanczos,format=yuv420p", "-c:v", "libx264", "-preset", "fast",
+                    "-crf", "19", "-af", "aresample=44100,loudnorm=I=-14:TP=-1.5:LRA=11", "-c:a", "aac",
                     "-b:a", "192k", "-movflags", "+faststart", out], check=True)
 
 
@@ -58,20 +58,25 @@ def build(cfg, out_path, state, prefer=None):
         name = cl[0]["broadcaster_name"]
         tmp = Path(tempfile.mkdtemp())
         parts = []
-        intro = {"kicker": f"{name} · top {len(cl)}", "theme": "gaming", "scenes": [
-            {"type": "hook", "text": f"Top {len(cl)} {name} moments", "highlight": [name],
-             "say": f"The top {len(cl)} {name} moments this week. Number one is crazy."}]}
-        render_animated(intro, str(tmp / "intro.mp4"), cfg, seed=1)
+        n = len(cl)
+        order = list(zip(range(n, 0, -1), reversed(cl)))  # count down: #n ... #1
+        srcs = {c["id"]: clips.download_clip(c, tmp) for c in cl}
+        render_card(srcs[cl[0]["id"]], str(tmp / "intro.mp4"), big=f"TOP {n}", pill=name.upper(),
+                    small="MOMENTS THIS WEEK", say=f"Top {n} {name} moments this week. Number one is crazy.")
         parts.append(tmp / "intro.mp4")
-        per = max(8.0, 52.0 / len(cl))
-        for rank, c in zip(range(len(cl), 0, -1), reversed(cl)):  # count down 5 -> 1
-            src = clips.download_clip(c, tmp)
+        per = max(8.0, 50.0 / n)
+        for idx, (rank, c) in enumerate(order):
+            src = srcs[c["id"]]
             words = clips.transcribe_words(src)
             start = max(0.0, c["duration"] - per)  # the payoff is usually at the end of a clip
             seg = tmp / f"clip{rank}.mp4"
-            clips.render_clip(src, c["title"][:60], f"twitch.tv/{c['broadcaster_name']}", str(seg),
-                              words, badge=f"#{rank}", start=start, max_len=per)
+            render_moment(src, str(seg), title=c["title"], streamer=name, credit=f"twitch.tv/{c['broadcaster_name']}",
+                          rank=rank, total=n, words=words, start=start, max_len=per, seg_index=idx)
             parts.append(seg)
+        render_card(srcs[cl[0]["id"]], str(tmp / "outro.mp4"), big="WHICH ONE?", pill="WAS YOUR #1",
+                    small="TELL ME IN THE COMMENTS", say="Which one was your number one? Tell me in the comments.",
+                    outro=True)
+        parts.append(tmp / "outro.mp4")
         concat([str(p) for p in parts], out_path)
         return {"format": "top5_streamer", "title": f"Top {len(cl)} {name} moments this week #shorts",
                 "description": "Clips used with permission. " + " | ".join(f"#{len(cl)-i}: {c['url']}" for i, c in enumerate(reversed(cl))),
