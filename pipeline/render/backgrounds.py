@@ -239,9 +239,11 @@ class Spotlight:
         return img.filter(ImageFilter.GaussianBlur(6))
 
 
-THEMES = {"news": NewsTape, "sports": Stadium, "tech": TechGrid, "space": Starfield, "science": Starfield,
+from .disco import DiscoBackground
+
+THEMES = {"disco": DiscoBackground, "news": NewsTape, "sports": Stadium, "tech": TechGrid, "space": Starfield, "science": Starfield,
           "money": MoneyChart, "finance": MoneyChart, "entertainment": Spotlight, "celebrity": Spotlight,
-          "gaming": SynthwaveBackground}
+          "gaming": DiscoBackground}
 
 
 class SceneBackgrounds:
@@ -277,7 +279,7 @@ class SceneBackgrounds:
                 d = _duration(path)
                 start = random.uniform(0, max(0.0, d - (seg["end"] - seg["start"]) - 1))
             self.per_scene.append((path, start if path else 0.0))
-        self.theme_bg = (THEMES.get(theme, SynthwaveBackground))
+        self.theme_bg = THEMES.get(theme, DiscoBackground)
         self.seed = seed
         self.theme = theme
         self.cache = {}

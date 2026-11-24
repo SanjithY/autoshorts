@@ -20,30 +20,34 @@ SCENE_SFX = {"stick": "whoosh", "hook": "boom", "stat": "whoosh", "bars": "whoos
              "text": "whoosh", "outro": "pop"}
 
 
-# ---------------------------------------------------------------- scene drawers
-def _kicker(frame, label, t):
-    spr = text_sprite(label.upper(), "black", 40, BLACK, 0, BLACK, 900, False)
-    box = rounded_box(spr.width + 40, spr.height + 6, YELLOW, 18)
-    box.paste(spr, (20, 3), spr)
-    paste(frame, box, W / 2, 245, 1 + 0.03 * math.sin(t * 4))
+# ---------------------------------------------------------------- scene drawers (Disco style)
+from . import disco as D
+from .disco import CENTER_Y as CY
+
+
+def _hl(s):
+    return tuple(s.get("highlight", []))
 
 
 def draw_hook(f, s, lt, d):
-    p = ease_out_back(lt / 0.28)
-    shake = (math.sin(lt * 60) * 10 * max(0, 1 - lt / 0.3))
-    spr = text_sprite(s["text"].upper(), "display", 175, WHITE, 12, BLACK, 940, True, 0.0,
-                      tuple(s.get("highlight", [])), YELLOW)
-    paste(f, spr, W / 2 + shake, CENTER_Y, 0.5 + 0.5 * p, rot=-3 * (1 - ease_out_cubic(lt / 0.4)) + 2)
+    p = ease_out_back(lt / 0.3)
+    spr = D.gtext(s["text"].upper(), "display", 168, 960, _hl(s), stroke=0)
+    shake = math.sin(lt * 60) * 8 * max(0, 1 - lt / 0.3)
+    paste(f, spr, W / 2 + shake, CY, 0.55 + 0.45 * p)
+    k = ease_out_cubic((lt - 0.15) / 0.4)
+    if k > 0:
+        bar = D.gradient(int(520 * k) + 2, 12).convert("RGBA")
+        bar.putalpha(D.round_mask(bar.width, 12, 6))
+        paste(f, bar, W / 2, CY + spr.height / 2 + 20, 1)
 
 
 def draw_text(f, s, lt, d):
-    p = ease_out_back(lt / 0.3)
-    spr = text_sprite(s["text"].upper(), "display", 130, WHITE, 10, BLACK, 920, True, 0.02,
-                      tuple(s.get("highlight", [])), YELLOW)
-    paste(f, spr, W / 2, CENTER_Y - 40 + 40 * (1 - p), 0.7 + 0.3 * p, alpha=min(1, lt / 0.12))
+    k = ease_out_cubic(lt / 0.35)
+    c = D.text_card(s["text"], 1000, 3, _hl(s))
+    paste(f, c, W / 2, CY + 40 * (1 - k), 1, alpha=k)
     if s.get("sub"):
-        sub = text_sprite(s["sub"], "bold", 54, TEAL, 6, BLACK, 880)
-        paste(f, sub, W / 2, CENTER_Y + spr.height / 2 + 50, 1, alpha=prog(lt, 0.35, 0.25))
+        sp = D.pill(s["sub"], 38, grad=True, dot=False)
+        paste(f, sp, W / 2, CY + c.height / 2 + 60, ease_out_back(prog(lt, 0.3, 0.3)))
 
 
 def _fmt(v, s):
@@ -53,145 +57,140 @@ def _fmt(v, s):
 
 
 def draw_stat(f, s, lt, d):
-    lab = text_sprite(s.get("label", "").upper(), "black", 60, TEAL, 7, BLACK, 900)
-    paste(f, lab, W / 2, CENTER_Y - 230, 1, alpha=prog(lt, 0, 0.2))
-    cnt = ease_out_cubic(prog(lt, 0.1, min(1.6, d * 0.55)))
-    val = float(s["value"]) * cnt
+    t_count = min(1.6, d * 0.55)
+    cnt = ease_out_cubic(prog(lt, 0.1, t_count))
     done = cnt >= 0.999
-    spr = text_sprite(_fmt(val if not done else float(s["value"]), s), "display", 230,
-                      YELLOW if done else WHITE, 13, BLACK, 1000)
-    pulse = 1 + (0.12 * math.exp(-(lt - 0.1 - min(1.6, d * 0.55)) * 8) if done else 0)
-    paste(f, spr, W / 2, CENTER_Y, pulse)
+    val = float(s["value"]) if done else float(s["value"]) * cnt
+    c = D.card(1000, 470)
+    paste(f, c, W / 2, CY, 1, alpha=min(1, lt / 0.2))
+    paste(f, D.pill(s.get("label", ""), 40), W / 2, CY - 160, 1, alpha=min(1, lt / 0.25))
+    num = D.gtext(_fmt(val, s), "display", 210, 960, all_grad=done)
+    pulse = 1 + (0.1 * math.exp(-(lt - 0.1 - t_count) * 8) if done else 0)
+    paste(f, num, W / 2, CY + 30, pulse)
     if s.get("sub"):
-        sub = text_sprite(s["sub"], "bold", 52, WHITE, 6, BLACK, 880)
-        paste(f, sub, W / 2, CENTER_Y + 220, 1, alpha=prog(lt, 0.9, 0.3))
+        sub = text_sprite(s["sub"].upper(), "black", 40, (200, 200, 215), 0, BLACK, 900, False)
+        paste(f, sub, W / 2, CY + 185, 1, alpha=prog(lt, 0.9, 0.3))
 
 
 def draw_bars(f, s, lt, d):
     items = s["items"][:4]
-    title = text_sprite(s.get("title", "").upper(), "black", 62, WHITE, 7, BLACK, 900)
-    paste(f, title, W / 2, 400, 1, alpha=prog(lt, 0, 0.2))
+    n = len(items)
+    ch = 150 + n * 170
+    top = CY - ch / 2
+    paste(f, D.card(1000, int(ch)), W / 2, CY, 1, alpha=min(1, lt / 0.2))
+    paste(f, D.pill(s.get("title", ""), 38), W / 2, top + 70, 1)
     mx = max(float(i["value"]) for i in items) or 1
     hi = s.get("highlight", 0)
     dr = ImageDraw.Draw(f)
     for k, it in enumerate(items):
-        y = 540 + k * 190
-        g = ease_out_cubic(prog(lt, 0.25 + k * 0.35, 0.7))
-        lab = text_sprite(it["label"].upper(), "black", 46, WHITE, 6, BLACK, 800)
-        paste(f, lab, 90 + lab.width / 2, y, 1, alpha=prog(lt, 0.2 + k * 0.35, 0.2))
-        bw = int(820 * float(it["value"]) / mx * g)
-        col = YELLOW if k == hi else PINK
-        if bw > 4:
-            dr.rounded_rectangle((90, y + 40, 90 + bw, y + 115), 16, fill=col, outline=BLACK, width=5)
+        y = top + 150 + k * 170
+        g = ease_out_cubic(prog(lt, 0.25 + k * 0.3, 0.7))
+        lab = text_sprite(it["label"].upper(), "black", 40, WHITE, 0, BLACK, 800, False)
+        paste(f, lab, 100 + lab.width / 2, y + 20, 1, alpha=prog(lt, 0.2 + k * 0.3, 0.2))
+        bw = int(760 * float(it["value"]) / mx * g)
+        if bw > 6:
+            if k == hi:
+                bar = D.gradient(bw, 64).convert("RGBA")
+                bar.putalpha(D.round_mask(bw, 64, 20))
+                f.paste(bar, (100, int(y + 60)), bar)
+            else:
+                dr.rounded_rectangle((100, y + 60, 100 + bw, y + 124), 20, fill=(125, 105, 180))
         if g > 0.6:
-            vs = text_sprite(it.get("display", str(it["value"])), "display", 64, WHITE, 7, BLACK, 600)
-            x = 90 + bw + 20 + vs.width / 2
-            if x + vs.width / 2 > W - 30:  # no room after the bar: put the value inside it
-                x = 90 + bw - vs.width / 2 - 14
-            paste(f, vs, x, y + 78, 1)
+            vs = text_sprite(str(it.get("display", it["value"])), "display", 58, WHITE, 0, BLACK, 300, True)
+            x = 100 + bw + 20 + vs.width / 2
+            if x + vs.width / 2 > W - 50:
+                x = 100 + bw - vs.width / 2 - 16
+            paste(f, vs, x, y + 92, 1)
 
 
 def draw_versus(f, s, lt, d):
-    l, r = s.get("left", "A"), s.get("right", "B")
     p = ease_out_back(lt / 0.35)
-    ls = text_sprite(l.upper(), "display", 110, PINK, 10, BLACK, 450)
-    rs = text_sprite(r.upper(), "display", 110, TEAL, 10, BLACK, 450)
-    paste(f, ls, 270 - 400 * (1 - p), 400, 1)
-    paste(f, rs, 810 + 400 * (1 - p), 400, 1)
-    vs = text_sprite("VS", "display", 90, YELLOW, 9, BLACK, 300)
-    paste(f, vs, W / 2, 400, ease_out_back(prog(lt, 0.2, 0.3)))
-    rows = s.get("rows", [])[:4]
-    for k, row in enumerate(rows):
+    lp = D.pill(s.get("left", "A"), 52, grad=False, dot=False, kind="black")
+    rp = D.pill(s.get("right", "B"), 52, grad=True, dot=False, kind="black")
+    paste(f, lp, 270 - 420 * (1 - p), 430, 1)
+    paste(f, rp, 810 + 420 * (1 - p), 430, 1)
+    vs = D.badge("VS", 120, 70)
+    paste(f, vs, W / 2, 430, ease_out_back(prog(lt, 0.2, 0.3)))
+    for k, row in enumerate(s.get("rows", [])[:4]):
         a = prog(lt, 0.5 + k * 0.45, 0.25)
         if a <= 0:
             continue
-        y = 590 + k * 165
-        box = rounded_box(980, 140, (0, 0, 0, 150), 26)
-        paste(f, box, W / 2, y, 0.9 + 0.1 * ease_out_back(a), a)
-        lab = text_sprite(row["label"].upper(), "bold", 34, WHITE, 0, BLACK, 360, False)
+        y = 600 + k * 175
+        paste(f, D.card(1000, 150, accent=False), W / 2, y, 0.92 + 0.08 * ease_out_back(a), a)
+        lab = text_sprite(row["label"].upper(), "black", 32, (200, 200, 215), 0, BLACK, 380, False)
         paste(f, lab, W / 2, y, 1, a)
-        lv = text_sprite(str(row["l"]), "display", 62, PINK, 6, BLACK, 300)
-        rv = text_sprite(str(row["r"]), "display", 62, TEAL, 6, BLACK, 300)
-        paste(f, lv, 200, y, 1, a)
-        paste(f, rv, 880, y, 1, a)
+        lv = text_sprite(str(row["l"]), "display", 64, WHITE, 0, BLACK, 300, True)
+        rv = D.gtext(str(row["r"]), "display", 64, 300, all_grad=True)
+        paste(f, lv, 190, y, 1, a)
+        paste(f, rv, 890, y, 1, a)
 
 
 def draw_list_item(f, s, lt, d):
-    p = ease_out_back(lt / 0.3)
-    num = text_sprite(f"#{s['n']}", "display", 300, YELLOW, 14, BLACK, 600)
-    paste(f, num, W / 2 - 600 * (1 - p), CENTER_Y - 200, 1, rot=6 * (1 - p))
-    spr = text_sprite(s["text"].upper(), "display", 112, WHITE, 10, BLACK, 920, True, 0.02,
-                      tuple(s.get("highlight", [])), YELLOW)
-    q = ease_out_back(prog(lt, 0.15, 0.3))
-    paste(f, spr, W / 2, CENTER_Y + 110, 0.6 + 0.4 * q, alpha=min(1, q * 2))
+    k = ease_out_cubic(lt / 0.35)
+    c = D.text_card(s["text"], 1000, 3, _hl(s), sizes=(84, 76, 68, 60, 52), left=210, min_h=260)
+    paste(f, c, W / 2, CY + 40 * (1 - k), 1, alpha=k)
+    sb = ease_out_back(min(1, max(0, (lt - 0.05) / 0.4)))
+    paste(f, D.badge(f"#{s['n']}", 196, 120), 40 + 30 + 98, CY + 40 * (1 - k), 0.4 + 0.6 * sb, rot=-8 * (1 - sb))
 
 
 def draw_stars(f, s, lt, d):
     n = int(s.get("n", 6))
+    paste(f, D.card(1000, 420), W / 2, CY, 1, alpha=min(1, lt / 0.2))
     dr = ImageDraw.Draw(f)
-    y = CENTER_Y - 150
+    y = CY - 80
     for k in range(6):
-        cx = 140 + k * 160
-        on = lt > 0.3 + k * 0.28 and k < n
-        a = ease_out_back(prog(lt, 0.3 + k * 0.28, 0.2)) if k < n else 1
-        r = 62 * (a if on else 1)
-        flash = on and int(lt * 6) % 2 == 0 and k == n - 1 and lt > 0.3 + n * 0.28
-        fill = (WHITE if flash else HOT) if on else (0, 0, 0)
-        dr.polygon(star_points(cx, y, r, r * 0.45), fill=fill, outline=WHITE, width=5)
-    spr = text_sprite(s["text"].upper(), "display", 120, WHITE, 10, BLACK, 920, True, 0.02,
-                      tuple(s.get("highlight", [])), YELLOW)
-    paste(f, spr, W / 2, CENTER_Y + 120, 1, alpha=prog(lt, 0.2, 0.25))
+        cx = 175 + k * 146
+        on = lt > 0.3 + k * 0.25 and k < n
+        a = ease_out_back(prog(lt, 0.3 + k * 0.25, 0.2)) if on else 1
+        flash = on and k == n - 1 and int(lt * 6) % 2 == 0 and lt > 0.3 + n * 0.25
+        col = (255, 255, 255) if flash else (D.PINK if k % 2 == 0 else D.ORANGE) if on else (40, 36, 60)
+        D.star_shape(dr, cx, y, 56 * a, col, outline=(255, 255, 255) if on else (90, 90, 110))
+    t = D.gtext(s["text"].upper(), "display", 96, 900, _hl(s))
+    paste(f, t, W / 2, CY + 100, 1, alpha=prog(lt, 0.2, 0.25))
 
 
-def _options(f, s, lt, reveal=None):
-    opts = s["options"][:3]
-    for k, o in enumerate(opts):
-        a = prog(lt, 0.3 + k * 0.25, 0.2)
-        y = 760 + k * 165
-        col = (30, 20, 60, 230)
-        if reveal is not None:
-            col = (40, 170, 90, 255) if k == reveal else (40, 30, 60, 140)
-        box = rounded_box(900, 135, col, 30, WHITE, 5)
-        paste(f, box, W / 2, y, 0.9 + 0.1 * ease_out_back(a), a)
-        t = text_sprite(f"{'ABC'[k]}) {o}", "black", 52, WHITE, 0, BLACK, 820, False)
-        paste(f, t, W / 2, y, 1, a)
+def _options(f, s, lt, reveal=None, top=740):
+    for k, o in enumerate(s["options"][:3]):
+        a = prog(lt, 0.3 + k * 0.22, 0.2)
+        y = top + k * 170
+        ok = reveal is not None and k == reveal
+        dim = reveal is not None and not ok
+        c = D.card(940, 140, accent=False, fill=(20, 110, 70, 230) if ok else (10, 10, 18, 120 if dim else 205))
+        paste(f, c, W / 2, y, 0.92 + 0.08 * ease_out_back(a), a)
+        paste(f, D.badge("ABC"[k], 96, 60), 140, y, 1, a)
+        t = text_sprite(str(o).upper(), "black", 52, WHITE if not dim else (160, 160, 175), 0, BLACK, 680, False)
+        paste(f, t, 220 + t.width / 2, y, 1, a)
 
 
 def draw_quiz_q(f, s, lt, d):
-    q = text_sprite(s["question"].upper(), "display", 96, WHITE, 9, BLACK, 940, True, 0.02,
-                    tuple(s.get("highlight", [])), YELLOW)
-    paste(f, q, W / 2, 470, ease_out_back(lt / 0.3))
+    q = D.text_card(s["question"], 1000, 3, _hl(s), sizes=(68, 62, 56, 50))
+    paste(f, q, W / 2, 480, ease_out_back(min(1, lt / 0.3)))
     _options(f, s, lt)
     cd = s.get("_countdown_start")
     if cd is not None and lt >= cd:
         rem = max(0.0, 3 - (lt - cd))
         dr = ImageDraw.Draw(f)
-        cx, cy, r = W / 2, 1290, 95
-        dr.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(0, 0, 0, 200))
-        dr.arc((cx - r, cy - r, cx + r, cy + r), -90, -90 + 360 * rem / 3, fill=YELLOW, width=18)
-        num = text_sprite(str(math.ceil(rem) if rem > 0 else 0), "display", 110, WHITE, 6, BLACK, 300)
+        cx, cy, r = W / 2, 1235, 70
+        dr.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(10, 10, 18))
+        dr.arc((cx - r, cy - r, cx + r, cy + r), -90, -90 + 360 * rem / 3, fill=D.PINK, width=14)
+        num = text_sprite(str(math.ceil(rem) if rem > 0 else 0), "display", 96, WHITE, 0, BLACK, 300)
         paste(f, num, cx, cy, 1 + 0.15 * (1 - (rem % 1)))
 
 
 def draw_quiz_a(f, s, lt, d):
-    q = text_sprite(s.get("question", "").upper(), "display", 80, WHITE, 8, BLACK, 940)
-    paste(f, q, W / 2, 470, 1)
-    _options(f, {**s, "options": s["options"]}, 9, reveal=int(s["answer"]))
-    if lt > 0.1:
-        ok = text_sprite("CORRECT ANSWER: " + "ABC"[int(s["answer"])], "black", 50, GREEN, 6, BLACK, 900)
-        paste(f, ok, W / 2, 660, ease_out_back(prog(lt, 0.1, 0.25)))
+    q = D.text_card(s.get("question", ""), 1000, 3, (), sizes=(68, 62, 56, 50))
+    paste(f, q, W / 2, 480, 1)
+    _options(f, s, 9, reveal=int(s["answer"]))
+    paste(f, D.pill("CORRECT: " + "ABC"[int(s["answer"])], 40, grad=True, dot=False), W / 2, 1235,
+          ease_out_back(prog(lt, 0.1, 0.3)))
 
 
 def draw_outro(f, s, lt, d):
-    spr = text_sprite(s["text"].upper(), "display", 120, WHITE, 10, BLACK, 920, True, 0.02,
-                      tuple(s.get("highlight", [])), YELLOW)
-    paste(f, spr, W / 2, CENTER_Y - 60, ease_out_back(lt / 0.3))
-    cta = s.get("cta")
-    if cta:
-        c = text_sprite(cta.upper(), "black", 50, BLACK, 0, BLACK, 820, False)
-        box = rounded_box(c.width + 60, c.height + 30, PINK, 30)
-        box.paste(c, (30, 15), c)
-        paste(f, box, W / 2, CENTER_Y + 200, 1 + 0.05 * math.sin(lt * 6), prog(lt, 0.3, 0.2))
+    spr = D.gtext(s["text"].upper(), "display", 124, 940, _hl(s))
+    paste(f, spr, W / 2, CY - 40, ease_out_back(lt / 0.3))
+    if s.get("cta"):
+        cta = D.pill(s["cta"], 46, grad=True, dot=False)
+        paste(f, cta, W / 2, CY + spr.height / 2 + 70, (1 + 0.05 * math.sin(lt * 6)) * ease_out_back(prog(lt, 0.25, 0.3)))
 
 
 def draw_stick(f, s, lt, d):
@@ -283,17 +282,21 @@ def render_animated(script: dict, out_path: str, cfg: dict, background_video: st
         from .backgrounds import SceneBackgrounds
         bg = SceneBackgrounds(script, timeline, seed, cfg)
     enc = Encoder(out_path, wav)
-    kicker = script.get("kicker", "GTA 6")
+    kicker_pill = D.pill(script.get("kicker", "GTA 6"), 34)
+    from .moments import draw_captions
     n_frames = int(total * FPS)
     for fi in range(n_frames):
         t = fi / FPS
         frame = bg.frame(t)
         seg = next((s for s in timeline if s["start"] <= t < s["end"]), timeline[-1])
         lt, d = t - seg["start"], seg["end"] - seg["start"]
-        _kicker(frame, kicker, t)
+        if not all_stick:
+            frame.paste(D.scrim(), (0, 0), D.scrim())
         DRAW[seg["scene"]["type"]](frame, seg["scene"], lt, d)
-        draw_caption(frame, chunks, t, y=1505 if all_stick else CAPTION_Y)
-        draw_progress(frame, t, total)
+        si = timeline.index(seg)
+        D.progress_segments(frame, len(timeline), si, lt / d)
+        paste(frame, kicker_pill, W / 2, 190, 1)
+        draw_captions(frame, chunks, t, y=1505 if all_stick else D.CAPTION_Y)
         if lt < 0.1 and not all_stick:  # flash cut between scenes
             frame = Image.blend(frame, Image.new("RGB", (W, H), WHITE), 0.35 * (1 - lt / 0.1))
         enc.write(frame)

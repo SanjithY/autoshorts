@@ -150,14 +150,15 @@ class Layout:
             frame.paste(Image.blend(frame, Image.new("RGB", frame.size, WHITE), 0.5 * (1 - t / 0.08)))
 
 
-def draw_captions(frame, chunks, t):
+def draw_captions(frame, chunks, t, y=None):
+    y = CAP_Y if y is None else y
     for ch in chunks:
         if ch[0]["start"] - 0.05 <= t < ch[-1]["end"] + 0.15:
             active = next((w["w"] for w in ch if w["start"] <= t < w["end"] + 0.05), "")
             text = clean_title(" ".join(w["w"] for w in ch), 40)
             spr = text_sprite(text, "black", 68, WHITE, 8, BLACK, 940, True, 0.0,
                               highlight=(clean_title(active, 40),) if active else (), hl_fill=YELLOW)
-            paste(frame, spr, W / 2, CAP_Y, 0.9 + 0.1 * ease_out_back((t - ch[0]["start"]) / 0.15))
+            paste(frame, spr, W / 2, y, 0.9 + 0.1 * ease_out_back((t - ch[0]["start"]) / 0.15))
             return
 
 
