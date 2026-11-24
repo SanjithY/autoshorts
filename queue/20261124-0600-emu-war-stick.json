@@ -1,10 +1,11 @@
 {
  "format": "stickman",
+ "style": "lit",
  "kicker": "Strange history",
  "theme": "story",
  "topic_key": "stories",
  "title": "Australia went to war with emus... and lost #history #shorts",
- "description": "In 1932 Major Meredith's soldiers took two Lewis guns and 10,000 rounds to fight emus damaging wheat farms in Western Australia. He claimed 986 kills from 9,860 rounds. Sources: Britannica, Wikipedia, National Geographic.",
+ "description": "In 1932, Major G.P.W. Meredith led two soldiers with two Lewis guns and 10,000 rounds against emus wrecking wheat farms in Western Australia. At a dam ambush the gun jammed, the troops were withdrawn on 8 November after mocking press coverage, and by 10 December Meredith claimed 986 emus for 9,860 rounds. Sources: Britannica, Wikipedia, National Geographic, Scientific American.",
  "hashtags": [
   "#history",
   "#emuwar",
@@ -14,30 +15,168 @@
  ],
  "scenes": [
   {
-   "type": "stick",
-   "setting": "field",
-   "title": "THE GREAT EMU WAR",
-   "camera": "punch",
-   "speaker": "a",
+   "say": "In 1932, Australia declared war... on birds.",
+   "place": {
+    "kind": "exterior",
+    "light": "golden",
+    "ground": "#c9a45c",
+    "ground_style": "wheat",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "farmhouse",
+      "x": 0.18,
+      "z": 0.72
+     },
+     {
+      "name": "windmill",
+      "x": 0.84,
+      "z": 0.62
+     },
+     {
+      "name": "gum_tree",
+      "x": 0.02,
+      "z": 0.4
+     }
+    ]
+   },
+   "fg": "wheat",
+   "speaker": "major",
+   "key": [
+    "1932",
+    "war",
+    "birds"
+   ],
+   "punch": [
+    "war",
+    "birds"
+   ],
+   "sfx": [
+    {
+     "on": "war",
+     "sound": "boom"
+    },
+    {
+     "on": "birds",
+     "sound": "drum"
+    }
+   ],
    "actors": [
     {
-     "id": "a",
-     "x": 0.22,
-     "color": "#ff9628",
-     "hat": "cap",
+     "id": "major",
+     "x": 0.42,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#8a7a4a",
+      "moustache": true,
+      "brows": "bushy",
+      "height": 1.0
+     },
      "do": [
       {
        "at": 0,
-       "action": "look"
+       "action": "walk",
+       "to": 0.5
       },
       {
-       "at": 0.9,
+       "at": 1.1,
+       "action": "point",
+       "face": "angry"
+      },
+      {
+       "at": 2.2,
+       "action": "shocked",
+       "face": "shock"
+      }
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "flock",
+     "x": 0.78,
+     "z": 0.45,
+     "n": 5,
+     "facing": -1,
+     "spread": 0.25
+    }
+   ],
+   "type": "stick"
+  },
+  {
+   "say": "Twenty thousand emus had moved onto the wheat farms of Western Australia.",
+   "place": {
+    "kind": "exterior",
+    "light": "golden",
+    "ground": "#c9a45c",
+    "ground_style": "wheat",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "farmhouse",
+      "x": 0.75,
+      "z": 0.7
+     },
+     {
+      "name": "haystack",
+      "x": 0.25,
+      "z": 0.6
+     },
+     {
+      "name": "telegraph_pole",
+      "x": 0.92,
+      "z": 0.45
+     }
+    ]
+   },
+   "fg": "wheat",
+   "fg_side": -1,
+   "speaker": "farmer",
+   "key": [
+    "twenty",
+    "thousand",
+    "emus"
+   ],
+   "sfx": [
+    {
+     "on": "twenty",
+     "sound": "rumble"
+    },
+    {
+     "on": "emus",
+     "sound": "drum"
+    }
+   ],
+   "actors": [
+    {
+     "id": "farmer",
+     "x": 0.2,
+     "z": 0.0,
+     "look": {
+      "hat": "straw",
+      "hat_color": "#d9b46a",
+      "outfit": "overalls",
+      "color": "#3f5f8f",
+      "height": 0.95
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "look",
+       "face": "neutral"
+      },
+      {
+       "at": 1.2,
        "action": "shocked",
        "face": "shock"
       },
       {
-       "at": 2.2,
-       "action": "point"
+       "at": 2.6,
+       "action": "facepalm",
+       "face": "worried"
       }
      ]
     }
@@ -46,132 +185,321 @@
     {
      "kind": "flock",
      "x": 1.4,
-     "move_to": 0.72,
-     "move_time": 2.2,
-     "n": 4,
-     "facing": -1
+     "z": 0.15,
+     "n": 7,
+     "spread": 0.55,
+     "move_to": 0.55,
+     "move_time": 3.2
     }
    ],
-   "say": "In nineteen thirty two, Australia sent soldiers with machine guns to fight emus. And the emus won."
+   "type": "stick"
   },
   {
-   "type": "stick",
-   "setting": "field",
-   "speaker": "f",
+   "say": "They trampled the crops, smashed the fences, and gobbled up the wheat.",
+   "place": {
+    "kind": "exterior",
+    "light": "golden",
+    "ground": "#c9a45c",
+    "ground_style": "furrows",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "broken_fence",
+      "x": 0.6,
+      "z": 0.2
+     },
+     {
+      "name": "farmhouse",
+      "x": 0.2,
+      "z": 0.75
+     },
+     {
+      "name": "water_tank",
+      "x": 0.88,
+      "z": 0.55
+     }
+    ]
+   },
+   "speaker": "farmer",
+   "key": [
+    "trampled",
+    "smashed",
+    "gobbled"
+   ],
+   "punch": [
+    "smashed"
+   ],
+   "sfx": [
+    {
+     "on": "trampled",
+     "sound": "crunch"
+    },
+    {
+     "on": "smashed",
+     "sound": "crash"
+    },
+    {
+     "on": "gobbled",
+     "sound": "drum"
+    }
+   ],
    "actors": [
     {
-     "id": "f",
-     "x": -0.1,
-     "color": "#9646ff",
-     "hat": "tophat",
+     "id": "farmer",
+     "x": 0.18,
+     "z": 0.0,
+     "look": {
+      "hat": "straw",
+      "hat_color": "#d9b46a",
+      "outfit": "overalls",
+      "color": "#3f5f8f",
+      "height": 0.95
+     },
      "do": [
       {
        "at": 0,
-       "action": "walk",
-       "to": 0.25
-      },
-      {
-       "at": 1.4,
-       "action": "facepalm",
-       "face": "sad"
-      },
-      {
-       "at": 2.8,
        "action": "angry",
        "face": "angry"
+      },
+      {
+       "at": 1.3,
+       "action": "point",
+       "face": "angry"
+      },
+      {
+       "at": 2.6,
+       "action": "cry",
+       "face": "sad"
       }
      ]
     }
    ],
    "props": [
-    {
-     "kind": "flock",
-     "x": -0.5,
-     "move_to": 0.75,
-     "move_time": 3,
-     "n": 5
-    },
     {
      "kind": "emu",
-     "x": 1.3,
-     "move_to": 0.92,
-     "move_time": 1.5,
-     "facing": -1,
-     "at": 1.5
+     "x": 0.5,
+     "z": 0.05,
+     "facing": -1
+    },
+    {
+     "kind": "flock",
+     "x": 0.72,
+     "z": 0.25,
+     "n": 4,
+     "spread": 0.3,
+     "move_to": 0.62,
+     "move_time": 3
+    },
+    {
+     "kind": "dust",
+     "x": 0.6,
+     "z": 0.1,
+     "at": 1.0
     }
    ],
-   "say": "Roughly twenty thousand emus were trampling wheat farms in Western Australia."
+   "type": "stick"
   },
   {
-   "type": "stick",
-   "setting": "field",
-   "speaker": "a",
-   "camera": "zoom_in",
+   "say": "The farmers begged the government for help.",
+   "place": {
+    "kind": "interior",
+    "light": "warm",
+    "wall": "#7c6a58",
+    "floor": "planks",
+    "floor_color": "#6e4a30",
+    "carpet": "#7a2c3a",
+    "ceiling_lamps": [
+     0.5
+    ],
+    "items": [
+     {
+      "name": "window",
+      "x": 0.24
+     },
+     {
+      "name": "bookshelf",
+      "x": 0.82
+     },
+     {
+      "name": "flag",
+      "x": 0.95,
+      "color": "#2b3f7a"
+     },
+     {
+      "name": "map_board",
+      "x": 0.52
+     },
+     {
+      "name": "filing_cabinet",
+      "x": 0.06
+     },
+     {
+      "name": "clock",
+      "x": 0.38
+     },
+     {
+      "name": "desk",
+      "x": 0.56
+     },
+     {
+      "name": "plant",
+      "x": 0.4
+     }
+    ]
+   },
+   "fg": "lamp",
+   "fg_side": -1,
+   "light_from": -1,
+   "speaker": "minister",
+   "key": [
+    "begged",
+    "help"
+   ],
+   "sfx": [
+    {
+     "on": "begged",
+     "sound": "paper"
+    },
+    {
+     "on": "help",
+     "sound": "bell"
+    }
+   ],
    "actors": [
     {
-     "id": "a",
-     "x": -0.15,
-     "color": "#ff9628",
-     "hat": "cap",
+     "id": "minister",
+     "x": 0.6,
+     "z": 0.0,
+     "look": {
+      "hat": "bowler",
+      "hat_color": "#222228",
+      "outfit": "jacket",
+      "color": "#2f3f5f",
+      "glasses": "round",
+      "moustache": true,
+      "bowtie": "#f2c230",
+      "height": 0.92
+     },
+     "prop": "telegram",
      "do": [
       {
        "at": 0,
-       "action": "walk",
-       "to": 0.32
+       "action": "think",
+       "face": "neutral"
       },
       {
-       "at": 1.5,
-       "action": "flex",
-       "face": "smug"
+       "at": 1.2,
+       "action": "look"
       },
       {
-       "at": 2.8,
-       "action": "point"
+       "at": 2.0,
+       "action": "shocked",
+       "face": "worried"
       }
      ]
     },
     {
-     "id": "b",
-     "x": -0.35,
-     "color": "#00d2e6",
-     "hat": "cap",
+     "id": "farmer",
+     "x": -0.15,
+     "z": 0.0,
+     "look": {
+      "hat": "straw",
+      "hat_color": "#d9b46a",
+      "outfit": "overalls",
+      "color": "#3f5f8f",
+      "height": 0.95
+     },
      "do": [
       {
        "at": 0,
        "action": "walk",
-       "to": 0.58
-      },
-      {
-       "at": 1.8,
-       "action": "wave",
-       "face": "happy"
+       "to": 0.26,
+       "then": "explain",
+       "face": "sad"
       }
      ]
     }
    ],
-   "props": [
-    {
-     "kind": "sign",
-     "x": 0.85,
-     "text": "CAMPION, W.A.",
-     "color": "#fff3d6"
-    }
-   ],
-   "say": "So Major Meredith showed up with two Lewis guns and ten thousand rounds of ammo."
+   "type": "stick"
   },
   {
-   "type": "stick",
-   "setting": "field",
-   "speaker": "a",
-   "fx": [
-    "exclaim"
+   "say": "So the Defence Minister sent in the army.",
+   "place": {
+    "kind": "interior",
+    "light": "warm",
+    "wall": "#7c6a58",
+    "floor": "planks",
+    "floor_color": "#6e4a30",
+    "carpet": "#7a2c3a",
+    "ceiling_lamps": [
+     0.5
+    ],
+    "items": [
+     {
+      "name": "window",
+      "x": 0.24
+     },
+     {
+      "name": "bookshelf",
+      "x": 0.82
+     },
+     {
+      "name": "flag",
+      "x": 0.95,
+      "color": "#2b3f7a"
+     },
+     {
+      "name": "map_board",
+      "x": 0.52
+     },
+     {
+      "name": "filing_cabinet",
+      "x": 0.06
+     },
+     {
+      "name": "clock",
+      "x": 0.38
+     },
+     {
+      "name": "desk",
+      "x": 0.56
+     }
+    ]
+   },
+   "fg": "lamp",
+   "fg_side": -1,
+   "speaker": "minister",
+   "key": [
+    "army"
+   ],
+   "punch": [
+    "army"
+   ],
+   "sfx": [
+    {
+     "on": "army",
+     "sound": "thud"
+    },
+    {
+     "on": "sent",
+     "sound": "whoosh"
+    }
    ],
    "actors": [
     {
-     "id": "a",
-     "x": 0.3,
-     "color": "#ff9628",
-     "hat": "cap",
+     "id": "minister",
+     "x": 0.62,
+     "z": 0.0,
+     "look": {
+      "hat": "bowler",
+      "hat_color": "#222228",
+      "outfit": "jacket",
+      "color": "#2f3f5f",
+      "glasses": "round",
+      "moustache": true,
+      "bowtie": "#f2c230",
+      "height": 0.92
+     },
      "do": [
       {
        "at": 0,
@@ -179,7 +507,465 @@
        "face": "smug"
       },
       {
+       "at": 1.4,
+       "action": "celebrate",
+       "face": "happy"
+      }
+     ]
+    },
+    {
+     "id": "major",
+     "x": 1.2,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#8a7a4a",
+      "moustache": true,
+      "brows": "bushy",
+      "height": 1.0
+     },
+     "do": [
+      {
+       "at": 0.5,
+       "action": "walk",
+       "to": 0.3,
+       "then": "flex",
+       "face": "smug"
+      }
+     ]
+    }
+   ],
+   "type": "stick"
+  },
+  {
+   "say": "Major Meredith, two soldiers, two machine guns, and ten thousand bullets.",
+   "place": {
+    "kind": "exterior",
+    "light": "day",
+    "ground": "#c9a45c",
+    "ground_style": "furrows",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "tent",
+      "x": 0.18,
+      "z": 0.55
+     },
+     {
+      "name": "tent",
+      "x": 0.8,
+      "z": 0.68
+     },
+     {
+      "name": "army_truck",
+      "x": 0.55,
+      "z": 0.62
+     },
+     {
+      "name": "crate",
+      "x": 0.9,
+      "z": 0.3
+     },
+     {
+      "name": "crate",
+      "x": 0.05,
+      "z": 0.25
+     },
+     {
+      "name": "gum_tree",
+      "x": 0.35,
+      "z": 0.8
+     }
+    ]
+   },
+   "speaker": "major",
+   "key": [
+    "two",
+    "ten",
+    "thousand"
+   ],
+   "punch": [
+    "machine"
+   ],
+   "sfx": [
+    {
+     "on": "soldiers",
+     "sound": "thud"
+    },
+    {
+     "on": "machine",
+     "sound": "clank"
+    },
+    {
+     "on": "bullets",
+     "sound": "cash"
+    }
+   ],
+   "actors": [
+    {
+     "id": "major",
+     "x": 0.25,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#8a7a4a",
+      "moustache": true,
+      "brows": "bushy",
+      "height": 1.0
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "flex",
+       "face": "smug"
+      },
+      {
+       "at": 1.6,
+       "action": "point"
+      }
+     ]
+    },
+    {
+     "id": "g1",
+     "x": 0.55,
+     "z": 0.08,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#5f5338",
+      "outfit": "uniform",
+      "color": "#7d7045",
+      "height": 0.95
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "idle",
+       "face": "neutral"
+      },
+      {
        "at": 1.0,
+       "action": "wave",
+       "face": "happy"
+      }
+     ]
+    },
+    {
+     "id": "g2",
+     "x": 0.78,
+     "z": 0.12,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#90804f",
+      "height": 0.95
+     },
+     "facing": -1,
+     "do": [
+      {
+       "at": 0,
+       "action": "look"
+      },
+      {
+       "at": 1.4,
+       "action": "nod",
+       "face": "happy"
+      }
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "lewis_gun",
+     "x": 0.62,
+     "z": 0.02,
+     "at": 1.6
+    },
+    {
+     "kind": "lewis_gun",
+     "x": 0.88,
+     "z": 0.05,
+     "facing": -1,
+     "at": 1.9
+    }
+   ],
+   "type": "stick"
+  },
+  {
+   "say": "But every time they took aim, the emus split up and ran in every direction.",
+   "place": {
+    "kind": "exterior",
+    "light": "golden",
+    "ground": "#c9a45c",
+    "ground_style": "furrows",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "gum_tree",
+      "x": 0.12,
+      "z": 0.55
+     },
+     {
+      "name": "windmill",
+      "x": 0.8,
+      "z": 0.75
+     },
+     {
+      "name": "rock",
+      "x": 0.6,
+      "z": 0.35
+     }
+    ]
+   },
+   "fg": "fence_post",
+   "fg_side": -1,
+   "speaker": "g1",
+   "key": [
+    "split",
+    "every"
+   ],
+   "punch": [
+    "split"
+   ],
+   "sfx": [
+    {
+     "on": "aim",
+     "sound": "clank"
+    },
+    {
+     "on": "split",
+     "sound": "whoosh"
+    },
+    {
+     "on": "ran",
+     "sound": "rumble"
+    }
+   ],
+   "actors": [
+    {
+     "id": "g1",
+     "x": 0.22,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#5f5338",
+      "outfit": "uniform",
+      "color": "#7d7045",
+      "height": 0.95
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "kneel",
+       "face": "smug"
+      },
+      {
+       "at": 1.6,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.8,
+       "action": "facepalm",
+       "face": "sad"
+      }
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "lewis_gun",
+     "x": 0.36,
+     "z": 0.0
+    },
+    {
+     "kind": "flock",
+     "x": 0.62,
+     "z": 0.3,
+     "n": 7,
+     "spread": 0.4,
+     "scatter": true,
+     "at": 1.5,
+     "move_time": 1.6
+    }
+   ],
+   "type": "stick"
+  },
+  {
+   "say": "At one dam, more than a thousand emus walked right up to the guns.",
+   "place": {
+    "kind": "exterior",
+    "light": "sunset",
+    "ground": "#c9a45c",
+    "ground_style": "furrows",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "dam",
+      "x": 0.55,
+      "z": 0.4
+     },
+     {
+      "name": "windmill",
+      "x": 0.88,
+      "z": 0.6
+     },
+     {
+      "name": "gum_tree",
+      "x": 0.1,
+      "z": 0.5
+     }
+    ]
+   },
+   "fg": "wheat",
+   "speaker": "major",
+   "key": [
+    "dam",
+    "thousand"
+   ],
+   "sfx": [
+    {
+     "on": "dam",
+     "sound": "splash"
+    },
+    {
+     "on": "thousand",
+     "sound": "drum"
+    },
+    {
+     "on": "walked",
+     "sound": "rumble"
+    }
+   ],
+   "actors": [
+    {
+     "id": "major",
+     "x": 0.15,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#8a7a4a",
+      "moustache": true,
+      "brows": "bushy",
+      "height": 1.0
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "kneel",
+       "face": "smug"
+      },
+      {
+       "at": 1.8,
+       "action": "point",
+       "face": "excited"
+      }
+     ]
+    },
+    {
+     "id": "g1",
+     "x": 0.32,
+     "z": 0.05,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#5f5338",
+      "outfit": "uniform",
+      "color": "#7d7045",
+      "height": 0.95
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "kneel",
+       "face": "worried"
+      }
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "lewis_gun",
+     "x": 0.4,
+     "z": 0.0
+    },
+    {
+     "kind": "flock",
+     "x": 1.2,
+     "z": 0.25,
+     "n": 9,
+     "spread": 0.45,
+     "move_to": 0.7,
+     "move_time": 3.5,
+     "facing": -1
+    }
+   ],
+   "type": "stick"
+  },
+  {
+   "say": "They opened fire, and seconds later, the gun jammed.",
+   "place": {
+    "kind": "exterior",
+    "light": "sunset",
+    "ground": "#c9a45c",
+    "ground_style": "furrows",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "dam",
+      "x": 0.6,
+      "z": 0.45
+     },
+     {
+      "name": "windmill",
+      "x": 0.9,
+      "z": 0.62
+     }
+    ]
+   },
+   "speaker": "g1",
+   "key": [
+    "fire",
+    "jammed"
+   ],
+   "punch": [
+    "jammed"
+   ],
+   "sfx": [
+    {
+     "on": "fire",
+     "sound": "gunburst"
+    },
+    {
+     "on": "jammed",
+     "sound": "clank"
+    }
+   ],
+   "actors": [
+    {
+     "id": "g1",
+     "x": 0.28,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#5f5338",
+      "outfit": "uniform",
+      "color": "#7d7045",
+      "height": 0.95
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "kneel",
+       "face": "angry"
+      },
+      {
+       "at": 1.5,
        "action": "shocked",
        "face": "shock"
       },
@@ -191,79 +977,26 @@
      ]
     },
     {
-     "id": "b",
-     "x": 0.15,
-     "color": "#00d2e6",
-     "hat": "cap",
+     "id": "major",
+     "x": 0.1,
+     "z": 0.06,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#8a7a4a",
+      "moustache": true,
+      "brows": "bushy",
+      "height": 1.0
+     },
      "do": [
       {
        "at": 0,
-       "action": "idle"
+       "action": "point",
+       "face": "excited"
       },
       {
-       "at": 1.2,
-       "action": "shocked",
-       "face": "shock"
-      },
-      {
-       "at": 2.6,
-       "action": "run",
-       "to": 0.7,
-       "then": "look"
-      }
-     ]
-    }
-   ],
-   "props": [
-    {
-     "kind": "flock",
-     "x": 0.62,
-     "n": 5
-    },
-    {
-     "kind": "flock",
-     "x": 0.62,
-     "move_to": 1.7,
-     "move_time": 1.2,
-     "n": 4,
-     "at": 1.0
-    }
-   ],
-   "say": "But the emus just scattered. One gun jammed after a few rounds, and after three days only about thirty birds were down."
-  },
-  {
-   "type": "stick",
-   "setting": "field",
-   "speaker": "a",
-   "bubble": {
-    "actor": "a",
-    "text": "10 BULLETS EACH?!",
-    "at": 2.2
-   },
-   "actors": [
-    {
-     "id": "a",
-     "x": 0.3,
-     "color": "#ff9628",
-     "hat": "cap",
-     "do": [
-      {
-       "at": 0,
-       "action": "think",
-       "face": "neutral"
-      },
-      {
-       "at": 1.4,
-       "action": "count_money",
-       "face": "sad"
-      },
-      {
-       "at": 2.2,
-       "action": "shocked",
-       "face": "shock"
-      },
-      {
-       "at": 3.4,
+       "at": 1.6,
        "action": "cry",
        "face": "sad"
       }
@@ -272,70 +1005,317 @@
    ],
    "props": [
     {
-     "kind": "emu",
-     "x": 1.3,
-     "move_to": 0.78,
-     "move_time": 1.8,
-     "facing": -1
-    }
-   ],
-   "say": "By December, Meredith claimed nine hundred eighty six emus, using almost ten thousand rounds. About ten bullets per bird."
-  },
-  {
-   "type": "stick",
-   "setting": "field",
-   "speaker": "a",
-   "camera": "zoom_out",
-   "actors": [
-    {
-     "id": "a",
+     "kind": "lewis_gun",
      "x": 0.4,
-     "color": "#ff9628",
-     "hat": "cap",
-     "do": [
-      {
-       "at": 0,
-       "action": "sad",
-       "face": "sad"
-      },
-      {
-       "at": 1.0,
-       "action": "walk",
-       "to": -0.2
-      }
-     ]
+     "z": 0.0,
+     "firing": true,
+     "fire_at": 0.3,
+     "stop_at": 1.4
     },
     {
-     "id": "b",
-     "x": 0.55,
-     "color": "#00d2e6",
-     "hat": "cap",
+     "kind": "flock",
+     "x": 0.7,
+     "z": 0.28,
+     "n": 8,
+     "spread": 0.4,
+     "scatter": true,
+     "at": 1.6,
+     "move_time": 1.4
+    }
+   ],
+   "type": "stick"
+  },
+  {
+   "say": "Newspapers mocked the army, and within a week, the soldiers were pulled out.",
+   "place": {
+    "kind": "interior",
+    "light": "cold",
+    "wall": "#5d6a78",
+    "floor": "tiles",
+    "floor_color": "#6a6460",
+    "ceiling_lamps": [
+     0.3,
+     0.72
+    ],
+    "items": [
+     {
+      "name": "window",
+      "x": 0.8
+     },
+     {
+      "name": "filing_cabinet",
+      "x": 0.12
+     },
+     {
+      "name": "paper_stacks",
+      "x": 0.32
+     },
+     {
+      "name": "desk",
+      "x": 0.55
+     },
+     {
+      "name": "clock",
+      "x": 0.55
+     },
+     {
+      "name": "counter",
+      "x": 0.92
+     }
+    ]
+   },
+   "fg": "plant",
+   "speaker": "rep",
+   "key": [
+    "mocked",
+    "week"
+   ],
+   "punch": [
+    "mocked"
+   ],
+   "sfx": [
+    {
+     "on": "newspapers",
+     "sound": "typewriter"
+    },
+    {
+     "on": "mocked",
+     "sound": "laugh"
+    },
+    {
+     "on": "pulled",
+     "sound": "engine"
+    }
+   ],
+   "crowd": {
+    "n": 6,
+    "kind": "townsfolk",
+    "z": [
+     0.25,
+     0.6
+    ],
+    "action": "laugh",
+    "face": "happy"
+   },
+   "actors": [
+    {
+     "id": "rep",
+     "x": 0.5,
+     "z": 0.0,
+     "look": {
+      "hat": "cap",
+      "hat_color": "#5a3e2b",
+      "outfit": "jacket",
+      "color": "#8f4f3f",
+      "height": 0.9
+     },
+     "prop": "newspaper",
      "do": [
       {
        "at": 0,
-       "action": "facepalm",
-       "face": "sad"
+       "action": "laugh",
+       "face": "happy"
       },
       {
-       "at": 1.3,
+       "at": 1.6,
+       "action": "point",
+       "face": "happy"
+      },
+      {
+       "at": 2.8,
+       "action": "laugh"
+      }
+     ]
+    }
+   ],
+   "type": "stick"
+  },
+  {
+   "say": "They came back, and by December, Meredith claimed nine hundred and eighty six emus, using nearly ten thousand rounds.",
+   "place": {
+    "kind": "exterior",
+    "light": "sunset",
+    "ground": "#c9a45c",
+    "ground_style": "furrows",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "tent",
+      "x": 0.85,
+      "z": 0.6
+     },
+     {
+      "name": "army_truck",
+      "x": 0.2,
+      "z": 0.6
+     },
+     {
+      "name": "gum_tree",
+      "x": 0.6,
+      "z": 0.8
+     }
+    ]
+   },
+   "speaker": "major",
+   "key": [
+    "December",
+    "nine",
+    "eighty",
+    "ten",
+    "thousand"
+   ],
+   "sfx": [
+    {
+     "on": "December",
+     "sound": "thud"
+    },
+    {
+     "on": "nine",
+     "sound": "cash"
+    },
+    {
+     "on": "rounds",
+     "sound": "clank"
+    }
+   ],
+   "actors": [
+    {
+     "id": "major",
+     "x": 0.3,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#8a7a4a",
+      "moustache": true,
+      "brows": "bushy",
+      "height": 1.0
+     },
+     "do": [
+      {
+       "at": 0,
        "action": "walk",
-       "to": -0.3
+       "to": 0.38
+      },
+      {
+       "at": 1.2,
+       "action": "point",
+       "face": "smug"
+      },
+      {
+       "at": 3.0,
+       "action": "think",
+       "face": "worried"
+      },
+      {
+       "at": 4.4,
+       "action": "facepalm",
+       "face": "sad"
       }
      ]
     }
    ],
    "props": [
     {
-     "kind": "flock",
-     "x": 1.5,
-     "move_to": 0.62,
-     "move_time": 2.5,
-     "n": 5,
-     "facing": -1,
-     "at": 1.2
+     "kind": "tally",
+     "x": 0.72,
+     "z": 0.05,
+     "text": "986 EMUS\n9,860 ROUNDS"
     }
    ],
-   "say": "The soldiers went home. The emus stayed. Team soldiers or team emus? Comment below."
+   "type": "stick"
+  },
+  {
+   "say": "That's about ten bullets per bird. So who really won?",
+   "place": {
+    "kind": "exterior",
+    "light": "sunset",
+    "ground": "#c9a45c",
+    "ground_style": "wheat",
+    "hills": "#8a7f9a",
+    "items": [
+     {
+      "name": "farmhouse",
+      "x": 0.2,
+      "z": 0.75
+     },
+     {
+      "name": "windmill",
+      "x": 0.84,
+      "z": 0.6
+     }
+    ]
+   },
+   "fg": "wheat",
+   "speaker": "major",
+   "key": [
+    "ten",
+    "won"
+   ],
+   "punch": [
+    "won"
+   ],
+   "sfx": [
+    {
+     "on": "ten",
+     "sound": "thud"
+    },
+    {
+     "on": "won",
+     "sound": "drum"
+    }
+   ],
+   "actors": [
+    {
+     "id": "major",
+     "x": 0.2,
+     "z": 0.0,
+     "look": {
+      "hat": "slouch",
+      "hat_color": "#6e6040",
+      "outfit": "uniform",
+      "color": "#8a7a4a",
+      "moustache": true,
+      "brows": "bushy",
+      "height": 1.0
+     },
+     "do": [
+      {
+       "at": 0,
+       "action": "shrug",
+       "face": "worried"
+      },
+      {
+       "at": 1.4,
+       "action": "sad",
+       "face": "sad"
+      },
+      {
+       "at": 2.6,
+       "action": "walk",
+       "to": -0.3,
+       "face": "sad"
+      }
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "emu",
+     "x": 0.68,
+     "z": 0.0,
+     "facing": -1
+    },
+    {
+     "kind": "flock",
+     "x": 0.7,
+     "z": 0.35,
+     "n": 6,
+     "spread": 0.4
+    }
+   ],
+   "type": "stick"
   }
  ],
  "post_after": "2026-11-23T12:00"

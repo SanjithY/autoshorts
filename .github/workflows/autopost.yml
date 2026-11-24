@@ -17,6 +17,9 @@ on:
         description: "Post even if the last post was recent"
         type: boolean
         default: false
+      script:
+        description: "Render this queue file (e.g. queue/x.json) instead of the next one"
+        required: false
       artifact_run_id:
         description: "Upload the exact video from this past run's artifact instead of making a new one"
         required: false
@@ -32,7 +35,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
 
@@ -99,6 +102,7 @@ jobs:
           [ -n "${{ inputs.format }}" ] && ARGS="$ARGS --format ${{ inputs.format }}"
           [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
           [ -n "${{ inputs.artifact_run_id }}" ] && ARGS="$ARGS --prebuilt prebuilt"
+          [ -n "${{ inputs.script }}" ] && ARGS="$ARGS --script ${{ inputs.script }}"
           python run.py $ARGS
 
       - name: Keep the video as a downloadable artifact (7 days)

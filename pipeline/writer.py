@@ -157,7 +157,8 @@ def normalize(script: dict) -> dict:
 def validate(script: dict):
     script = normalize(script)
     sc = script.get("scenes") or []
-    assert 3 <= len(sc) <= 9, "need 3-9 scenes"
+    mx = 12 if script.get("style") == "lit" else 9
+    assert 3 <= len(sc) <= mx, f"need 3-{mx} scenes"
     assert sc[0]["type"] in ("hook", "stick"), "first scene must be a hook (or a stickman scene)"
     words = 0
     for s in sc:

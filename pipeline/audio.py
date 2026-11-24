@@ -253,6 +253,10 @@ def sfx(kind: str, seed=0):
         f = 900 + 350 * np.sin(2 * np.pi * 2.2 * t)
         y = np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR)) * np.exp(-t * 2.5)
         return (0.07 * _lowpass(y, 3000)).astype(np.float32)
+    from .render.lit_stage import synth
+    y = synth(kind, seed)
+    if y is not None:
+        return y
     raise ValueError(kind)
 
 

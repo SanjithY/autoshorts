@@ -163,3 +163,25 @@ PY
 python run.py --dry-run --script queue/<one stickman file>.json   # render one to be sure it works
 git add queue && git commit -m "queue: scripts for <date>" && git push
 ```
+
+
+## Optional: "lit set" stickman style (`"style": "lit"` on a stickman script)
+Flat 2D stickmen (white heads, black line limbs, one flat clothing colour each) inside rich, lit, painted-3D sets:
+perspective floors, furniture with light/dark/top faces, cast shadows, warm key light vs. cool purple shadow, haze,
+a blurred foreground object, vignette, a camera that keeps moving and whip-slides between scenes, 1-2 word captions.
+Pick sets, palette and light to fit the topic. Full field list: top of `pipeline/render/lit_stage.py`.
+- 9-12 scenes, ONE short sentence each, at least 6 different places; every scene acts out what the sentence says.
+- `place`: exterior (`light`: golden/sunset/day/night/storm/dust, `ground`, `ground_style`: wheat/furrows/road/cobbles,
+  `items` with x and depth z 0-1) or interior (`light`: warm/cold/night, `wall`, `floor`: planks/tiles, `carpet`,
+  `ceiling_lamps`, `items` along the back wall). Use 4-8 items per scene. Items: desk, typewriter, lamp, bookshelf,
+  cabinet, filing_cabinet, counter, chair, window, curtains, map_board, flag, clock, plant, crate, paper_stacks,
+  chandelier, radio, telephone, farmhouse, windmill, water_tank, gum_tree, tree, fence, broken_fence, tent, haystack,
+  dam, army_truck, telegraph_pole, rock, lamp_post, awning_shop.
+- Characters: `look` = {hat: top/bowler/slouch/straw/cap/helmet/kepi, hat_color, outfit: jacket/waistcoat/shirt/uniform/
+  dress/overalls/coat/apron, color, moustache, glasses, brows: bushy, bowtie: "#f2c230", hair, height}. Keep each
+  character's look identical in every scene. `z` puts them deeper in the set. Steps in `do` as usual.
+- `crowd`: {n, kind: soldiers/farmers/townsfolk/officials, z: [near, far], action: cheer/laugh/look/shock/work}.
+- Props: emu, flock (n, spread, scatter), lewis_gun (firing, fire_at, stop_at), truck, tally (text), sign, dust, or any item.
+- `fg` soft foreground object: wheat, fence_post, plant, curtain, lamp, leaves. `key`: yellow caption words.
+  `punch`: words that get a camera punch-in. `sfx`: [{"on": word, "sound": ...}] with sounds gunburst, clank, rumble,
+  crunch, crash, paper, typewriter, engine, splash, drum, laugh, cash, thud, whistle, wind, bell, boom, whoosh, pop, ding.

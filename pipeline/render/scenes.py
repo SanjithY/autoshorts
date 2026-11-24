@@ -255,6 +255,9 @@ def _footage_audio(rel, total, gain):
 
 def render_animated(script: dict, out_path: str, cfg: dict, background_video: str | None = None,
                     bg_start: float = 0.0, seed: int = 0):
+    if script.get("style") == "lit":  # flat stickmen in rich lit sets
+        from .lit_stage import render_lit
+        return render_lit(script, out_path, cfg, seed=seed)
     A.configure(cfg)
     timeline, vev, sev, total = build_timeline(script, None, None)
     words = [w for seg in timeline for w in seg["words"]]
