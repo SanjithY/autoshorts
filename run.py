@@ -135,7 +135,13 @@ def main():
         video = str(OUT / f"{stamp}-{fmt}.mp4")
         print(f"[run] using queued script {qpath.name}: {meta.get('title')}")
         try:
-            if meta.get("format") == "top5_streamer":
+            if meta.get("prebuilt_asset"):  # an exact, already-approved video kept as a GitHub release asset
+                import subprocess
+                tag = meta.get("prebuilt_release", "prebuilt")
+                subprocess.run(["gh", "release", "download", tag, "-p", meta["prebuilt_asset"], "-D", str(OUT), "--clobber"], check=True)
+                video = str(OUT / meta["prebuilt_asset"])
+                print(f"[run] using prebuilt video {meta['prebuilt_asset']} as-is (no re-render)")
+            elif meta.get("format") == "top5_streamer":
                 from pipeline import compilation
                 m = compilation.build(cfg, video, st, prefer=meta.get("streamer"))
                 if not m:
