@@ -90,6 +90,9 @@ def render(script, out_path, cfg, preview=False, frames_dir=None):
            "res": [360, 640] if preview else script.get("res", [720, 1280]),
            "samples": 4 if preview else int(script.get("samples", 16)),
            "out_dir": str(work / "frames"), "frames": n, "shots": shots, "tracks": tracks}
+    for k in ("pedestal", "speed0", "travel0", "lights_scale", "raytrace"):
+        if k in script:
+            job[k] = script[k]
     if preview:
         job["only"] = list(range(0, n, fps // 2))
     (work / "job.json").write_text(json.dumps(job))

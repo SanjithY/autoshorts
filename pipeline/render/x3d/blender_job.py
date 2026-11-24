@@ -55,7 +55,7 @@ def mat(name, col, metal=0.0, rough=0.4, emit=None, strength=0.0):
     return m
 
 
-def studio():
+def studio(pedestal=True):
     """Signature set: a curved pink-to-purple cyclorama, glossy floor, a pedestal ringed with neon."""
     sc = bpy.context.scene
     # cyclorama: floor + curved back wall in one mesh
@@ -97,6 +97,9 @@ def studio():
     nt.links.new(mp.outputs["Result"], ramp.inputs["Fac"])
     nt.links.new(ramp.outputs["Color"], b.inputs["Base Color"])
     cyc.data.materials.append(m)
+    if not pedestal:
+        _lights_world()
+        return
     # pedestal with a neon ring
     bpy.ops.mesh.primitive_cylinder_add(radius=2.6, depth=0.4, location=(0, 0, -1.8), vertices=128)
     ped = bpy.context.object
@@ -108,6 +111,10 @@ def studio():
     bpy.ops.mesh.primitive_torus_add(major_radius=2.62, minor_radius=0.03, location=(0, 0, -2.0), major_segments=128)
     bpy.context.object.data.materials.append(mat("neon2", (1, 0.6, 0.2), 0, 0.5, (1.0, 0.55, 0.15), 10.0))
 
+    _lights_world()
+
+
+def _lights_world(scale=1.0):
     def light(kind, loc, energy, col, size=2.0, target=(0, 0, 0)):
         bpy.ops.object.light_add(type=kind, location=loc)
         l = bpy.context.object
@@ -118,6 +125,7 @@ def studio():
         d = Vector(target) - l.location
         l.rotation_euler = d.to_track_quat("-Z", "Y").to_euler()
         return l
+    sc = bpy.context.scene
     light("AREA", (-4, -5, 6), 1400, (1.0, 0.86, 0.72), 4)       # warm key
     light("AREA", (5, 3, 3), 1100, (1.0, 0.25, 0.62), 3)          # pink rim
     light("AREA", (-5, 3, 2), 700, (1.0, 0.55, 0.18), 3)          # orange rim
@@ -143,9 +151,14 @@ def main(job_path):
             pass
     sc.view_settings.view_transform = "AgX"
     sc.view_settings.look = "AgX - Punchy" if "AgX - Punchy" in [l.name for l in []] else sc.view_settings.look
-    studio()
+    studio(job.get("pedestal", True))
     model = importlib.import_module(f"pipeline.render.x3d.{job['model']}")
-    rig = model.Lock() if job["model"] == "pin_tumbler" else model.Model()
+    rig = model.Lock() if hasattr(model, "Lock") else model.Model()
+    if job.get("lights_scale"):
+        for o in bpy.data.objects:
+            if o.type == "LIGHT":
+                o.location *= float(job["lights_scale"])
+                o.data.energy *= float(job["lights_scale"]) ** 2
     bpy.ops.object.camera_add()
     cam = bpy.context.object
     sc.camera = cam
@@ -155,9 +168,17 @@ def main(job_path):
     out.mkdir(parents=True, exist_ok=True)
     frames = job.get("only") or range(job["frames"])
     tracks = job.get("tracks", {})
+    # chain travel = integral of the "speed" track (so speed changes never make parts jump)
+    travel = [float(job.get("travel0", 0.0))]
+    for f in range(1, job["frames"] + 1):
+        travel.append(travel[-1] + track_value(tracks.get("speed", []), (f - 0.5) / fps, float(job.get("speed0", 0.5))) / fps)
     t_start = time.time()
     for fi in frames:
         t = fi / fps
+        state = {k: track_value(v, t, 0) for k, v in tracks.items()}
+        state["travel"] = travel[fi]
+        state["_t"] = t
+        rig.apply(state)
         shot = next((s for s in job["shots"] if s["start"] <= t < s["end"]), job["shots"][-1])
         u = (t - shot["start"]) / max(1e-6, shot["end"] - shot["start"])
         e = ease(u) if shot.get("ease", True) else u
@@ -165,6 +186,14 @@ def main(job_path):
         lerp3 = lambda p, q: Vector(p).lerp(Vector(q), e)
         tgt = lerp3(a["target"], b.get("target", a["target"]))
         pos = lerp3(a["pos"], b.get("pos", a["pos"]))
+        if shot.get("anchor") and hasattr(rig, "anchor"):   # camera rides along with a moving part
+            an = shot["anchor"]
+            if an.startswith("ride_at:"):   # the point that sits at loop position s when this shot starts
+                fs = int(round(shot["start"] * fps))
+                an = f"ride:{float(an.split(':')[1]) - travel[min(fs, len(travel) - 1)]}"
+            base = rig.anchor(an)
+            tgt = base + tgt
+            pos = base + pos
         orb = math.radians(shot.get("orbit", 0) * e)
         if orb:
             rel = pos - tgt
@@ -178,8 +207,6 @@ def main(job_path):
         cam.data.lens = a.get("lens", 50) + (b.get("lens", a.get("lens", 50)) - a.get("lens", 50)) * e
         cam.data.dof.focus_distance = (tgt - pos).length
         cam.data.dof.aperture_fstop = a.get("fstop", 2.8)
-        state = {k: track_value(v, t, 0) for k, v in tracks.items()}
-        rig.apply(state)
         sc.render.filepath = str(out / f"f{fi:05d}.png")
         bpy.ops.render.render(write_still=True)
         if fi % 24 == 0:
