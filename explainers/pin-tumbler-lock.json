@@ -1,8 +1,8 @@
 {
  "format": "explainer3d",
  "model": "pin_tumbler",
- "voice": "en-US-ChristopherNeural",
- "rate": "+2%",
+ "voice": "en-US-AndrewMultilingualNeural",
+ "rate": "+8%",
  "title": "Why does only ONE key open your door? \ud83d\udd11 #shorts",
  "description": "How a pin-tumbler lock works: spring-loaded pin stacks block the plug until the right key lifts every gap to the shear line. Linus Yale Jr. perfected the pin-tumbler cylinder lock by 1865, and the basic design is still used in most homes today. Sources: Wikipedia (Pin tumbler lock, Linus Yale Jr.), CBS News Almanac.",
  "hashtags": [
@@ -933,5 +933,6 @@
   640,
   1136
  ],
- "samples": 12
+ "samples": 12,
+ "kokoro_voice": "am_michael"
 }

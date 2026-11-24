@@ -27,8 +27,8 @@ W, H = 1080, 1920
 
 def plan(script, cfg):
     from ... import audio as A
-    A.configure({**cfg, "edge_voice": script.get("voice", "en-US-ChristopherNeural"), "edge_rate": script.get("rate", "+2%"),
-                 "voice": script.get("kokoro_voice", "am_onyx")})
+    A.configure({**cfg, "edge_voice": script.get("voice", cfg.get("edge_voice")), "edge_rate": script.get("rate", cfg.get("edge_rate", "+8%")),
+                 "voice": script.get("kokoro_voice", cfg.get("voice", "am_michael"))})
     t = 0.0
     timeline, voice, sfx = [], [], []
     shots, tracks = [], {}
