@@ -1,0 +1,166 @@
+{
+ "format": "stickman",
+ "kicker": "Strange history",
+ "theme": "story",
+ "topic_key": "stories",
+ "title": "A whole city couldn't stop dancing (1518) #history #shorts",
+ "description": "In July 1518, Frau Troffea began dancing in the streets of Strasbourg and couldn't stop. Others joined, up to about 400 by some accounts, and the city's cure was a stage and musicians. Sources: Britannica, Popular Science, History.com.",
+ "hashtags": [
+  "#history",
+  "#dancingplague",
+  "#truestory",
+  "#strasbourg",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "town",
+   "speaker": "a",
+   "say": "In fifteen eighteen, an entire city started dancing, and nobody could stop.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "dance",
+     "face": "shock",
+     "color": "#ff2e78",
+     "hat": ""
+    }
+   ],
+   "title": "A CITY THAT COULDN'T STOP DANCING",
+   "camera": "punch"
+  },
+  {
+   "type": "stick",
+   "setting": "town",
+   "speaker": "a",
+   "say": "It began on July fourteenth in Strasbourg. A woman named Frau Troffea stepped into the street and danced. For days.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.42,
+     "action": "dance",
+     "face": "sad"
+    }
+   ],
+   "fx": [
+    "sweat"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "town",
+   "speaker": "a",
+   "say": "Then her neighbors started dancing too. By some accounts, as many as four hundred people joined in.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.25,
+     "action": "dance"
+    },
+    {
+     "id": "b",
+     "x": 0.55,
+     "action": "dance",
+     "face": "shock",
+     "color": "#00d2e6"
+    },
+    {
+     "id": "c",
+     "x": 0.82,
+     "action": "dance",
+     "face": "shock",
+     "color": "#ff9628",
+     "facing": -1
+    }
+   ],
+   "camera": "zoom_out"
+  },
+  {
+   "type": "stick",
+   "setting": "town",
+   "speaker": "d",
+   "say": "So what did the city leaders decide? The cure was... more dancing.",
+   "actors": [
+    {
+     "id": "d",
+     "x": 0.5,
+     "action": "point",
+     "face": "smug",
+     "hat": "tophat",
+     "color": "#9646ff"
+    }
+   ],
+   "bubble": {
+    "actor": "d",
+    "text": "KEEP DANCING!"
+   },
+   "camera": "zoom_in"
+  },
+  {
+   "type": "stick",
+   "setting": "stage",
+   "speaker": "a",
+   "say": "They built a stage and hired musicians to keep everyone moving. It only made things worse.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.25,
+     "action": "dance"
+    },
+    {
+     "id": "b",
+     "x": 0.5,
+     "action": "dance",
+     "prop": "mic"
+    },
+    {
+     "id": "c",
+     "x": 0.75,
+     "action": "dance",
+     "facing": -1
+    }
+   ],
+   "fx": [
+    "exclaim"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "stage",
+   "speaker": "a",
+   "say": "Dancers collapsed from exhaustion. To this day, nobody knows for sure what caused it.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.4,
+     "action": "fall",
+     "face": "sad"
+    },
+    {
+     "id": "b",
+     "x": 0.68,
+     "action": "think",
+     "face": "neutral",
+     "facing": -1
+    }
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "void",
+   "speaker": "b",
+   "say": "Would you have joined in, or run? Tell me in the comments.",
+   "actors": [
+    {
+     "id": "b",
+     "x": 0.5,
+     "action": "shrug",
+     "face": "happy"
+    }
+   ]
+  }
+ ],
+ "post_after": "2026-11-23T12:00"
+}

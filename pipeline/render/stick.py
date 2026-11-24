@@ -833,6 +833,7 @@ class World:
             pr["_x"] = pr["_x0"]
 
     def frame(self, sc, lt, dur, scene_key):
+        from . import stick_disco as SD
         if scene_key != self.scene_id:
             self._setup_scene(sc, scene_key)
         surface = skia.Surface(W, H)
@@ -858,6 +859,7 @@ class World:
         SETTINGS.get(sc.get("setting", "city_night"), _city_night)(c, lt, pan)
         if sc.get("setting", "city_night") in ("city_night", "gaming", "news_desk", "stage"):  # haze so characters read clearly
             c.drawRect(skia.Rect.MakeXYWH(-400, -400, W + 800, GROUND + 400), paint((20, 10, 40), fill=True, alpha=60))
+        SD.world_pass(c, sc.get("setting", "city_night"), lt)
         # props
         for pr in sc.get("props", []):
             if "move_to" in pr:
@@ -865,7 +867,7 @@ class World:
                 pr["_x"] = lerp(pr["_x0"], W * float(pr["move_to"]), k)
                 pr["_moving"] = 0 < k < 1
                 pr["facing"] = 1 if pr["move_to"] >= pr.get("x", 0.5) else -1
-            if pr.get("kind") not in ("money_rain",):
+            if pr.get("kind") not in ("money_rain",) and not SD.draw_extra_prop(c, pr, lt):
                 draw_world_prop(c, pr, lt, lt)
         # actors
         joints = {}
@@ -890,8 +892,9 @@ class World:
             p = blend(self.blend_from[aid], target, k) if k < 1 else target
             act.last_pose = p
             talking = speaker == aid and bool(sc.get("say"))
-            joints[aid] = draw_actor(c, act, p, lt, talking=talking)
+            joints[aid] = SD.draw_actor(c, act, p, lt, talking=talking)
         fx_layer(c, sc.get("fx", []), lt, joints)
+        SD.fx_extra(c, sc.get("fx", []), lt, joints)
         for pr in sc.get("props", []):
             if pr.get("kind") == "money_rain":
                 draw_world_prop(c, pr, lt, lt)
@@ -901,12 +904,13 @@ class World:
             speech_bubble(c, b["text"], j["head"][0], j["head"][1], lt - float(b.get("at", 0.15)), thought=b.get("thought", False))
         c.restore()
         overlay_fx(c, sc.get("fx", []), lt)
+        SD.overlay_extra(c, sc.get("fx", []), lt)
         if sc.get("title"):
             s = ease_back(min(1, lt / 0.3))
             c.save()
             c.translate(W / 2, 300)
             c.scale(s, s)
-            draw_text_center(c, sc["title"], 0, 0, 104, (255, 255, 255), 940, stroke=True)
+            SD.title_text(c, sc["title"], 0, 0, 108, 940)
             c.restore()
         img = surface.makeImageSnapshot()
         arr = img.toarray(colorType=skia.kRGBA_8888_ColorType)[:, :, :3]

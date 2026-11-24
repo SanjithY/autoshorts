@@ -6,9 +6,16 @@ The poster (GitHub Actions, every 3 hours) takes the oldest file in `queue/` who
 
 ## 1. Pick topics
 
-- Read `config.yaml → focus`. While today is on or before `focus.until`, about
-  `focus.share` of the scripts (6 of 8) are about the focus topic (GTA 6), and the rest are trending.
-  After that date, all 8 come from trends + evergreen fun topics.
+- **The GTA 6 run is over** (owner's call, Nov 23). Build a diverse portfolio: no more than
+  1 of 8 scripts per day about GTA, and never two videos on the same topic back to back.
+  Spread across: true stories, trending pop culture, streamers, gaming news, sports moments,
+  science, tech, records and money.
+- **Every `stickman` video is a truly interesting true story**: strange history, unbelievable
+  survivals, legendary cons, record breakers, absurd sports moments, weird science. Pick stories
+  most people haven't heard, with a twist you can say in the first line ("Australia went to war
+  with emus. And lost."). Verify every detail with 2+ sources; if sources disagree, use the
+  cautious version ("some accounts say..."). Avoid gore, suicide, sexual content, and stories whose
+  main point is someone dying.
 - Read `state/trends.json` (Google Trends + YouTube trending, already filtered) and
   search the web yourself for what's blowing up **today** with the YouTube Shorts audience:
   gaming, streamers, viral moments, movies/TV/music, sports highlights, tech/gadgets,
@@ -27,7 +34,7 @@ something they didn't do.
 
 ## 3. Vary the formats (per day)
 
-At least 2 `stickman`, about 1 in 5 `footage_story` (while GTA 6 is the focus), then a mix of `stat_shock`, `top_list`, `versus`, `quiz`,
+2-3 `stickman` true stories per day, then a mix of `stat_shock`, `top_list`, `versus`, `quiz`,
 `myth_or_fact` and `news_flash`. Never the same format back to back.
 Only queue a `top5_streamer` when `config.yaml → twitch_clips.streamers` has someone with
 `permission: true` (the poster builds that video itself from Twitch; set `streamer` to their login).
@@ -38,7 +45,7 @@ Only queue a `top5_streamer` when `config.yaml → twitch_clips.streamers` has s
 each with its length and what happens in it. Every graphic-format GTA video (stat, list, versus,
 quiz, myth, news) automatically gets matching clips as its background. Add `"bg_hint"` to a scene to steer it.
 
-**About 1 in 5 videos should be a `footage_story`:** a video *about* one clip. Set
+**`footage_story` is paused** now that GTA isn't the focus (the owner may re-enable it). When asked for one, it is a video *about* one clip. Set
 `"format": "footage_story"`, `"footage": "gta6/<file>.mp4"` (from the catalog), and
 `"footage_audio": 0.35` (game sound under the narration). Narrate what happens in the clip in first person ("I"),
 like a funny gamer recap, using the hook, text, stars and outro scene types. Keep the narration within about the clip's
@@ -100,7 +107,8 @@ One JSON file per video: `queue/YYYYMMDD-HHMM-<slug>.json`. Set `post_after`
 
 ### Stickman scenes (`"type": "stick"`)
 
-Use 4-7 of these per stickman video; every scene should have visible action (no static talking heads
+Stickman videos show no topic pill on screen (only the progress bar and captions), so put a big
+`title` on the first scene. Use 5-7 scenes per stickman video; every scene should have visible action (no static talking heads
 back to back).
 
 ```json
@@ -113,7 +121,10 @@ back to back).
  "fx": ["police_lights", "speed_lines"], "camera": "zoom_in"}
 ```
 
-- **setting:** `city_night` (neon, palms), `city_day`, `beach`, `room`, `stage`, `news_desk`, `gaming`, `void`
+- **setting:** `city_night` (neon, palms), `city_day`, `beach`, `room`, `stage` (dance floor + disco ball), `news_desk`, `gaming`, `void`,
+  and story sets: `town` (old European square), `field` (farmland), `ocean` (ship deck at night, liner on the horizon),
+  `paris` (Eiffel Tower), `forest` (storm, lookout tower), `stadium` (crowd + track).
+  The disco look (glowing figures, light beams, sparkles, colour grade, light-up floor indoors) is automatic.
 - **action:** `idle`, `talk`, `explain`, `walk`, `run`, `sneak`, `jump`, `celebrate`, `dance`, `wave`, `point`,
   `shrug`, `facepalm`, `think`, `shocked`, `sad`, `angry`, `fall`, `sit`, `phone`, `count_money`, `flex`, `bow`.
   Use `walk`, `run` or `sneak` with `"to"` to move them (x is 0-1 across the screen). Leave `x` out to continue from the last scene.
@@ -121,8 +132,9 @@ back to back).
 - **hat:** `cap`, `tophat`, `police`, `crown`, `headset`, `sunglasses`. **prop:** `phone`, `money`, `controller`, `trophy`, `mic`.
 - **stars:** 1-6 wanted stars over the head.
 - **props (world):** `car`, `sports_car`, `police_car` (x, move_to, move_time, color, driver),
-  `sign` (text, color), `tv` (text, color), `chart` (values[], labels[]), `money_rain`, `palm`, `building`.
-- **fx:** `police_lights`, `speed_lines`, `impact`, `sweat`, `hearts`, `exclaim`, `vignette`. **camera:** `zoom_in`, `zoom_out`, `punch`, `pan`, `shake`.
+  `sign` (text, color), `tv` (text, color), `chart` (values[], labels[]), `money_rain`, `palm`, `building`,
+  `emu` (one bird; x, move_to, facing, scale), `flock` (n birds), `ship`, `eiffel`, `disco_ball` (x, y, r).
+- **fx:** `police_lights`, `speed_lines`, `impact`, `sweat`, `hearts`, `exclaim`, `vignette`, `lightning` (bolt hits the last actor), `rain`, `confetti`. **camera:** `zoom_in`, `zoom_out`, `punch`, `pan`, `shake`.
 - Keep bubbles short (2-6 words) and put them on the speaking actor. Give recurring characters
   the same id, hat and color across scenes.
 

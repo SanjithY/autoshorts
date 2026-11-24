@@ -16,8 +16,8 @@ music_gain: 0.32
 focus:
   topic: "GTA 6"
   topic_key: gta6        # footage/gta6/ clips are used as backgrounds for these videos
-  until: "2026-11-30"
-  share: 0.75            # share of videos on the focus topic while it's active
+  until: "2026-11-23"    # GTA week ended early: owner asked for a broader mix
+  share: 0.0             # share of videos on the focus topic while it's active
 
 # ─── Format rotation ──────────────────────────────────────────────────────
 # Relative weights. A format is never repeated back-to-back, and the last

@@ -1,0 +1,134 @@
+{
+ "format": "stickman",
+ "kicker": "True story",
+ "theme": "story",
+ "topic_key": "stories",
+ "title": "She survived the Titanic... and that's not the crazy part #titanic #shorts",
+ "description": "Violet Jessop was aboard the Olympic when it collided with HMS Hawke in 1911, survived the Titanic in 1912, and survived the sinking of the Britannic in 1916. Sources: Wikipedia, National Geographic, History UK.",
+ "hashtags": [
+  "#titanic",
+  "#history",
+  "#truestory",
+  "#violetjessop",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "say": "This woman survived the Titanic. And that isn't even the craziest part.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.4,
+     "action": "wave",
+     "face": "happy",
+     "color": "#ff2e78"
+    }
+   ],
+   "title": "MISS UNSINKABLE",
+   "camera": "punch"
+  },
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "say": "Violet Jessop worked on the Olympic, the biggest liner in the world, when it crashed into a warship in nineteen eleven.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.4,
+     "action": "shocked",
+     "face": "shock"
+    }
+   ],
+   "fx": [
+    "impact"
+   ],
+   "camera": "shake"
+  },
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "say": "In nineteen twelve, she moved to its sister ship. The Titanic.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.45,
+     "action": "idle",
+     "face": "neutral"
+    }
+   ],
+   "camera": "zoom_in"
+  },
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "say": "When it hit an iceberg, she made it into a lifeboat and survived.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.45,
+     "action": "sad",
+     "face": "sad"
+    }
+   ],
+   "fx": [
+    "vignette"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "say": "Then in World War One, she was a nurse on the third sister ship, the Britannic. In nineteen sixteen, it hit a mine and sank.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.45,
+     "action": "shocked",
+     "face": "shock"
+    }
+   ],
+   "fx": [
+    "impact"
+   ],
+   "camera": "shake"
+  },
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "say": "She jumped out of her lifeboat as it was being pulled toward the ship's propellers, and survived again.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.4,
+     "action": "jump",
+     "face": "shock"
+    }
+   ],
+   "fx": [
+    "speed_lines"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "say": "Three sister ships, three disasters, and she lived through all of them. Would you ever get on a boat again?",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "shrug",
+     "face": "happy"
+    }
+   ]
+  }
+ ],
+ "post_after": "2026-11-23T12:00"
+}

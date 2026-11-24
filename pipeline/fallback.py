@@ -58,7 +58,7 @@ def news_from_headline(research: dict, cfg: dict, used_urls: set):
 
 
 def pick_bank(used: list):
-    files = sorted((ROOT / "bank").glob("*.json"))
+    files = sorted((ROOT / "bank").glob("*.json")) or sorted((ROOT / "bank" / "gta").glob("*.json"))
     fresh = [f for f in files if f.stem not in used] or files  # recycle once all are used
     f = random.choice(fresh)
     d = json.loads(f.read_text())

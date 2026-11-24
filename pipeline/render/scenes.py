@@ -295,7 +295,8 @@ def render_animated(script: dict, out_path: str, cfg: dict, background_video: st
         DRAW[seg["scene"]["type"]](frame, seg["scene"], lt, d)
         si = timeline.index(seg)
         D.progress_segments(frame, len(timeline), si, lt / d)
-        paste(frame, kicker_pill, W / 2, 190, 1)
+        if not all_stick:  # stickman videos keep the timeline + captions, but no topic pill
+            paste(frame, kicker_pill, W / 2, 190, 1)
         draw_captions(frame, chunks, t, y=1505 if all_stick else D.CAPTION_Y)
         if lt < 0.1 and not all_stick:  # flash cut between scenes
             frame = Image.blend(frame, Image.new("RGB", (W, H), WHITE), 0.35 * (1 - lt / 0.1))

@@ -1,0 +1,168 @@
+{
+ "format": "stickman",
+ "kicker": "Strange history",
+ "theme": "story",
+ "topic_key": "stories",
+ "title": "The most chaotic Olympic race ever (1904) #olympics #shorts",
+ "description": "The 1904 St. Louis Olympic marathon: Fred Lorz rode in a car and crossed first, winner Thomas Hicks was given strychnine, egg whites and brandy, and F\u00e9lix Carvajal napped after eating bad apples and still finished fourth. Sources: Olympics.com, Smithsonian, Wikipedia.",
+ "hashtags": [
+  "#olympics",
+  "#marathon",
+  "#history",
+  "#truestory",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "stadium",
+   "speaker": "a",
+   "say": "The nineteen oh four Olympic marathon might be the most chaotic race in history.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.3,
+     "action": "run",
+     "face": "happy",
+     "color": "#ff2e78"
+    },
+    {
+     "id": "b",
+     "x": 0.6,
+     "action": "run",
+     "color": "#00d2e6"
+    }
+   ],
+   "title": "THE WORST OLYMPIC RACE EVER",
+   "camera": "punch"
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "say": "It ran on dusty roads in St. Louis. Thirty two runners started. Only fourteen finished.",
+   "actors": [
+    {
+     "id": "a",
+     "x": -0.1,
+     "action": "run",
+     "to": 1.2,
+     "face": "sad",
+     "color": "#ff2e78"
+    }
+   ],
+   "fx": [
+    "sweat"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "say": "Fred Lorz dropped out around mile nine, then hitched a ride in a car for about ten miles.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.25,
+     "action": "wave",
+     "face": "smug",
+     "color": "#ff2e78"
+    }
+   ],
+   "props": [
+    {
+     "kind": "car",
+     "x": -0.4,
+     "move_to": 0.45,
+     "move_time": 2,
+     "color": "#ff9628",
+     "driver": true
+    }
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "stadium",
+   "speaker": "a",
+   "say": "He jogged into the stadium first and nearly got the gold medal, until people found out.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "celebrate",
+     "face": "happy",
+     "color": "#ff2e78"
+    }
+   ],
+   "fx": [
+    "confetti"
+   ],
+   "bubble": {
+    "actor": "a",
+    "text": "I WON!"
+   }
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "b",
+   "say": "The real winner, Thomas Hicks, got strychnine, a poison, mixed with egg whites and brandy from his own trainers.",
+   "actors": [
+    {
+     "id": "b",
+     "x": 0.35,
+     "action": "run",
+     "face": "sad",
+     "color": "#00d2e6"
+    },
+    {
+     "id": "c",
+     "x": 0.7,
+     "action": "point",
+     "hat": "cap",
+     "color": "#9646ff",
+     "facing": -1
+    }
+   ],
+   "fx": [
+    "sweat"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "d",
+   "say": "And Cuban runner F\u00e9lix Carvajal ate some bad apples, took a nap, and still finished fourth.",
+   "actors": [
+    {
+     "id": "d",
+     "x": 0.45,
+     "action": "sit",
+     "face": "happy",
+     "color": "#ff9628"
+    }
+   ],
+   "bubble": {
+    "actor": "d",
+    "text": "ZZZ...",
+    "thought": true
+   }
+  },
+  {
+   "type": "stick",
+   "setting": "stadium",
+   "speaker": "d",
+   "say": "A car, a nap, and poison. Which runner is your favorite?",
+   "actors": [
+    {
+     "id": "d",
+     "x": 0.5,
+     "action": "cheer",
+     "face": "happy",
+     "color": "#ff9628"
+    }
+   ]
+  }
+ ],
+ "post_after": "2026-11-23T12:00"
+}

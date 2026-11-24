@@ -1,0 +1,168 @@
+{
+ "format": "stickman",
+ "kicker": "Strange history",
+ "theme": "story",
+ "topic_key": "stories",
+ "title": "Australia went to war with emus... and lost #history #shorts",
+ "description": "In 1932 Major Meredith's soldiers took two Lewis guns and 10,000 rounds to fight emus damaging wheat farms in Western Australia. He claimed 986 kills from 9,860 rounds. Sources: Britannica, Wikipedia, National Geographic.",
+ "hashtags": [
+  "#history",
+  "#emuwar",
+  "#australia",
+  "#truestory",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "say": "In nineteen thirty two, Australia sent soldiers with machine guns to fight emus. And the emus won.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.22,
+     "action": "shocked",
+     "hat": "cap",
+     "color": "#ff9628"
+    }
+   ],
+   "props": [
+    {
+     "kind": "flock",
+     "x": 0.72,
+     "n": 4,
+     "facing": -1
+    }
+   ],
+   "title": "THE GREAT EMU WAR",
+   "camera": "punch"
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "f",
+   "say": "Roughly twenty thousand emus were trampling wheat farms in Western Australia.",
+   "actors": [
+    {
+     "id": "f",
+     "x": 0.2,
+     "action": "facepalm",
+     "face": "sad",
+     "hat": "tophat",
+     "color": "#9646ff"
+    }
+   ],
+   "props": [
+    {
+     "kind": "flock",
+     "x": -0.3,
+     "move_to": 0.75,
+     "move_time": 3,
+     "n": 5
+    }
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "say": "So Major Meredith showed up with two Lewis guns and ten thousand rounds of ammo.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.35,
+     "action": "flex",
+     "face": "smug",
+     "hat": "cap"
+    },
+    {
+     "id": "b",
+     "x": 0.62,
+     "action": "point",
+     "hat": "cap",
+     "color": "#00d2e6",
+     "facing": -1
+    }
+   ],
+   "camera": "zoom_in"
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "say": "But the emus just scattered. One gun jammed after a few rounds, and after three days only about thirty birds were down.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.3,
+     "action": "shocked",
+     "face": "shock"
+    }
+   ],
+   "props": [
+    {
+     "kind": "flock",
+     "x": 0.6,
+     "move_to": 1.5,
+     "move_time": 1.6,
+     "n": 5
+    }
+   ],
+   "fx": [
+    "speed_lines",
+    "exclaim"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "say": "By December, Meredith claimed nine hundred eighty six emus, using almost ten thousand rounds. About ten bullets per bird.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.32,
+     "action": "facepalm",
+     "face": "sad"
+    }
+   ],
+   "props": [
+    {
+     "kind": "emu",
+     "x": 0.75,
+     "facing": -1
+    }
+   ],
+   "bubble": {
+    "actor": "a",
+    "text": "10 BULLETS EACH?!"
+   }
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "say": "The soldiers went home. The emus stayed. Team soldiers or team emus? Comment below.",
+   "actors": [
+    {
+     "id": "a",
+     "x": -0.2,
+     "action": "walk",
+     "to": 0.1,
+     "face": "sad"
+    }
+   ],
+   "props": [
+    {
+     "kind": "flock",
+     "x": 0.62,
+     "n": 4,
+     "facing": -1
+    }
+   ],
+   "camera": "zoom_out"
+  }
+ ],
+ "post_after": "2026-11-23T12:00"
+}

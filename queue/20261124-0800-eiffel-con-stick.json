@@ -1,0 +1,180 @@
+{
+ "format": "stickman",
+ "kicker": "Strange history",
+ "theme": "story",
+ "topic_key": "stories",
+ "title": "The man who sold the Eiffel Tower. Twice. #history #shorts",
+ "description": "In 1925 con man Victor Lustig posed as a government official, told scrap dealers the Eiffel Tower would be sold for scrap, and took Andr\u00e9 Poisson's money. Poisson was too embarrassed to report it, so Lustig ran the scam again. Sources: Mental Floss, Ripley's, Smithsonian.",
+ "hashtags": [
+  "#history",
+  "#eiffeltower",
+  "#conman",
+  "#truestory",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "stick",
+   "setting": "paris",
+   "speaker": "a",
+   "say": "In nineteen twenty five, a con man sold the Eiffel Tower. Then he sold it again.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.28,
+     "action": "bow",
+     "face": "smug",
+     "hat": "tophat",
+     "color": "#ff9628"
+    }
+   ],
+   "title": "HE SOLD THE EIFFEL TOWER",
+   "camera": "punch"
+  },
+  {
+   "type": "stick",
+   "setting": "paris",
+   "speaker": "a",
+   "say": "Victor Lustig read that the tower was expensive to repair, so he posed as a French government official.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.32,
+     "action": "think",
+     "face": "smug"
+    }
+   ],
+   "bubble": {
+    "actor": "a",
+    "text": "I HAVE AN IDEA",
+    "thought": true
+   }
+  },
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "a",
+   "say": "He invited scrap metal dealers to a fancy Paris hotel and told them the tower was being sold for scrap.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.25,
+     "action": "explain",
+     "face": "smug"
+    },
+    {
+     "id": "b",
+     "x": 0.6,
+     "action": "listen",
+     "face": "shock",
+     "color": "#00d2e6",
+     "facing": -1
+    },
+    {
+     "id": "c",
+     "x": 0.85,
+     "action": "listen",
+     "color": "#9646ff",
+     "facing": -1
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "x": 0.5,
+     "text": "TOWER FOR SALE",
+     "color": "#ffe0ef"
+    }
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "room",
+   "speaker": "b",
+   "say": "One dealer, Andr\u00e9 Poisson, wanted it badly. He paid, and Lustig fled to Austria with the money.",
+   "actors": [
+    {
+     "id": "b",
+     "x": 0.35,
+     "action": "count_money",
+     "face": "happy",
+     "prop": "money"
+    },
+    {
+     "id": "a",
+     "x": 0.7,
+     "action": "run",
+     "to": 1.3,
+     "face": "smug"
+    }
+   ],
+   "props": [
+    {
+     "kind": "money_rain",
+     "x": 0.5
+    }
+   ],
+   "fx": [
+    "speed_lines"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "paris",
+   "speaker": "b",
+   "say": "Poisson was too embarrassed to tell the police, so nobody came looking.",
+   "actors": [
+    {
+     "id": "b",
+     "x": 0.5,
+     "action": "facepalm",
+     "face": "sad"
+    }
+   ],
+   "fx": [
+    "sweat"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "paris",
+   "speaker": "a",
+   "say": "So Lustig came back and ran the same scam again. This time the victim went to the police, and Lustig slipped away to America.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.15,
+     "action": "sneak",
+     "to": 0.75,
+     "face": "smug"
+    }
+   ],
+   "props": [
+    {
+     "kind": "police_car",
+     "x": -0.4,
+     "move_to": 0.2,
+     "move_time": 2.5
+    }
+   ],
+   "fx": [
+    "police_lights"
+   ]
+  },
+  {
+   "type": "stick",
+   "setting": "void",
+   "speaker": "a",
+   "say": "Would you have fallen for it? Be honest.",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.5,
+     "action": "shrug",
+     "face": "smug"
+    }
+   ]
+  }
+ ],
+ "post_after": "2026-11-23T12:00"
+}
