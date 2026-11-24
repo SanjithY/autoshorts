@@ -152,6 +152,39 @@ def act_pose(action, t, actor):
         return pose(torso=10 * s(p_), head=8 * s(p_ + 1), la1=-90 + 60 * s(p_), la2=-60, ra1=90 + 60 * s(p_ + 1), ra2=60,
                     ll1=-20 + 20 * s(p_), ll2=-30 * abs(s(p_)), rl1=20 + 20 * s(p_), rl2=-30 * abs(s(p_ + 1.5)),
                     dy=-18 * abs(s(p_)))
+    if a == "dance2":  # disco point: one arm up, hips swaying
+        p_ = t * 4.2
+        up = s(p_) > 0
+        return pose(torso=8 * s(p_), head=6 * s(p_ + 0.5), ra1=160 if up else 40, ra2=10 if up else 70,
+                    la1=-30, la2=-100, ll1=-12 + 14 * s(p_), ll2=-20 * abs(s(p_)), rl1=12 + 14 * s(p_), rl2=-10,
+                    dy=-10 * abs(s(p_)))
+    if a == "dance3":  # side shuffle with arm swings
+        p_ = t * 7
+        return pose(torso=-6 * s(p_ / 2), la1=-60 - 50 * s(p_), la2=-40, ra1=60 + 50 * s(p_), ra2=40,
+                    ll1=-30 * s(p_), ll2=-50 * max(0, s(p_)), rl1=30 * s(p_), rl2=-50 * max(0, -s(p_)),
+                    dy=-24 * abs(s(p_)))
+    if a == "nod":
+        return pose(head=10 * abs(s(t * 4)), la1=-10, ra1=10, torso=2)
+    if a == "look":  # glance around
+        return pose(head=-12 * s(t * 1.6), torso=2 * s(t * 1.6), la1=-14, ra1=14, dy=-2 * abs(s(t * 2)))
+    if a == "laugh":
+        g = abs(s(t * 12))
+        return pose(torso=-8 + 6 * g, head=-14 - 6 * g, la1=30, la2=80, ra1=35, ra2=85, dy=-5 * g)
+    if a == "cry":
+        g = s(t * 10)
+        return pose(torso=12, head=24, la1=150, la2=130, ra1=150, ra2=130, dy=4 + 2 * g)
+    if a == "climb":
+        p_ = t * 6
+        return pose(la1=-160 + 25 * s(p_), la2=-10, ra1=160 - 25 * s(p_ + math.pi), ra2=10,
+                    ll1=40 * max(0, s(p_)), ll2=-80 * max(0, s(p_)), rl1=40 * max(0, -s(p_)), rl2=-80 * max(0, -s(p_)))
+    if a == "throw":
+        c = t % 1.4
+        k = ease(min(1, c / 0.5)) if c < 0.5 else 1 - ease(min(1, (c - 0.5) / 0.25))
+        return pose(torso=-10 * k + 12 * (1 - k), ra1=-120 * k + 100 * (1 - k), ra2=-30, la1=40, ll1=-15, rl1=20)
+    if a == "kneel":
+        return pose(torso=6, ll1=90, ll2=-90, rl1=-5, rl2=-80, la1=20, ra1=30, ra2=40, dy=60)
+    if a == "lie":
+        return pose(torso=-90, head=-5, la1=-100, ra1=-80, ll1=-10, rl1=10, dy=150)
     if a == "wave":
         return pose(head=5, la1=-10, ra1=150, ra2=25 + 30 * s(t * 9), dy=-2 * abs(s(t * 2)))
     if a == "point":
@@ -199,6 +232,54 @@ def act_pose(action, t, actor):
 
 
 MOVING = {"walk": 260, "run": 620, "sneak": 160}  # px per second
+
+# Actions that loop forever. When a scene gives an actor one of these and no "do" list, the engine
+# breaks it into a varied sequence so nobody repeats one move for the whole scene.
+VARIETY = {
+    "talk": ["talk", "explain", "point", "talk", "shrug", "explain"],
+    "explain": ["explain", "point", "talk", "explain", "shrug"],
+    "idle": ["idle", "look", "nod", "idle", "think", "look"],
+    "listen": ["listen", "nod", "look", "think", "nod"],
+    "dance": ["dance", "dance2", "dance3", "dance", "dance2"],
+    "dance2": ["dance2", "dance3", "dance", "dance2"],
+    "dance3": ["dance3", "dance", "dance2", "dance3"],
+    "celebrate": ["celebrate", "jump", "cheer", "dance2", "celebrate"],
+    "cheer": ["cheer", "jump", "celebrate", "wave"],
+    "think": ["think", "look", "think", "point"],
+    "phone": ["phone", "laugh", "phone", "look"],
+    "sad": ["sad", "facepalm", "sad", "cry"],
+    "angry": ["angry", "point", "angry", "facepalm"],
+    "wave": ["wave", "point", "wave", "celebrate"],
+    "count_money": ["count_money", "laugh", "count_money", "flex"],
+}
+
+
+def _seed(aid):
+    return sum(ord(ch) * (i + 7) for i, ch in enumerate(str(aid)))
+
+
+def auto_steps(a, aid, dur, speaker):
+    """Expand a single looping action into a varied timeline of steps for this scene."""
+    act = a.get("action", "idle")
+    if "do" in a:
+        return [dict(st) for st in a["do"]]
+    base = {"action": act}
+    for k in ("to", "then", "face"):
+        if k in a:
+            base[k] = a[k]
+    if act in MOVING or act not in VARIETY or dur < 2.4:
+        return [dict(base, at=0)]
+    rnd = random.Random(_seed(aid) * 31 + int(dur * 10))
+    seq = VARIETY[act]
+    off = rnd.randrange(len(seq))
+    seg = rnd.uniform(1.1, 1.6) if speaker else rnd.uniform(1.4, 2.2)
+    steps, tt, i = [], 0.0, 0
+    while tt < dur:
+        nm = seq[(off + i) % len(seq)] if i else act
+        steps.append({"at": tt, "action": nm})
+        tt += seg * rnd.uniform(0.85, 1.2)
+        i += 1
+    return steps
 
 
 @dataclass
@@ -800,6 +881,7 @@ class World:
         self.scene_id = None
         self.scene_start_x = {}
         self.blend_from = {}
+        self.steps, self.step_state, self.step_x0, self.step_from = {}, {}, {}, {}
 
     def _setup_scene(self, sc, key):
         self.scene_id = key
@@ -859,45 +941,70 @@ class World:
         SETTINGS.get(sc.get("setting", "city_night"), _city_night)(c, lt, pan)
         if sc.get("setting", "city_night") in ("city_night", "gaming", "news_desk", "stage"):  # haze so characters read clearly
             c.drawRect(skia.Rect.MakeXYWH(-400, -400, W + 800, GROUND + 400), paint((20, 10, 40), fill=True, alpha=60))
-        SD.world_pass(c, sc.get("setting", "city_night"), lt)
+        SD.world_pass(c, sc.get("setting", "city_night"), lt, pan)
         # props
         for pr in sc.get("props", []):
+            plt = lt - float(pr.get("at", 0))
+            if plt < 0:  # enters later in the scene
+                continue
             if "move_to" in pr:
-                k = ease(lt / max(0.1, float(pr.get("move_time", dur))))
+                k = ease(plt / max(0.1, float(pr.get("move_time", dur))))
                 pr["_x"] = lerp(pr["_x0"], W * float(pr["move_to"]), k)
                 pr["_moving"] = 0 < k < 1
                 pr["facing"] = 1 if pr["move_to"] >= pr.get("x", 0.5) else -1
-            if pr.get("kind") not in ("money_rain",) and not SD.draw_extra_prop(c, pr, lt):
-                draw_world_prop(c, pr, lt, lt)
+            if pr.get("kind") not in ("money_rain",) and not SD.draw_extra_prop(c, pr, plt):
+                draw_world_prop(c, pr, plt, lt)
         # actors
         joints = {}
         speaker = sc.get("speaker")
         for i, a in enumerate(sc.get("actors", [])):
             aid = str(a.get("id", f"a{i}"))
             act = self.actors[aid]
-            action = a.get("action", "idle")
-            # movement
-            if "to" in a:
-                x0, x1 = self.scene_start_x[aid], W * float(a["to"])
-                speed = MOVING.get(action, 300)
+            key = (scene_key, aid)
+            if key not in self.steps:
+                self.steps[key] = auto_steps(a, aid, dur, speaker == aid)
+                self.step_state[key] = None
+            steps = self.steps[key]
+            si = max([k for k, st in enumerate(steps) if float(st.get("at", 0)) <= lt] or [0])
+            st = steps[si]
+            t0 = float(st.get("at", 0))
+            if self.step_state[key] != si:  # new step: remember where we start from
+                self.step_state[key] = si
+                self.step_x0[key] = act.x if si else self.scene_start_x[aid]
+                self.step_from[key] = dict(act.last_pose) if si else self.blend_from[aid]
+                if st.get("face"):
+                    act.face = st["face"]
+                if "facing" in st:
+                    act.facing = int(st["facing"])
+                if "prop" in st:
+                    act.prop = st["prop"]
+            slt = max(0.0, lt - t0)
+            action = st.get("action", "idle")
+            if "to" in st:
+                x0, x1 = self.step_x0[key], W * float(st["to"])
+                speed = MOVING.get(action, 300) * float(st.get("speed", 1))
                 travel = abs(x1 - x0) / speed
-                k = min(1, lt / max(0.1, travel))
+                k = min(1, slt / max(0.1, travel))
                 act.x = lerp(x0, x1, k)
                 if abs(x1 - x0) > 3:
                     act.facing = 1 if x1 > x0 else -1
                 if k >= 1 and action in MOVING:
-                    action = a.get("then", "idle")
-            target = act_pose(action, lt, act)
-            k = ease(lt / 0.25)
-            p = blend(self.blend_from[aid], target, k) if k < 1 else target
+                    action = st.get("then", "idle")
+            sd = _seed(aid)
+            tempo = 0.88 + (sd % 25) / 100
+            looping = action in VARIETY or action in MOVING or action in ("dance2", "dance3", "nod", "look", "laugh", "cry", "climb")
+            tp = slt * tempo + (sd % 17) * 0.13 if looping else slt
+            target = act_pose(action, tp, act)
+            k = ease(slt / 0.25)
+            p = blend(self.step_from[key], target, k) if k < 1 else target
             act.last_pose = p
             talking = speaker == aid and bool(sc.get("say"))
             joints[aid] = SD.draw_actor(c, act, p, lt, talking=talking)
         fx_layer(c, sc.get("fx", []), lt, joints)
         SD.fx_extra(c, sc.get("fx", []), lt, joints)
         for pr in sc.get("props", []):
-            if pr.get("kind") == "money_rain":
-                draw_world_prop(c, pr, lt, lt)
+            if pr.get("kind") == "money_rain" and lt >= float(pr.get("at", 0)):
+                draw_world_prop(c, pr, lt - float(pr.get("at", 0)), lt)
         b = sc.get("bubble")
         if b and b.get("text") and str(b.get("actor")) in joints:
             j = joints[str(b["actor"])]

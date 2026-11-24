@@ -16,129 +16,248 @@
   {
    "type": "stick",
    "setting": "forest",
+   "title": "STRUCK 7 TIMES",
    "speaker": "a",
-   "say": "This park ranger was struck by lightning seven times. And survived every single one.",
+   "fx": [
+    "lightning@0.6",
+    "rain"
+   ],
    "actors": [
     {
      "id": "a",
-     "x": 0.42,
-     "action": "shocked",
-     "face": "shock",
+     "x": 0.1,
+     "color": "#00d2e6",
      "hat": "cap",
-     "color": "#00d2e6"
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.42
+      },
+      {
+       "at": 0.7,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.2,
+       "action": "flex",
+       "face": "smug"
+      }
+     ]
     }
    ],
-   "fx": [
-    "lightning",
-    "rain"
-   ],
-   "title": "STRUCK 7 TIMES"
+   "say": "This park ranger was struck by lightning seven times. And survived every single one."
   },
   {
    "type": "stick",
    "setting": "forest",
    "speaker": "a",
-   "say": "Roy Sullivan was a ranger in Shenandoah National Park in Virginia.",
    "actors": [
     {
      "id": "a",
-     "x": 0.35,
-     "action": "wave",
-     "face": "happy"
+     "x": 0.2,
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.5,
+       "face": "happy"
+      },
+      {
+       "at": 1.5,
+       "action": "wave"
+      },
+      {
+       "at": 2.6,
+       "action": "point"
+      }
+     ]
     }
-   ]
+   ],
+   "say": "Roy Sullivan was a ranger in Shenandoah National Park in Virginia."
   },
   {
    "type": "stick",
    "setting": "forest",
    "speaker": "a",
-   "say": "In nineteen forty two, he ran out of a burning lookout tower, and a bolt hit his leg and burned a hole in his shoe.",
+   "fx": [
+    "lightning@1.6",
+    "rain"
+   ],
    "actors": [
     {
      "id": "a",
-     "x": 0.6,
-     "action": "run",
-     "to": 0.25,
-     "face": "shock"
+     "x": 0.78,
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 0.35,
+       "face": "shock"
+      },
+      {
+       "at": 1.7,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.8,
+       "action": "sad",
+       "face": "sad"
+      }
+     ]
     }
    ],
-   "fx": [
-    "lightning",
-    "rain"
-   ]
+   "say": "In nineteen forty two, he ran out of a burning lookout tower, and a bolt hit his leg and burned a hole in his shoe."
   },
   {
    "type": "stick",
    "setting": "room",
    "speaker": "a",
-   "say": "In nineteen seventy two, lightning got him inside a ranger station and set his hair on fire.",
-   "actors": [
-    {
-     "id": "a",
-     "x": 0.45,
-     "action": "shocked",
-     "face": "shock"
-    }
-   ],
    "fx": [
-    "lightning",
+    "lightning@1.2",
     "sweat"
    ],
    "bubble": {
     "actor": "a",
-    "text": "NOT AGAIN!"
-   }
+    "text": "NOT AGAIN!",
+    "at": 1.8
+   },
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.45,
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "phone",
+       "face": "neutral"
+      },
+      {
+       "at": 1.25,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.4,
+       "action": "run",
+       "to": 0.8
+      }
+     ]
+    }
+   ],
+   "say": "In nineteen seventy two, lightning got him inside a ranger station and set his hair on fire."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "a",
-   "say": "He got hit in his own front yard, on a trail, and finally, in nineteen seventy seven, while fishing.",
+   "fx": [
+    "lightning@2.2"
+   ],
    "actors": [
     {
      "id": "a",
-     "x": 0.4,
-     "action": "facepalm",
-     "face": "sad"
+     "x": 0.15,
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.4
+      },
+      {
+       "at": 1.2,
+       "action": "sit",
+       "face": "happy"
+      },
+      {
+       "at": 2.25,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 3.2,
+       "action": "facepalm",
+       "face": "sad"
+      }
+     ]
     }
    ],
-   "fx": [
-    "lightning"
-   ]
+   "say": "He got hit in his own front yard, on a trail, and finally, in nineteen seventy seven, while fishing."
   },
   {
    "type": "stick",
    "setting": "stage",
    "speaker": "a",
-   "say": "Guinness World Records says nobody has survived more lightning strikes. People called him the Human Lightning Rod.",
+   "fx": [
+    "confetti"
+   ],
    "actors": [
     {
      "id": "a",
      "x": 0.5,
-     "action": "flex",
-     "face": "smug"
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "flex",
+       "face": "smug"
+      },
+      {
+       "at": 1.4,
+       "action": "celebrate",
+       "face": "happy"
+      },
+      {
+       "at": 2.8,
+       "action": "bow"
+      }
+     ]
     }
    ],
-   "fx": [
-    "confetti"
-   ]
+   "say": "Guinness World Records says nobody has survived more lightning strikes. People called him the Human Lightning Rod."
   },
   {
    "type": "stick",
    "setting": "forest",
    "speaker": "a",
-   "say": "Would you ever go outside in a storm again?",
+   "fx": [
+    "rain"
+   ],
    "actors": [
     {
      "id": "a",
      "x": 0.5,
-     "action": "shrug",
-     "face": "happy"
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "look"
+      },
+      {
+       "at": 1.0,
+       "action": "shrug",
+       "face": "happy"
+      },
+      {
+       "at": 2.2,
+       "action": "point"
+      }
+     ]
     }
    ],
-   "fx": [
-    "rain"
-   ]
+   "say": "Would you ever go outside in a storm again?"
   }
  ],
  "post_after": "2026-11-23T12:00"

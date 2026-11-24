@@ -16,118 +16,239 @@
   {
    "type": "stick",
    "setting": "ocean",
+   "title": "MISS UNSINKABLE",
+   "camera": "punch",
    "speaker": "a",
-   "say": "This woman survived the Titanic. And that isn't even the craziest part.",
    "actors": [
     {
      "id": "a",
-     "x": 0.4,
-     "action": "wave",
-     "face": "happy",
-     "color": "#ff2e78"
+     "x": 0.1,
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.42
+      },
+      {
+       "at": 1.2,
+       "action": "wave",
+       "face": "happy"
+      },
+      {
+       "at": 2.4,
+       "action": "point"
+      }
+     ]
     }
    ],
-   "title": "MISS UNSINKABLE",
-   "camera": "punch"
+   "say": "This woman survived the Titanic. And that isn't even the craziest part."
   },
   {
    "type": "stick",
    "setting": "ocean",
    "speaker": "a",
-   "say": "Violet Jessop worked on the Olympic, the biggest liner in the world, when it crashed into a warship in nineteen eleven.",
-   "actors": [
-    {
-     "id": "a",
-     "x": 0.4,
-     "action": "shocked",
-     "face": "shock"
-    }
-   ],
    "fx": [
     "impact"
    ],
-   "camera": "shake"
+   "camera": "shake",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.42,
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "look"
+      },
+      {
+       "at": 0.6,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.0,
+       "action": "fall",
+       "face": "shock"
+      },
+      {
+       "at": 3.4,
+       "action": "think",
+       "face": "neutral"
+      }
+     ]
+    }
+   ],
+   "say": "Violet Jessop worked on the Olympic, the biggest liner in the world, when it crashed into a warship in nineteen eleven."
   },
   {
    "type": "stick",
    "setting": "ocean",
    "speaker": "a",
-   "say": "In nineteen twelve, she moved to its sister ship. The Titanic.",
+   "camera": "zoom_in",
    "actors": [
     {
      "id": "a",
-     "x": 0.45,
-     "action": "idle",
-     "face": "neutral"
+     "x": -0.1,
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.45,
+       "face": "happy"
+      },
+      {
+       "at": 1.6,
+       "action": "look"
+      },
+      {
+       "at": 2.6,
+       "action": "shrug"
+      }
+     ]
     }
    ],
-   "camera": "zoom_in"
+   "props": [
+    {
+     "kind": "sign",
+     "x": 0.8,
+     "text": "TITANIC · 1912",
+     "color": "#fff3d6",
+     "at": 0.8
+    }
+   ],
+   "say": "In nineteen twelve, she moved to its sister ship. The Titanic."
   },
   {
    "type": "stick",
    "setting": "ocean",
    "speaker": "a",
-   "say": "When it hit an iceberg, she made it into a lifeboat and survived.",
-   "actors": [
-    {
-     "id": "a",
-     "x": 0.45,
-     "action": "sad",
-     "face": "sad"
-    }
-   ],
    "fx": [
     "vignette"
-   ]
-  },
-  {
-   "type": "stick",
-   "setting": "ocean",
-   "speaker": "a",
-   "say": "Then in World War One, she was a nurse on the third sister ship, the Britannic. In nineteen sixteen, it hit a mine and sank.",
+   ],
    "actors": [
     {
      "id": "a",
-     "x": 0.45,
-     "action": "shocked",
-     "face": "shock"
+     "x": 0.6,
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 0.9,
+       "action": "run",
+       "to": 0.25
+      },
+      {
+       "at": 2.2,
+       "action": "sad",
+       "face": "sad"
+      }
+     ]
     }
    ],
-   "fx": [
-    "impact"
-   ],
-   "camera": "shake"
+   "say": "When it hit an iceberg, she made it into a lifeboat and survived."
   },
   {
    "type": "stick",
    "setting": "ocean",
    "speaker": "a",
-   "say": "She jumped out of her lifeboat as it was being pulled toward the ship's propellers, and survived again.",
+   "fx": [
+    "impact"
+   ],
+   "camera": "shake",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.2,
+     "color": "#ff2e78",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.5,
+       "face": "neutral"
+      },
+      {
+       "at": 1.6,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.8,
+       "action": "run",
+       "to": 0.15
+      }
+     ]
+    }
+   ],
+   "say": "Then in World War One, she was a nurse on the third sister ship, the Britannic. In nineteen sixteen, it hit a mine and sank."
+  },
+  {
+   "type": "stick",
+   "setting": "ocean",
+   "speaker": "a",
+   "fx": [
+    "speed_lines"
+   ],
    "actors": [
     {
      "id": "a",
      "x": 0.4,
-     "action": "jump",
-     "face": "shock"
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 1.0,
+       "action": "jump"
+      },
+      {
+       "at": 2.6,
+       "action": "celebrate",
+       "face": "happy"
+      }
+     ]
     }
    ],
-   "fx": [
-    "speed_lines"
-   ]
+   "say": "She jumped out of her lifeboat as it was being pulled toward the ship's propellers, and survived again."
   },
   {
    "type": "stick",
    "setting": "ocean",
    "speaker": "a",
-   "say": "Three sister ships, three disasters, and she lived through all of them. Would you ever get on a boat again?",
    "actors": [
     {
      "id": "a",
      "x": 0.5,
-     "action": "shrug",
-     "face": "happy"
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "shrug",
+       "face": "happy"
+      },
+      {
+       "at": 1.6,
+       "action": "laugh"
+      },
+      {
+       "at": 2.8,
+       "action": "wave"
+      }
+     ]
     }
-   ]
+   ],
+   "say": "Three sister ships, three disasters, and she lived through all of them. Would you ever get on a boat again?"
   }
  ],
  "post_after": "2026-11-23T12:00"

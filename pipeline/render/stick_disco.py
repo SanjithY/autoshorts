@@ -75,11 +75,11 @@ def draw_actor(c, actor, p, t, talking=False):
     sh.setMaskFilter(blur(9))
     c.drawOval(skia.Rect.MakeXYWH(fx - 120 * k, GROUND - 12, 240 * k, 30), sh)
     # neon glow that pulses on the beat
-    pulse = 0.7 + 0.3 * beat(t)
-    g = glow(acc, w + 30, 18, int(190 * pulse))
+    pulse = 0.85 + 0.15 * math.sin(t * 2.5)
+    g = glow(acc, w + 22, 14, int(130 * pulse))
     for a, b in BACK + FRONT + (("hip", "neck"),):
         c.drawLine(*j[a], *j[b], g)
-    c.drawCircle(*j["head"], r + 14, glow(acc, 0, 20, int(200 * pulse), fill=True))
+    c.drawCircle(*j["head"], r + 10, glow(acc, 0, 16, int(120 * pulse), fill=True))
     # limbs as tubes, back side slightly lighter for depth
     for a, b in BACK:
         _tube(c, j[a], j[b], w, (60, 42, 96), acc)
@@ -228,64 +228,10 @@ def grade(c, setting_name):
     c.drawRect(skia.Rect.MakeXYWH(-400, -400, W + 800, H + 800), gp)
 
 
-def world_pass(c, setting_name, t):
-    """Called after the set is drawn, before props and actors."""
-    if setting_name in INDOOR:
-        disco_floor(c, t)
-    else:
-        neon_edge(c)
-    grade(c, setting_name)
-    day = setting_name in OUTDOOR_DAY
-    beams(c, t, 0.45 if day else 1.0)
-    sparkles(c, t, 26 if day else 40, 0.6 if day else 1.0)
-    if setting_name in ("stage", "void", "room", "gaming"):
-        disco_ball(c, 860, 470, 62, t)
-
-
-# --------------------------------------------------------------- restyled built-in sets
-@setting("city_day")
-def _city_day(c, t, cam):
-    _grad(c, (255, 110, 160), (255, 205, 140))
-    c.drawCircle(540 - cam * 0.2, 820, 210, paint((255, 235, 170), fill=True, alpha=230))
-    rnd = random.Random(5)
-    x = -300
-    while x < W + 300:
-        bw, bh = rnd.randint(120, 230), rnd.randint(300, 700)
-        col = rnd.choice([(120, 60, 150), (150, 70, 160), (100, 50, 130)])
-        c.drawRect(skia.Rect.MakeXYWH(x - cam * 0.4, GROUND - bh, bw, bh), paint(col, fill=True))
-        x += bw + rnd.randint(8, 30)
-    _street(c, (70, 40, 90))
-
-
-@setting("void")
-def _void(c, t, cam):
-    _grad(c, (30, 12, 60), (80, 20, 110), 0, GROUND)
-    for yy in range(160, GROUND, 60):
-        for xx in range(30, W, 60):
-            c.drawCircle(xx, yy, 2.5, paint((255, 255, 255), fill=True, alpha=40))
-
-
-@setting("room")
-def _room(c, t, cam):
-    _grad(c, (60, 26, 96), (110, 40, 130), -400, GROUND)
-    c.drawRoundRect(skia.Rect.MakeXYWH(640 - cam * 0.3, 640, 300, 330), 10, 10, paint((40, 20, 80), fill=True))
-    for i in range(6):
-        c.drawRect(skia.Rect.MakeXYWH(660 - cam * 0.3 + i * 48, 860 - (i * 37) % 120, 30, 110 + (i * 37) % 120),
-                   paint((90, 50, 140), fill=True))
-    c.drawRoundRect(skia.Rect.MakeXYWH(640 - cam * 0.3, 640, 300, 330), 10, 10, paint((255, 90, 180), 8))
-    c.drawLine(-400, 560, W + 400, 560, glow((255, 80, 170), 10, 10, 220))
-    c.drawLine(-400, 560, W + 400, 560, paint((255, 210, 235), 3))
-    c.drawRoundRect(skia.Rect.MakeXYWH(80 - cam * 0.5, 820, 240, 160), 12, 12, paint((255, 140, 60), fill=True))
-
-
-@setting("news_desk")
-def _news(c, t, cam):
-    _grad(c, (40, 14, 80), (130, 30, 120))
-    for i in range(12):
-        c.drawLine(-200 + i * 120 - cam * 0.2, 200, -500 + i * 160 - cam * 0.2, GROUND, paint((255, 90, 180), 3, alpha=70))
-    c.drawRect(skia.Rect.MakeXYWH(-400, GROUND - 330, W + 800, 60), paint((255, 46, 120), fill=True))
-    from .stick import draw_text_center
-    draw_text_center(c, "BREAKING NEWS", 300, GROUND - 300, 46, (255, 255, 255), 600)
+def world_pass(c, setting_name, t, cam=0.0):
+    """Called after the set is drawn, before props and actors: background life, no disco effects."""
+    from .ambient import ambient
+    ambient(c, setting_name, t, cam)
 
 
 def _street(c, fill):
@@ -298,8 +244,8 @@ def _street(c, fill):
 # --------------------------------------------------------------- new story sets
 @setting("town")
 def _town(c, t, cam):
-    """An old European town square (half-timbered houses, cathedral spire), at dusk."""
-    _grad(c, (60, 24, 110), (255, 120, 120))
+    """An old European town square (half-timbered houses, cathedral spire), summer afternoon."""
+    _grad(c, (110, 170, 235), (250, 225, 190))
     sp = skia.Path()  # cathedral spire silhouette
     sx = 760 - cam * 0.15
     sp.moveTo(sx - 120, GROUND - 300)
@@ -310,7 +256,7 @@ def _town(c, t, cam):
     sp.lineTo(sx + 120, GROUND - 900)
     sp.lineTo(sx + 120, GROUND - 300)
     sp.close()
-    c.drawPath(sp, paint((70, 30, 100), fill=True))
+    c.drawPath(sp, paint((150, 120, 130), fill=True))
     rnd = random.Random(8)
     x = -320
     while x < W + 300:
@@ -323,7 +269,7 @@ def _town(c, t, cam):
         roof.lineTo(xx + bw / 2, GROUND - bh - 170)
         roof.lineTo(xx + bw + 14, GROUND - bh)
         roof.close()
-        c.drawPath(roof, paint(rnd.choice([(150, 40, 70), (120, 40, 90), (170, 60, 60)]), fill=True))
+        c.drawPath(roof, paint(rnd.choice([(170, 70, 55), (140, 60, 50), (185, 90, 60)]), fill=True))
         beam = paint((80, 40, 50), 10, cap=False)
         for fy in range(GROUND - bh, GROUND, 140):
             c.drawLine(xx, fy, xx + bw, fy, beam)
@@ -331,25 +277,25 @@ def _town(c, t, cam):
             c.drawLine(xx + bw, fy, xx + bw / 2, fy + 140, beam)
         c.drawRect(skia.Rect.MakeXYWH(xx, GROUND - bh, bw, bh), paint((80, 40, 50), 10))
         for wy in range(GROUND - bh + 40, GROUND - 120, 140):
-            c.drawRect(skia.Rect.MakeXYWH(xx + 24, wy, 40, 54), paint((255, 210, 110), fill=True))
-            c.drawRect(skia.Rect.MakeXYWH(xx + bw - 64, wy, 40, 54), paint((255, 210, 110), fill=True))
+            c.drawRect(skia.Rect.MakeXYWH(xx + 24, wy, 40, 54), paint((120, 160, 190), fill=True))
+            c.drawRect(skia.Rect.MakeXYWH(xx + bw - 64, wy, 40, 54), paint((120, 160, 190), fill=True))
         x += bw + 6
     # cobblestones
-    c.drawRect(skia.Rect.MakeXYWH(-400, GROUND, W + 800, H), paint((95, 70, 100), fill=True))
+    c.drawRect(skia.Rect.MakeXYWH(-400, GROUND, W + 800, H), paint((120, 110, 105), fill=True))
     rnd = random.Random(2)
     for yy in range(GROUND + 10, H, 46):
         off = (yy // 46) % 2 * 40
         for xx in range(-80 + off, W + 80, 80):
             c.drawRoundRect(skia.Rect.MakeXYWH(xx - cam * 0.8, yy, 70, 36), 14, 14,
-                            paint(rnd.choice([(120, 90, 125), (110, 82, 118), (130, 100, 135)]), fill=True))
+                            paint(rnd.choice([(150, 140, 130), (140, 130, 122), (160, 150, 140)]), fill=True))
 
 
 @setting("field")
 def _field(c, t, cam):
-    """Open farmland at sunset: hills, wheat, a wire fence."""
-    _grad(c, (255, 100, 140), (255, 200, 130))
-    c.drawCircle(300 - cam * 0.1, 980, 160, paint((255, 235, 170), fill=True, alpha=230))
-    for i, (cx, col) in enumerate(((150, (150, 70, 140)), (700, (130, 60, 130)), (1150, (150, 70, 140)))):
+    """Open farmland on a hot day: hills, wheat, a wire fence."""
+    _grad(c, (90, 160, 235), (215, 235, 250))
+    c.drawCircle(300 - cam * 0.1, 420, 90, paint((255, 245, 200), fill=True))
+    for i, (cx, col) in enumerate(((150, (150, 150, 90)), (700, (130, 140, 80)), (1150, (150, 150, 90)))):
         c.drawOval(skia.Rect.MakeXYWH(cx - 520 - cam * 0.2, 1020, 1040, 420), paint(col, fill=True))
     c.drawRect(skia.Rect.MakeXYWH(-400, 1160, W + 800, GROUND - 1160), paint((235, 160, 60), fill=True))
     rnd = random.Random(4)
@@ -392,17 +338,17 @@ def _ship(c, x, y, s):
 @setting("ocean")
 def _ocean(c, t, cam):
     """Night at sea seen from a ship's deck, a sister ship on the horizon."""
-    _grad(c, (14, 8, 44), (90, 30, 120), 0, 1000)
+    _grad(c, (8, 14, 40), (40, 60, 110), 0, 1000)
     rnd = random.Random(9)
     for i in range(70):
         c.drawCircle(rnd.uniform(0, W), rnd.uniform(120, 900), rnd.uniform(1.5, 3.5),
                      paint((255, 255, 255), fill=True, alpha=int(120 + 120 * abs(math.sin(t * 2 + i)))))
     c.drawCircle(250 - cam * 0.1, 360, 70, paint((255, 240, 220), fill=True))
-    c.drawRect(skia.Rect.MakeXYWH(-400, 1000, W + 800, GROUND - 1000), paint((20, 30, 80), fill=True))
+    c.drawRect(skia.Rect.MakeXYWH(-400, 1000, W + 800, GROUND - 1000), paint((15, 30, 70), fill=True))
     for i in range(8):
         y = 1015 + i * 34
         off = math.sin(t * 1.6 + i) * 40
-        c.drawLine(-100 + off, y, W + 100 + off, y, paint((120, 90, 220), 3, alpha=120))
+        c.drawLine(-100 + off, y, W + 100 + off, y, paint((90, 130, 200), 3, alpha=120))
     _ship(c, 760 - cam * 0.3, 1000, 0.42)
     # deck railing + planks
     for i in range(-3, 16):
@@ -419,7 +365,7 @@ def _eiffel(c, x, base, s, t):
     c.save()
     c.translate(x, base)
     c.scale(s, s)
-    col = (40, 20, 70)
+    col = (60, 45, 50)
     p = skia.Path()
     p.moveTo(-230, 0)
     p.quadTo(-120, -300, -40, -700)
@@ -445,40 +391,40 @@ def _eiffel(c, x, base, s, t):
 
 @setting("paris")
 def _paris(c, t, cam):
-    _grad(c, (40, 16, 90), (255, 110, 150))
+    _grad(c, (15, 20, 60), (70, 80, 140))
     _eiffel(c, 700 - cam * 0.25, GROUND - 120, 0.95, t)
     rnd = random.Random(6)
     x = -300
     while x < W + 300:
         bw, bh = rnd.randint(150, 240), rnd.randint(240, 380)
         xx = x - cam * 0.5
-        c.drawRect(skia.Rect.MakeXYWH(xx, GROUND - bh, bw, bh), paint((70, 36, 100), fill=True))
+        c.drawRect(skia.Rect.MakeXYWH(xx, GROUND - bh, bw, bh), paint((200, 185, 160), fill=True))
         roof = skia.Path()
         roof.moveTo(xx, GROUND - bh)
         roof.lineTo(xx + 30, GROUND - bh - 60)
         roof.lineTo(xx + bw - 30, GROUND - bh - 60)
         roof.lineTo(xx + bw, GROUND - bh)
         roof.close()
-        c.drawPath(roof, paint((50, 26, 80), fill=True))
+        c.drawPath(roof, paint((90, 100, 120), fill=True))
         for wy in range(GROUND - bh + 30, GROUND - 60, 80):
             for wx in range(int(xx) + 20, int(xx) + bw - 40, 55):
                 if rnd.random() < 0.55:
                     c.drawRect(skia.Rect.MakeXYWH(wx, wy, 26, 40), paint((255, 210, 120), fill=True))
         x += bw + 4
-    _street(c, (60, 34, 80))
+    _street(c, (70, 70, 80))
 
 
 @setting("forest")
 def _forest(c, t, cam):
     """Mountain forest under a storm, with a fire lookout tower."""
-    _grad(c, (24, 18, 54), (110, 60, 130))
+    _grad(c, (30, 35, 55), (95, 100, 120))
     for i, (cx, col) in enumerate(((-100, (60, 40, 100)), (500, (70, 45, 110)), (1100, (60, 40, 100)))):
         m = skia.Path()
         m.moveTo(cx - 600 - cam * 0.15, GROUND - 200)
         m.lineTo(cx - cam * 0.15, GROUND - 820 + i * 60)
         m.lineTo(cx + 600 - cam * 0.15, GROUND - 200)
         m.close()
-        c.drawPath(m, paint(col, fill=True))
+        c.drawPath(m, paint((60 + i * 8, 70 + i * 6, 90), fill=True))
     tx = 820 - cam * 0.35  # lookout tower
     for dx in (-70, 70):
         c.drawLine(tx + dx * 1.4, GROUND - 60, tx + dx * 0.6, GROUND - 640, paint((60, 30, 50), 12))
@@ -513,11 +459,11 @@ def _forest(c, t, cam):
 @setting("stadium")
 def _stadium(c, t, cam):
     """Old stadium: crowd stands and a running track."""
-    _grad(c, (255, 120, 150), (255, 200, 140), 0, 700)
+    _grad(c, (100, 165, 235), (210, 230, 250), 0, 700)
     rnd = random.Random(14)
     for row in range(9):
         y = 640 + row * 70
-        c.drawRect(skia.Rect.MakeXYWH(-400, y, W + 800, 70), paint((90 + row * 6, 50, 110), fill=True))
+        c.drawRect(skia.Rect.MakeXYWH(-400, y, W + 800, 70), paint((120 + row * 5, 115 + row * 4, 120), fill=True))
         for i in range(30):
             x = (i * 44 + row * 17) - cam * 0.3
             bob = 6 * math.sin(t * 6 + i + row) if (i + row) % 3 == 0 else 0
@@ -587,6 +533,15 @@ def draw_extra_prop(c, pr, t):
     return False
 
 
+def _strike_t(names, t):
+    """'lightning' strikes at scene start, 'lightning@1.5' strikes 1.5 s in. Returns time since strike or None."""
+    for n in names:
+        if isinstance(n, str) and n.startswith("lightning"):
+            at = float(n.split("@")[1]) if "@" in n else 0.0
+            return t - at
+    return None
+
+
 def fx_extra(c, names, t, joints):
     if "rain" in names:
         rnd = random.Random(5)
@@ -604,8 +559,10 @@ def fx_extra(c, names, t, joints):
             c.rotate(t * 300 + i * 40)
             c.drawRect(skia.Rect.MakeXYWH(-9, -5, 18, 10), paint(DISCO[i % 4], fill=True))
             c.restore()
-    if "lightning" in names:
-        strike = t < 0.55
+    tl = _strike_t(names, t)
+    if tl is not None:
+        strike = 0 <= tl < 0.55
+        t = tl
         target = None
         if joints:
             target = list(joints.values())[-1]["head"]
@@ -626,9 +583,11 @@ def fx_extra(c, names, t, joints):
 
 
 def overlay_extra(c, names, t):
-    if "lightning" in names:
+    tl = _strike_t(names, t)
+    if tl is not None:
+        t = tl
         a = 0
-        if t < 0.55:
+        if 0 <= t < 0.55:
             a = 230 * (1 - t / 0.55) * (0.6 + 0.4 * (int(t * 20) % 2))
         if a > 1:
             c.drawRect(skia.Rect.MakeXYWH(0, 0, W, H), paint((240, 230, 255), fill=True, alpha=int(a)))
@@ -644,8 +603,5 @@ def title_text(c, text, x, y, size, max_w):
     for i, ln in enumerate(lines):
         w = font.measureText(ln)
         bx, by = x - w / 2, y0 + i * lh
-        c.drawString(ln, bx, by, font, glow(DISCO[0], size * 0.18, 14, 200))
-        c.drawString(ln, bx, by, font, paint(INK, size * 0.16))
-        fill = skia.Paint(AntiAlias=True, Shader=skia.GradientShader.MakeLinear(
-            [(bx, by - size), (bx + w, by)], [rgb((255, 255, 255)), rgb((255, 190, 220)), rgb(DISCO[1])], [0, 0.35, 1]))
-        c.drawString(ln, bx, by, font, fill)
+        c.drawString(ln, bx, by, font, paint((20, 20, 28), size * 0.16))
+        c.drawString(ln, bx, by, font, paint((255, 255, 255), fill=True))

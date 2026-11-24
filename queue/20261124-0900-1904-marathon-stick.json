@@ -4,7 +4,7 @@
  "theme": "story",
  "topic_key": "stories",
  "title": "The most chaotic Olympic race ever (1904) #olympics #shorts",
- "description": "The 1904 St. Louis Olympic marathon: Fred Lorz rode in a car and crossed first, winner Thomas Hicks was given strychnine, egg whites and brandy, and F\u00e9lix Carvajal napped after eating bad apples and still finished fourth. Sources: Olympics.com, Smithsonian, Wikipedia.",
+ "description": "The 1904 St. Louis Olympic marathon: Fred Lorz rode in a car and crossed first, winner Thomas Hicks was given strychnine, egg whites and brandy, and Felix Carvajal napped after eating bad apples and still finished fourth. Sources: Olympics.com, Smithsonian, Wikipedia.",
  "hashtags": [
   "#olympics",
   "#marathon",
@@ -16,152 +16,335 @@
   {
    "type": "stick",
    "setting": "stadium",
-   "speaker": "a",
-   "say": "The nineteen oh four Olympic marathon might be the most chaotic race in history.",
-   "actors": [
-    {
-     "id": "a",
-     "x": 0.3,
-     "action": "run",
-     "face": "happy",
-     "color": "#ff2e78"
-    },
-    {
-     "id": "b",
-     "x": 0.6,
-     "action": "run",
-     "color": "#00d2e6"
-    }
-   ],
    "title": "THE WORST OLYMPIC RACE EVER",
-   "camera": "punch"
-  },
-  {
-   "type": "stick",
-   "setting": "field",
+   "camera": "punch",
    "speaker": "a",
-   "say": "It ran on dusty roads in St. Louis. Thirty two runners started. Only fourteen finished.",
    "actors": [
     {
      "id": "a",
      "x": -0.1,
-     "action": "run",
-     "to": 1.2,
-     "face": "sad",
-     "color": "#ff2e78"
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 1.2
+      }
+     ]
+    },
+    {
+     "id": "b",
+     "x": -0.35,
+     "color": "#00d2e6",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 1.2
+      }
+     ]
+    },
+    {
+     "id": "d",
+     "x": -0.6,
+     "color": "#ff9628",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 1.2
+      }
+     ]
     }
    ],
-   "fx": [
-    "sweat"
-   ]
+   "say": "The nineteen oh four Olympic marathon might be the most chaotic race in history."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "a",
-   "say": "Fred Lorz dropped out around mile nine, then hitched a ride in a car for about ten miles.",
+   "fx": [
+    "sweat"
+   ],
    "actors": [
     {
      "id": "a",
-     "x": 0.25,
-     "action": "wave",
-     "face": "smug",
-     "color": "#ff2e78"
+     "x": -0.1,
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 0.55,
+       "speed": 0.6
+      },
+      {
+       "at": 2.2,
+       "action": "sad",
+       "face": "sad"
+      }
+     ]
+    },
+    {
+     "id": "b",
+     "x": -0.4,
+     "color": "#00d2e6",
+     "do": [
+      {
+       "at": 0.4,
+       "action": "walk",
+       "to": 0.3,
+       "then": "facepalm",
+       "face": "sad"
+      }
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "x": 0.85,
+     "text": "ST. LOUIS 1904",
+     "color": "#fff3d6"
+    }
+   ],
+   "say": "It ran on dusty roads in St. Louis. Thirty two runners started. Only fourteen finished."
+  },
+  {
+   "type": "stick",
+   "setting": "field",
+   "speaker": "a",
+   "actors": [
+    {
+     "id": "a",
+     "x": 0.3,
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "sad",
+       "face": "sad"
+      },
+      {
+       "at": 1.0,
+       "action": "wave",
+       "face": "smug"
+      },
+      {
+       "at": 2.6,
+       "action": "celebrate",
+       "face": "happy"
+      }
+     ]
     }
    ],
    "props": [
     {
      "kind": "car",
-     "x": -0.4,
-     "move_to": 0.45,
+     "x": -0.5,
+     "move_to": 0.55,
      "move_time": 2,
      "color": "#ff9628",
-     "driver": true
+     "driver": true,
+     "at": 0.8
     }
-   ]
+   ],
+   "say": "Fred Lorz dropped out around mile nine, then hitched a ride in a car for about ten miles."
   },
   {
    "type": "stick",
    "setting": "stadium",
    "speaker": "a",
-   "say": "He jogged into the stadium first and nearly got the gold medal, until people found out.",
-   "actors": [
-    {
-     "id": "a",
-     "x": 0.5,
-     "action": "celebrate",
-     "face": "happy",
-     "color": "#ff2e78"
-    }
-   ],
    "fx": [
     "confetti"
    ],
    "bubble": {
     "actor": "a",
-    "text": "I WON!"
-   }
+    "text": "I WON!",
+    "at": 1.0
+   },
+   "actors": [
+    {
+     "id": "a",
+     "x": -0.1,
+     "color": "#ff2e78",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 0.45,
+       "then": "celebrate",
+       "face": "happy"
+      },
+      {
+       "at": 3.0,
+       "action": "shocked",
+       "face": "shock"
+      }
+     ]
+    },
+    {
+     "id": "o",
+     "x": 0.85,
+     "color": "#9646ff",
+     "hat": "tophat",
+     "facing": -1,
+     "do": [
+      {
+       "at": 0,
+       "action": "idle"
+      },
+      {
+       "at": 2.4,
+       "action": "angry",
+       "face": "angry"
+      },
+      {
+       "at": 3.2,
+       "action": "point"
+      }
+     ]
+    }
+   ],
+   "say": "He jogged into the stadium first and nearly got the gold medal, until people found out."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "b",
-   "say": "The real winner, Thomas Hicks, got strychnine, a poison, mixed with egg whites and brandy from his own trainers.",
+   "fx": [
+    "sweat"
+   ],
    "actors": [
     {
      "id": "b",
-     "x": 0.35,
-     "action": "run",
-     "face": "sad",
-     "color": "#00d2e6"
+     "x": 0.05,
+     "color": "#00d2e6",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 0.5,
+       "speed": 0.45,
+       "face": "sad"
+      },
+      {
+       "at": 3.0,
+       "action": "fall",
+       "face": "sad"
+      }
+     ]
     },
     {
      "id": "c",
-     "x": 0.7,
-     "action": "point",
-     "hat": "cap",
+     "x": -0.25,
      "color": "#9646ff",
-     "facing": -1
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.72
+      },
+      {
+       "at": 2.2,
+       "action": "throw"
+      }
+     ]
     }
    ],
-   "fx": [
-    "sweat"
-   ]
+   "say": "The real winner, Thomas Hicks, got strychnine, a poison, mixed with egg whites and brandy from his own trainers."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "d",
-   "say": "And Cuban runner F\u00e9lix Carvajal ate some bad apples, took a nap, and still finished fourth.",
-   "actors": [
-    {
-     "id": "d",
-     "x": 0.45,
-     "action": "sit",
-     "face": "happy",
-     "color": "#ff9628"
-    }
-   ],
    "bubble": {
     "actor": "d",
     "text": "ZZZ...",
-    "thought": true
-   }
+    "thought": true,
+    "at": 3.0
+   },
+   "actors": [
+    {
+     "id": "d",
+     "x": -0.1,
+     "color": "#ff9628",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 0.35,
+       "face": "happy"
+      },
+      {
+       "at": 1.3,
+       "action": "sit",
+       "face": "happy"
+      },
+      {
+       "at": 2.4,
+       "action": "sad",
+       "face": "sad"
+      },
+      {
+       "at": 3.0,
+       "action": "lie",
+       "face": "neutral"
+      }
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "palm",
+     "x": 0.75,
+     "scale": 0.8
+    }
+   ],
+   "say": "And Cuban runner Felix Carvajal ate some bad apples, took a nap, and still finished fourth."
   },
   {
    "type": "stick",
    "setting": "stadium",
    "speaker": "d",
-   "say": "A car, a nap, and poison. Which runner is your favorite?",
+   "fx": [
+    "confetti"
+   ],
    "actors": [
     {
      "id": "d",
-     "x": 0.5,
-     "action": "cheer",
-     "face": "happy",
-     "color": "#ff9628"
+     "x": -0.1,
+     "color": "#ff9628",
+     "do": [
+      {
+       "at": 0,
+       "action": "run",
+       "to": 0.5,
+       "then": "cheer",
+       "face": "happy"
+      }
+     ]
+    },
+    {
+     "id": "a",
+     "x": 0.85,
+     "color": "#ff2e78",
+     "facing": -1,
+     "do": [
+      {
+       "at": 0,
+       "action": "shrug",
+       "face": "smug"
+      },
+      {
+       "at": 1.5,
+       "action": "laugh"
+      }
+     ]
     }
-   ]
+   ],
+   "say": "A car, a nap, and poison. Which runner is your favorite?"
   }
  ],
  "post_after": "2026-11-23T12:00"

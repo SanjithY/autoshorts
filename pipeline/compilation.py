@@ -61,9 +61,7 @@ def build(cfg, out_path, state, prefer=None):
         n = len(cl)
         order = list(zip(range(n, 0, -1), reversed(cl)))  # count down: #n ... #1
         srcs = {c["id"]: clips.download_clip(c, tmp) for c in cl}
-        render_card(srcs[cl[0]["id"]], str(tmp / "intro.mp4"), big=f"TOP {n}", pill=name.upper(),
-                    small="MOMENTS THIS WEEK", say=f"Top {n} {name} moments this week. Number one is crazy.")
-        parts.append(tmp / "intro.mp4")
+        # no intro card: the video opens straight on clip #n with the title laid over it
         per = max(8.0, 50.0 / n)
         for idx, (rank, c) in enumerate(order):
             src = srcs[c["id"]]
@@ -71,7 +69,8 @@ def build(cfg, out_path, state, prefer=None):
             start = max(0.0, c["duration"] - per)  # the payoff is usually at the end of a clip
             seg = tmp / f"clip{rank}.mp4"
             render_moment(src, str(seg), title=c["title"], streamer=name, credit=f"twitch.tv/{c['broadcaster_name']}",
-                          rank=rank, total=n, words=words, start=start, max_len=per, seg_index=idx)
+                          rank=rank, total=n, words=words, start=start, max_len=per, seg_index=idx,
+                          hook={"big": f"TOP {n}", "pill": name.upper(), "small": "MOMENTS THIS WEEK"} if idx == 0 else None)
             parts.append(seg)
         render_card(srcs[cl[0]["id"]], str(tmp / "outro.mp4"), big="WHICH ONE?", pill="WAS YOUR #1",
                     small="TELL ME IN THE COMMENTS", say="Which one was your number one? Tell me in the comments.",

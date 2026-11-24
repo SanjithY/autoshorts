@@ -174,8 +174,32 @@ def _clip_audio(path, start, dur):
     return np.frombuffer(pcm, np.float32).copy()
 
 
+def _hook_sprites(hook):
+    from . import disco as D
+    big = D.gtext(hook["big"], "display", 230, 980, all_grad=True)
+    pill = D.pill(hook["pill"], 54, grad=False, dot=False, kind="black")
+    small = text_sprite(hook["small"], "black", 52, WHITE, 8, BLACK, 980, True, 0.0)
+    return big, pill, small
+
+
+def draw_hook(frame, sprites, t, hold=2.3):
+    """Title overlaid on the first clip as it plays: pops in at once, then flies out."""
+    if t > hold + 0.35:
+        return
+    big, pill, small = sprites
+    k_in = ease_out_back(min(1, t / 0.28))
+    k_out = ease_out_cubic(max(0, (t - hold) / 0.35))
+    a = 1 - k_out
+    sc = Image.new("RGBA", (CLIP_W, CLIP_H), (8, 6, 18, int(150 * a)))
+    frame.paste(sc, (W // 2 - CLIP_W // 2, CLIP_Y), sc)
+    cy = CLIP_Y + CLIP_H / 2
+    paste(frame, pill, W / 2, cy - 175 - 60 * k_out, 0.6 + 0.4 * k_in, alpha=a)
+    paste(frame, big, W / 2, cy - 10, (0.5 + 0.5 * k_in) * (1 + 0.3 * k_out), alpha=a)
+    paste(frame, small, W / 2, cy + 160 + 60 * k_out, ease_out_back(min(1, max(0, t - 0.12) / 0.28)), alpha=a)
+
+
 def render_moment(video_path, out_path, *, title, streamer, credit, rank=None, total=5,
-                  words=None, start=0.0, max_len=None, seg_index=0):
+                  words=None, start=0.0, max_len=None, seg_index=0, hook=None):
     full = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                                           "-of", "default=nw=1:nk=1", video_path]))
     dur = min(full - start, max_len) if max_len else full - start
@@ -184,6 +208,7 @@ def render_moment(video_path, out_path, *, title, streamer, credit, rank=None, t
                  if start <= w["start"] < start + dur]
     chunks = caption_chunks(words or [], max_words=3)
     lay = Layout(rank, total, clean_title(title), streamer, credit)
+    hook_spr = _hook_sprites(hook) if hook else None
     # audio: clip sound + a whoosh on the cut
     clip_a = _clip_audio(video_path, start, dur)
     aud = A.mix(dur, [(0, clip_a)], [(0, "whoosh")], music_gain=0)
@@ -206,6 +231,8 @@ def render_moment(video_path, out_path, *, title, streamer, credit, rank=None, t
         frame = Image.fromarray(np.frombuffer(bb, np.uint8).reshape(bh, bw, 3)).resize((W, H), Image.BICUBIC)
         clip = Image.fromarray(np.frombuffer(fb, np.uint8).reshape(CLIP_H, CLIP_W, 3))
         lay.draw(frame, clip, t, t / dur, seg_index)
+        if hook_spr:
+            draw_hook(frame, hook_spr, t)
         draw_captions(frame, chunks, t)
         enc.write(frame)
     for p in (fg, bg):

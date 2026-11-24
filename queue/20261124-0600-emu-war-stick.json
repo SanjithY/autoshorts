@@ -16,152 +16,326 @@
   {
    "type": "stick",
    "setting": "field",
+   "title": "THE GREAT EMU WAR",
+   "camera": "punch",
    "speaker": "a",
-   "say": "In nineteen thirty two, Australia sent soldiers with machine guns to fight emus. And the emus won.",
    "actors": [
     {
      "id": "a",
      "x": 0.22,
-     "action": "shocked",
+     "color": "#ff9628",
      "hat": "cap",
-     "color": "#ff9628"
+     "do": [
+      {
+       "at": 0,
+       "action": "look"
+      },
+      {
+       "at": 0.9,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.2,
+       "action": "point"
+      }
+     ]
     }
    ],
    "props": [
     {
      "kind": "flock",
-     "x": 0.72,
+     "x": 1.4,
+     "move_to": 0.72,
+     "move_time": 2.2,
      "n": 4,
      "facing": -1
     }
    ],
-   "title": "THE GREAT EMU WAR",
-   "camera": "punch"
+   "say": "In nineteen thirty two, Australia sent soldiers with machine guns to fight emus. And the emus won."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "f",
-   "say": "Roughly twenty thousand emus were trampling wheat farms in Western Australia.",
    "actors": [
     {
      "id": "f",
-     "x": 0.2,
-     "action": "facepalm",
-     "face": "sad",
+     "x": -0.1,
+     "color": "#9646ff",
      "hat": "tophat",
-     "color": "#9646ff"
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.25
+      },
+      {
+       "at": 1.4,
+       "action": "facepalm",
+       "face": "sad"
+      },
+      {
+       "at": 2.8,
+       "action": "angry",
+       "face": "angry"
+      }
+     ]
     }
    ],
    "props": [
     {
      "kind": "flock",
-     "x": -0.3,
+     "x": -0.5,
      "move_to": 0.75,
      "move_time": 3,
      "n": 5
+    },
+    {
+     "kind": "emu",
+     "x": 1.3,
+     "move_to": 0.92,
+     "move_time": 1.5,
+     "facing": -1,
+     "at": 1.5
     }
-   ]
+   ],
+   "say": "Roughly twenty thousand emus were trampling wheat farms in Western Australia."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "a",
-   "say": "So Major Meredith showed up with two Lewis guns and ten thousand rounds of ammo.",
+   "camera": "zoom_in",
    "actors": [
     {
      "id": "a",
-     "x": 0.35,
-     "action": "flex",
-     "face": "smug",
-     "hat": "cap"
+     "x": -0.15,
+     "color": "#ff9628",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.32
+      },
+      {
+       "at": 1.5,
+       "action": "flex",
+       "face": "smug"
+      },
+      {
+       "at": 2.8,
+       "action": "point"
+      }
+     ]
     },
     {
      "id": "b",
-     "x": 0.62,
-     "action": "point",
-     "hat": "cap",
+     "x": -0.35,
      "color": "#00d2e6",
-     "facing": -1
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "walk",
+       "to": 0.58
+      },
+      {
+       "at": 1.8,
+       "action": "wave",
+       "face": "happy"
+      }
+     ]
     }
    ],
-   "camera": "zoom_in"
+   "props": [
+    {
+     "kind": "sign",
+     "x": 0.85,
+     "text": "CAMPION, W.A.",
+     "color": "#fff3d6"
+    }
+   ],
+   "say": "So Major Meredith showed up with two Lewis guns and ten thousand rounds of ammo."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "a",
-   "say": "But the emus just scattered. One gun jammed after a few rounds, and after three days only about thirty birds were down.",
+   "fx": [
+    "exclaim"
+   ],
    "actors": [
     {
      "id": "a",
      "x": 0.3,
-     "action": "shocked",
-     "face": "shock"
+     "color": "#ff9628",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "point",
+       "face": "smug"
+      },
+      {
+       "at": 1.0,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.4,
+       "action": "facepalm",
+       "face": "sad"
+      }
+     ]
+    },
+    {
+     "id": "b",
+     "x": 0.15,
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "idle"
+      },
+      {
+       "at": 1.2,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 2.6,
+       "action": "run",
+       "to": 0.7,
+       "then": "look"
+      }
+     ]
     }
    ],
    "props": [
     {
      "kind": "flock",
-     "x": 0.6,
-     "move_to": 1.5,
-     "move_time": 1.6,
+     "x": 0.62,
      "n": 5
+    },
+    {
+     "kind": "flock",
+     "x": 0.62,
+     "move_to": 1.7,
+     "move_time": 1.2,
+     "n": 4,
+     "at": 1.0
     }
    ],
-   "fx": [
-    "speed_lines",
-    "exclaim"
-   ]
+   "say": "But the emus just scattered. One gun jammed after a few rounds, and after three days only about thirty birds were down."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "a",
-   "say": "By December, Meredith claimed nine hundred eighty six emus, using almost ten thousand rounds. About ten bullets per bird.",
+   "bubble": {
+    "actor": "a",
+    "text": "10 BULLETS EACH?!",
+    "at": 2.2
+   },
    "actors": [
     {
      "id": "a",
-     "x": 0.32,
-     "action": "facepalm",
-     "face": "sad"
+     "x": 0.3,
+     "color": "#ff9628",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "think",
+       "face": "neutral"
+      },
+      {
+       "at": 1.4,
+       "action": "count_money",
+       "face": "sad"
+      },
+      {
+       "at": 2.2,
+       "action": "shocked",
+       "face": "shock"
+      },
+      {
+       "at": 3.4,
+       "action": "cry",
+       "face": "sad"
+      }
+     ]
     }
    ],
    "props": [
     {
      "kind": "emu",
-     "x": 0.75,
+     "x": 1.3,
+     "move_to": 0.78,
+     "move_time": 1.8,
      "facing": -1
     }
    ],
-   "bubble": {
-    "actor": "a",
-    "text": "10 BULLETS EACH?!"
-   }
+   "say": "By December, Meredith claimed nine hundred eighty six emus, using almost ten thousand rounds. About ten bullets per bird."
   },
   {
    "type": "stick",
    "setting": "field",
    "speaker": "a",
-   "say": "The soldiers went home. The emus stayed. Team soldiers or team emus? Comment below.",
+   "camera": "zoom_out",
    "actors": [
     {
      "id": "a",
-     "x": -0.2,
-     "action": "walk",
-     "to": 0.1,
-     "face": "sad"
+     "x": 0.4,
+     "color": "#ff9628",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "sad",
+       "face": "sad"
+      },
+      {
+       "at": 1.0,
+       "action": "walk",
+       "to": -0.2
+      }
+     ]
+    },
+    {
+     "id": "b",
+     "x": 0.55,
+     "color": "#00d2e6",
+     "hat": "cap",
+     "do": [
+      {
+       "at": 0,
+       "action": "facepalm",
+       "face": "sad"
+      },
+      {
+       "at": 1.3,
+       "action": "walk",
+       "to": -0.3
+      }
+     ]
     }
    ],
    "props": [
     {
      "kind": "flock",
-     "x": 0.62,
-     "n": 4,
-     "facing": -1
+     "x": 1.5,
+     "move_to": 0.62,
+     "move_time": 2.5,
+     "n": 5,
+     "facing": -1,
+     "at": 1.2
     }
    ],
-   "camera": "zoom_out"
+   "say": "The soldiers went home. The emus stayed. Team soldiers or team emus? Comment below."
   }
  ],
  "post_after": "2026-11-23T12:00"
