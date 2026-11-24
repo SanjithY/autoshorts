@@ -35,6 +35,18 @@ def top_clips(cfg, streamer: dict, n=5, used_ids=()):
     return data[:n]
 
 
+def hook_title(name, top):
+    """A curiosity title built from the #1 clip, instead of a generic 'Top N moments'."""
+    import re
+    t = re.sub(r"\s+", " ", re.sub(r"[^\x20-\x7E]", "", top.get("title", ""))).strip(" -|:!.")
+    words = t.split()
+    if 3 <= len(words) <= 9 and len(t) <= 48 and not re.search(r"(https?://|#|@)", t):
+        return f"{name}: {t} 😭 #shorts"
+    hooks = [f"{name} did NOT expect this 😭 #shorts", f"{name}'s stream got out of hand this week 😭 #shorts",
+             f"Wait for {name}'s #1 moment 😭 #shorts", f"{name} had the craziest week on stream 😂 #shorts"]
+    return hooks[sum(map(ord, top.get("id", ""))) % len(hooks)]
+
+
 def concat(parts, out):
     lst = Path(tempfile.mkdtemp()) / "list.txt"
     lst.write_text("".join(f"file '{p}'\n" for p in parts))
@@ -62,7 +74,7 @@ def build(cfg, out_path, state, prefer=None):
         order = list(zip(range(n, 0, -1), reversed(cl)))  # count down: #n ... #1
         srcs = {c["id"]: clips.download_clip(c, tmp) for c in cl}
         # no intro card: the video opens straight on clip #n with the title laid over it
-        per = max(8.0, 50.0 / n)
+        per = max(8.0, float(cfg.get("compilation", {}).get("target_seconds", 30)) / n)
         for idx, (rank, c) in enumerate(order):
             src = srcs[c["id"]]
             words = clips.transcribe_words(src)
@@ -77,7 +89,7 @@ def build(cfg, out_path, state, prefer=None):
                     outro=True)
         parts.append(tmp / "outro.mp4")
         concat([str(p) for p in parts], out_path)
-        return {"format": "top5_streamer", "title": f"Top {len(cl)} {name} moments this week #shorts",
+        return {"format": "top5_streamer", "title": hook_title(name, cl[0]),
                 "description": "Clips used with permission. " + " | ".join(f"#{len(cl)-i}: {c['url']}" for i, c in enumerate(reversed(cl))),
                 "hashtags": [f"#{name.lower()}", "#twitch", "#clips", "#shorts"],
                 "clip_ids": [c["id"] for c in cl]}

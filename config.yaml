@@ -41,7 +41,8 @@ formats:
   top5_streamer: 2   # "Top 5 <streamer> moments" compilation (allowlist only!)
 
 compilation:
-  count: 5
+  count: 3              # 3 clips (~30 s) holds viewers better than 5 (~55 s)
+  target_seconds: 30
   lookback_days: 7
 
 # ─── LLM (optional) ───────────────────────────────────────────────────────

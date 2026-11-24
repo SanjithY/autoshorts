@@ -135,6 +135,19 @@ back to back).
   `sign` (text, color), `tv` (text, color), `chart` (values[], labels[]), `money_rain`, `palm`, `building`,
   `emu` (one bird; x, move_to, facing, scale), `flock` (n birds), `ship`, `eiffel`, `disco_ball` (x, y, r).
 - **fx:** `police_lights`, `speed_lines`, `impact`, `sweat`, `hearts`, `exclaim`, `vignette`, `lightning` (bolt hits the last actor), `rain`, `confetti`. **camera:** `zoom_in`, `zoom_out`, `punch`, `pan`, `shake`.
+- **Characters (skit style):** each actor can set `"outfit"` (`shirt`, `hoodie`, `vest`, `suit`, `dress`, `uniform`),
+  `"hair"` (`short`, `long`, `bun`, `spiky`, `pigtails`, `curly`, or `""` for bald) and `"hair_color"` ("#3c2818").
+  Unset ones are picked per character id. Hats `glasses`/`sunglasses` draw over the eyes.
+- **Action timelines:** instead of one `action`, give `"do": [{"at": 0, "action": "walk", "to": 0.4},
+  {"at": 1.3, "action": "point", "face": "smug"}, {"at": 2.5, "action": "laugh", "icon": "money"}]`. Write 2-4 steps per
+  actor per scene so something changes every 1-2 seconds. Extra actions: `dance2`, `dance3`, `nod`, `look`, `laugh`,
+  `cry`, `climb`, `throw`, `kneel`, `lie`.
+- **Pop-up icons** appear by the head on a step's `"icon"` (or automatically from faces/actions): `?`, `!`, `anger`, `sweat`,
+  `heart`, `money`, `idea`, `music`, `zzz`, `fire`, `skull`. Scene-level: `"pops": [{"at": 1.2, "actor": "a", "icon": "idea"}]`.
+- **Camera:** the engine cuts like a skit (wide, two-shot, medium, close-up on the speaker, reaction close-ups) every
+  1.5-2.3 s and blurs the background on close shots. Set `"speaker"` on every scene so close-ups land on the right person.
+  Override with `"shots": [{"at": 0, "shot": "wide"}, {"at": 1.5, "shot": "close", "on": "a"}]` or `"camera": "wide"`.
+- Props can enter mid-scene with `"at"` (seconds), e.g. a police car arriving at 1.4 s. Lightning can strike mid-scene: `"lightning@1.5"`.
 - Keep bubbles short (2-6 words) and put them on the speaking actor. Give recurring characters
   the same id, hat and color across scenes.
 

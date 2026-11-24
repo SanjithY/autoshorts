@@ -295,10 +295,13 @@ class Actor:
     prop: str = ""
     last_pose: dict = field(default_factory=lambda: dict(BASE))
     stars: int = 0
+    outfit: str = "shirt"
+    hair: str = ""
+    hair_color: tuple = (60, 40, 30)
 
 
 # --------------------------------------------------------------- drawing the figure
-L = dict(torso=138, neck=16, head=60, ua=86, fa=82, th=104, sh=104)
+L = dict(torso=128, neck=8, head=74, ua=82, fa=78, th=100, sh=100)
 
 
 def _seg(x, y, ang_deg, length, facing):
@@ -882,9 +885,74 @@ class World:
         self.scene_start_x = {}
         self.blend_from = {}
         self.steps, self.step_state, self.step_x0, self.step_from = {}, {}, {}, {}
+        self.shots, self.pops, self.popped = {}, [], set()
+        self.cam = (1.0, (W / 2, GROUND - 300), (W / 2, GROUND - 300))
+
+    # ------------------------------------------------------------ camera director
+    def _shot(self, sc, lt, dur, key):
+        if key not in self.shots:
+            self.shots[key] = self._plan_shots(sc, dur)
+        plan = self.shots[key]
+        cur = plan[0]
+        for sh in plan:
+            if sh["at"] <= lt:
+                cur = sh
+        return cur["shot"], lt - cur["at"], cur.get("on")
+
+    def _plan_shots(self, sc, dur):
+        if sc.get("shots"):
+            return sorted([dict(s_) for s_ in sc["shots"]], key=lambda s_: s_.get("at", 0))
+        ids = [str(a.get("id", f"a{i}")) for i, a in enumerate(sc.get("actors", []))]
+        if not ids or sc.get("camera") == "wide":
+            return [{"at": 0, "shot": "wide"}]
+        spk = sc.get("speaker") if sc.get("speaker") in ids else ids[0]
+        moving = any("to" in a or any("to" in st for st in a.get("do", [])) for a in sc.get("actors", [])) or \
+            any("move_to" in pr for pr in sc.get("props", []))
+        has_props = any(pr.get("kind") in ("car", "police_car", "sports_car", "flock", "emu", "ship", "sign", "tv", "chart")
+                        for pr in sc.get("props", []))
+        rnd = random.Random(sum(map(ord, "".join(ids))) + int(dur * 100))
+        others = [i for i in ids if i != spk]
+        cycle = [("close", spk)]
+        if others:
+            cycle += [("two", None), ("close", rnd.choice(others)), ("medium", spk)]
+        else:
+            cycle += [("medium", spk), ("close", spk)]
+        if moving or has_props or len(ids) >= 3:
+            cycle.insert(1, ("wide", None))
+        plan, t, i = [], 0.0, 0
+        first = ("wide", None) if (moving or has_props or len(ids) >= 3) else (("two", None) if others else ("medium", spk))
+        plan.append({"at": 0.0, "shot": first[0], "on": first[1]})
+        t = rnd.uniform(1.4, 2.0)
+        while t < dur - 0.6:
+            sh, on = cycle[i % len(cycle)]
+            if plan[-1]["shot"] == sh and plan[-1].get("on") == on:
+                i += 1
+                continue
+            plan.append({"at": t, "shot": sh, "on": on})
+            t += rnd.uniform(1.4, 2.3)
+            i += 1
+        return plan
+
+    def _framing(self, sc, shot, on, st):
+        base = (W / 2, GROUND - 300)
+        drift = 1 + 0.025 * min(1, st / 2.5)
+        vis = [self.actors[a] for a in self.visible if a in self.actors]
+        head_y = GROUND - (L["th"] + L["sh"] + L["torso"] + L["neck"] + L["head"]) * 1.45
+        if shot == "wide" or not vis:
+            return 1.0 * drift, base, base
+        if shot == "two":
+            xs = [a.x for a in vis if -150 < a.x < W + 150] or [W / 2]
+            span = max(xs) - min(xs) + 380
+            Z = min(1.75, max(1.0, 1000 / span)) * drift
+            return Z, ((max(xs) + min(xs)) / 2, head_y + 90), (W / 2, 700)
+        a = self.actors.get(on) or vis[0]
+        if shot == "close":
+            return 2.1 * drift, (a.x + a.facing * 10, head_y + 10), (W / 2, 690)
+        return 1.55 * drift, (a.x, head_y + 110), (W / 2, 700)
 
     def _setup_scene(self, sc, key):
         self.scene_id = key
+        self.pops = []
         self.scene_start_x = {}
         self.blend_from = {}
         for i, a in enumerate(sc.get("actors", [])):
@@ -896,6 +964,19 @@ class World:
                 self.actors[aid] = act
             elif "x" in a:  # omit "x" to continue from where the actor ended last scene
                 act.x = W * float(a["x"])
+            if act is not None and not getattr(act, "_styled", False):
+                from . import stick_toon as ST
+                sd = ST._seed(aid)
+                act.outfit = ST.OUTFITS[sd % len(ST.OUTFITS[:4])]
+                act.hair = ST.HAIRS[(sd // 3) % len(ST.HAIRS)]
+                act.hair_color = ST.HAIR_COLORS[(sd // 7) % len(ST.HAIR_COLORS)]
+                act._styled = True
+            if a.get("outfit"):
+                act.outfit = a["outfit"]
+            if "hair" in a:
+                act.hair = a["hair"] or ""
+            if a.get("hair_color"):
+                act.hair_color = tuple(int(a["hair_color"].lstrip("#")[k:k + 2], 16) for k in (0, 2, 4))
             if a.get("color"):
                 act.accent = tuple(int(a["color"].lstrip("#")[k:k + 2], 16) for k in (0, 2, 4))
             act.hat = a.get("hat", act.hat)
@@ -916,17 +997,18 @@ class World:
 
     def frame(self, sc, lt, dur, scene_key):
         from . import stick_disco as SD
+        from . import stick_toon as ST
         if scene_key != self.scene_id:
             self._setup_scene(sc, scene_key)
         surface = skia.Surface(W, H)
         c = surface.getCanvas()
-        # camera
+        # camera: a director cuts between wide, two-shot, medium and close-up framings
         cam = sc.get("camera", "")
         zoom, pan, shake = 1.0, 0.0, (0, 0)
         if cam == "zoom_in":
-            zoom = lerp(1.0, 1.18, ease(lt / max(dur, 0.1)))
+            zoom = lerp(1.0, 1.12, ease(lt / max(dur, 0.1)))
         elif cam == "zoom_out":
-            zoom = lerp(1.2, 1.0, ease(lt / max(dur, 0.1)))
+            zoom = lerp(1.12, 1.0, ease(lt / max(dur, 0.1)))
         elif cam == "punch":
             zoom = 1 + 0.12 * math.exp(-lt * 6)
         elif cam == "pan":
@@ -934,14 +1016,23 @@ class World:
         if cam == "shake" or "impact" in sc.get("fx", []):
             amp = 14 * math.exp(-lt * 3)
             shake = (amp * math.sin(lt * 70), amp * math.cos(lt * 63))
+        shot, shot_t, shot_on = self._shot(sc, lt, dur, scene_key)
+        Z, focus, anchor = self._framing(sc, shot, shot_on, shot_t)
+        Z *= zoom
+        self.cam = (Z, focus, (anchor[0] + shake[0], anchor[1] + shake[1]))
         c.save()
-        c.translate(W / 2 + shake[0], GROUND - 300 + shake[1])
-        c.scale(zoom, zoom)
-        c.translate(-W / 2 - pan, -(GROUND - 300))
+        c.translate(anchor[0] + shake[0], anchor[1] + shake[1])
+        c.scale(Z, Z)
+        c.translate(-focus[0] - pan, -focus[1])
+        dof = max(0.0, (Z - 1.15) * 7)
+        if dof > 0.5:  # shallow depth of field on closer shots: soften the set behind the characters
+            c.saveLayer(None, skia.Paint(ImageFilter=skia.ImageFilters.Blur(dof, dof)))
         SETTINGS.get(sc.get("setting", "city_night"), _city_night)(c, lt, pan)
         if sc.get("setting", "city_night") in ("city_night", "gaming", "news_desk", "stage"):  # haze so characters read clearly
             c.drawRect(skia.Rect.MakeXYWH(-400, -400, W + 800, GROUND + 400), paint((20, 10, 40), fill=True, alpha=60))
         SD.world_pass(c, sc.get("setting", "city_night"), lt, pan)
+        if dof > 0.5:
+            c.restore()
         # props
         for pr in sc.get("props", []):
             plt = lt - float(pr.get("at", 0))
@@ -999,23 +1090,40 @@ class World:
             p = blend(self.step_from[key], target, k) if k < 1 else target
             act.last_pose = p
             talking = speaker == aid and bool(sc.get("say"))
-            joints[aid] = SD.draw_actor(c, act, p, lt, talking=talking)
+            others = [self.actors[o] for o in self.visible if o != aid and o in self.actors]
+            tgt = self.actors.get(speaker) if speaker and speaker != aid and speaker in self.actors else (others[0] if others else None)
+            look = (1 if tgt.x > act.x else -1) if tgt else act.facing
+            joints[aid] = ST.draw_actor(c, act, p, lt, talking=talking, look=look)
+            if self.step_state.get(key) is not None:
+                face_now = act.face
+                if (key, si) not in self.popped:
+                    self.popped.add((key, si))
+                    icon = st.get("icon") or ST.ACTION_ICON.get(action) or (ST.AUTO_ICON.get(face_now) if st.get("face") else None)
+                    if icon and si > 0 or (icon and st.get("icon")):
+                        self.pops.append((lt if si else 0.0, aid, icon))
         fx_layer(c, sc.get("fx", []), lt, joints)
         SD.fx_extra(c, sc.get("fx", []), lt, joints)
         for pr in sc.get("props", []):
             if pr.get("kind") == "money_rain" and lt >= float(pr.get("at", 0)):
                 draw_world_prop(c, pr, lt - float(pr.get("at", 0)), lt)
-        b = sc.get("bubble")
-        if b and b.get("text") and str(b.get("actor")) in joints:
-            j = joints[str(b["actor"])]
-            speech_bubble(c, b["text"], j["head"][0], j["head"][1], lt - float(b.get("at", 0.15)), thought=b.get("thought", False))
         c.restore()
+        # screen-space overlays: speech bubbles and pop-up icons stay readable at any zoom
+        Zs, fo, an = self.cam
+        to_screen = lambda q: ((q[0] - fo[0] - pan) * Zs + an[0], (q[1] - fo[1]) * Zs + an[1])
+        heads = {aid: (*to_screen(j["head"]), L["head"] * self.actors[aid].scale * Zs) for aid, j in joints.items()}
+        b = sc.get("bubble")
+        if b and b.get("text") and str(b.get("actor")) in heads:
+            hx_, hy_, hr_ = heads[str(b["actor"])]
+            speech_bubble(c, b["text"], min(W - 120, max(120, hx_)), hy_ - hr_ + 150, lt - float(b.get("at", 0.15)),
+                          thought=b.get("thought", False))
+        pops = list(self.pops) + [(float(pp.get("at", 0)), str(pp.get("actor")), pp.get("icon")) for pp in sc.get("pops", [])]
+        ST.draw_pops(c, pops, lt, heads)
         overlay_fx(c, sc.get("fx", []), lt)
         SD.overlay_extra(c, sc.get("fx", []), lt)
-        if sc.get("title"):
-            s = ease_back(min(1, lt / 0.3))
+        if sc.get("title") and lt < 2.6:
+            s = ease_back(min(1, lt / 0.3)) * (1 if lt < 2.3 else max(0.01, 1 - (lt - 2.3) / 0.3))
             c.save()
-            c.translate(W / 2, 300)
+            c.translate(W / 2, 270)
             c.scale(s, s)
             SD.title_text(c, sc["title"], 0, 0, 108, 940)
             c.restore()
