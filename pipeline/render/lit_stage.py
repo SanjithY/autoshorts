@@ -396,6 +396,30 @@ def synth(kind, seed=0):
         y = _lowpass(noise(L), 600) * (0.5 + 0.5 * np.sin(np.linspace(0, 6, L)))
         y *= np.sin(np.linspace(0, np.pi, L))
         return (0.3 * y / np.abs(y).max()).astype(np.float32)
+    if kind == "jingle":  # keys on a ring
+        L = int(0.7 * SR)
+        t = np.arange(L) / SR
+        y = np.zeros(L)
+        for i in range(7):
+            s0 = rng.uniform(0, 0.35)
+            f = rng.uniform(2400, 6200)
+            y += np.sin(2 * np.pi * f * (t - s0)) * np.exp(-((t - s0).clip(0)) * 28) * (t > s0)
+        return (0.22 * y / np.abs(y).max()).astype(np.float32)
+    if kind == "click":  # a pin dropping into place / lock click
+        L = int(0.16 * SR)
+        t = np.arange(L) / SR
+        y = 0.7 * band(noise(L), 1800, 9000) * np.exp(-t * 140) + 0.5 * np.sin(2 * np.pi * 1450 * t) * np.exp(-t * 60)
+        return (0.5 * y / np.abs(y).max()).astype(np.float32)
+    if kind == "boing":  # spring
+        L = int(0.6 * SR)
+        t = np.arange(L) / SR
+        f = 240 + 120 * np.sin(2 * np.pi * 9 * t) * np.exp(-t * 4)
+        y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 5)
+        return (0.3 * y).astype(np.float32)
+    if kind == "slide":  # metal sliding on metal
+        L = int(0.9 * SR)
+        y = band(noise(L), 900, 5000) * np.sin(np.linspace(0, np.pi, L)) ** 1.5
+        return (0.22 * y / np.abs(y).max()).astype(np.float32)
     if kind == "bell":
         L = int(1.4 * SR)
         t = np.arange(L) / SR
