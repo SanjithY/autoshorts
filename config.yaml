@@ -29,7 +29,7 @@ schedule:
   # Go back up to 2, then 3 windows once Shorts-feed views return.
   windows_from:
     "2026-11-25": [["16:00", "21:00"]]
-  pause_until: "2026-11-25T23:00Z"
+  pause_until: "2026-11-26T23:30Z"   # only fixed-time posts (glitches video, escalator) until then
   lookahead_min: 65
 # Safety net against double posts from overlapping timers.
 min_gap_minutes: 100
