@@ -111,8 +111,14 @@ def schedule_gate(cfg, st):
     # 3) random time inside each daily window
     tz = ZoneInfo(sch.get("timezone", "America/Chicago"))
     local = now.astimezone(tz)
+    def windows_for(day):
+        w = sch["windows"]
+        for start_day, ww in sorted((sch.get("windows_from") or {}).items()):
+            if day.isoformat() >= str(start_day):
+                w = ww
+        return w
     for day in (local.date() - dt.timedelta(days=1), local.date()):
-        for i, (a, b) in enumerate(sch["windows"]):
+        for i, (a, b) in enumerate(windows_for(day)):
             ha, ma = map(int, a.split(":"))
             hb, mb = map(int, b.split(":"))
             start = dt.datetime(day.year, day.month, day.day, ha, ma, tzinfo=tz)

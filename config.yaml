@@ -25,6 +25,10 @@ focus:
 schedule:
   timezone: America/Chicago
   windows: [["11:00", "12:45"], ["16:00", "17:45"], ["19:00", "21:00"]]
+  # Recovery mode: from Nov 26, just 1 post a day at a random time between 4 and 9 PM.
+  # Go back up to 2, then 3 windows once Shorts-feed views return.
+  windows_from:
+    "2026-11-26": [["16:00", "21:00"]]
   pause_until: "2026-11-25T23:00Z"
   lookahead_min: 65
 # Safety net against double posts from overlapping timers.
