@@ -82,7 +82,20 @@ def render(script, out_path, cfg, preview=False, frames_dir=None):
     from .. import disco as D
     from ..lit_stage import caption_groups, draw_caption
     fps = 24
-    timeline, voice, sfx, shots, tracks, total = plan(script, cfg)
+    # On CI the plan (voice + timings) is made once and shared, so every render machine uses identical timing.
+    plan_file = os.environ.get("X3D_PLAN_FILE")
+    if plan_file and Path(plan_file).exists():
+        import pickle
+        timeline, voice, sfx, shots, tracks, total = pickle.loads(Path(plan_file).read_bytes())
+    else:
+        timeline, voice, sfx, shots, tracks, total = plan(script, cfg)
+        if plan_file:
+            import pickle
+            Path(plan_file).parent.mkdir(parents=True, exist_ok=True)
+            Path(plan_file).write_bytes(pickle.dumps((timeline, voice, sfx, shots, tracks, total)))
+            if os.environ.get("X3D_PLAN_ONLY"):
+                print(f"[x3d] plan saved: {total:.2f}s")
+                return None
     n = int(total * fps)
     work = Path(frames_dir or tempfile.mkdtemp(prefix="x3d_"))
     work.mkdir(parents=True, exist_ok=True)

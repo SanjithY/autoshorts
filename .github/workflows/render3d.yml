@@ -20,8 +20,50 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # The voice and timings are made once, so every render machine uses exactly the same timing.
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install system packages
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg libegl1 libgl1 libgl1-mesa-dri libegl-mesa0 libfontconfig1 libxi6 libxxf86vm1 libxfixes3 libxrender1 libxkbcommon0 libsm6
+
+      - name: Install Python packages (incl. Blender as a module)
+        run: pip install -r requirements.txt bpy
+
+      - name: Cache voice model
+        uses: actions/cache@v4
+        with:
+          path: models
+          key: kokoro-v1.0-int8
+
+      - name: Download voice model (first run only)
+        run: |
+          mkdir -p models
+          [ -f models/kokoro.onnx ] || curl -sL -o models/kokoro.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx
+          [ -f models/voices.bin ] || curl -sL -o models/voices.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+
+      - name: Make the voiceover and timing plan
+        env:
+          X3D_PLAN_FILE: plan/plan.pkl
+          X3D_PLAN_ONLY: "1"
+        run: python -m pipeline.render.x3d.render "${{ inputs.script }}" out3d.mp4 x3d_work
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plan
+          path: plan/plan.pkl
+          retention-days: 2
+
   # Blender frames are slow (~1 min each), so 12 machines each render a slice in parallel.
   frames:
+    needs: plan
     runs-on: ubuntu-latest
     timeout-minutes: 350
     strategy:
@@ -53,9 +95,15 @@ jobs:
           [ -f models/kokoro.onnx ] || curl -sL -o models/kokoro.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx
           [ -f models/voices.bin ] || curl -sL -o models/voices.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: plan
+          path: plan
+
       - name: Render this slice of frames
         env:
           X3D_CHUNK: ${{ matrix.chunk }}/12
+          X3D_PLAN_FILE: plan/plan.pkl
         run: python -m pipeline.render.x3d.render "${{ inputs.script }}" out3d.mp4 x3d_work
 
       - uses: actions/upload-artifact@v4
@@ -99,9 +147,15 @@ jobs:
           merge-multiple: true
           path: x3d_work/frames
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: plan
+          path: plan
+
       - name: Build the video (captions, SFX, music -> mp4)
         env:
           X3D_ASSEMBLE: "1"
+          X3D_PLAN_FILE: plan/plan.pkl
         run: python -m pipeline.render.x3d.render "${{ inputs.script }}" out3d.mp4 x3d_work
 
       - name: Keep the video as a downloadable artifact
