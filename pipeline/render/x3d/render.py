@@ -95,11 +95,28 @@ def render(script, out_path, cfg, preview=False, frames_dir=None):
             job[k] = script[k]
     if preview:
         job["only"] = list(range(0, n, fps // 2))
+    # Parallel rendering on CI: X3D_CHUNK="i/K" renders only that slice of frames and stops;
+    # X3D_ASSEMBLE=1 skips Blender and builds the video from frames the chunk jobs rendered.
+    chunk = os.environ.get("X3D_CHUNK")
+    if chunk:
+        i, k = map(int, chunk.split("/"))
+        job["only"] = list(range(i * n // k, (i + 1) * n // k))
     (work / "job.json").write_text(json.dumps(job))
+    if os.environ.get("X3D_ASSEMBLE"):
+        fdir = work / "frames"
+        have = sorted(int(p.stem[1:]) for p in fdir.glob("f*.png"))
+        missing = [fi for fi in range(n) if not (fdir / f"f{fi:05d}.png").exists()]
+        print(f"[x3d] assembling {n} frames ({len(have)} rendered, {len(missing)} filled from neighbours)")
+        if len(missing) > max(6, n // 50):
+            raise RuntimeError(f"too many missing frames: {missing[:20]}")
+        import shutil
+        for fi in missing:
+            near = min(have, key=lambda h: abs(h - fi))
+            shutil.copy(fdir / f"f{near:05d}.png", fdir / f"f{fi:05d}.png")
     done = sorted((work / "frames").glob("*.png")) if (work / "frames").exists() else []
-    if len(done) < len(job.get("only") or range(n)):
+    if not os.environ.get("X3D_ASSEMBLE") and len(done) < len(job.get("only") or range(n)):
         subprocess.run([sys.executable, "-m", "pipeline.render.x3d.blender_job", str(work / "job.json")], cwd=str(ROOT), check=True)
-    if preview:
+    if preview or chunk:
         return work
     # audio: deep narration + mechanical SFX + quiet ambient bed
     mixed = A.mix(total, voice, sfx, music_seed=7, music_gain=float(script.get("music_gain", 0.14)))
