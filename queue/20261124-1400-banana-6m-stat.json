@@ -1,0 +1,64 @@
+{
+ "format": "stat_shock",
+ "kicker": "Art · money",
+ "theme": "money",
+ "stock_query": "banana yellow",
+ "title": "Someone paid $6.2M for a banana. Then ate it 🍌 #shorts",
+ "description": "The fruit itself came from a New York street stand for about 35 cents. What the buyer really owns is a certificate and instructions for replacing the banana. Read more: NPR, Bloomberg, Smithsonian Magazine, The Art Newspaper.",
+ "hashtags": ["#art", "#money", "#funfacts", "#shorts"],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "A $6.2M BANANA",
+   "highlight": ["$6.2M"],
+   "say": "Someone paid six point two million dollars for a banana."
+  },
+  {
+   "type": "text",
+   "text": "Duct-taped to a wall",
+   "highlight": ["wall"],
+   "sub": "\"Comedian\" by Maurizio Cattelan",
+   "say": "It's an artwork called Comedian. One banana, one strip of duct tape, stuck to a wall."
+  },
+  {
+   "type": "stat",
+   "value": 6.2,
+   "prefix": "$",
+   "suffix": "M",
+   "decimals": 1,
+   "label": "Sotheby's, 2024",
+   "sub": "with fees, New York",
+   "say": "In November twenty twenty four, it sold at Sotheby's in New York to crypto founder Justin Sun."
+  },
+  {
+   "type": "stat",
+   "value": 0.35,
+   "prefix": "$",
+   "decimals": 2,
+   "label": "the actual banana",
+   "sub": "from a street fruit stand",
+   "say": "The banana on display? Bought from a Manhattan fruit stand for about thirty five cents."
+  },
+  {
+   "type": "text",
+   "text": "You buy the IDEA",
+   "highlight": ["IDEA"],
+   "sub": "certificate + instructions",
+   "say": "The buyer gets a certificate and instructions, so the banana can be swapped when it rots."
+  },
+  {
+   "type": "text",
+   "text": "So he ATE it",
+   "highlight": ["ATE"],
+   "sub": "Hong Kong, days later",
+   "say": "Nine days later, at an event in Hong Kong, he peeled it and ate it."
+  },
+  {
+   "type": "outro",
+   "text": "Art or a joke?",
+   "cta": "Comment below",
+   "say": "So is this art, or the most expensive joke ever?"
+  }
+ ],
+ "post_after": "2026-11-25T04:24"
+}
