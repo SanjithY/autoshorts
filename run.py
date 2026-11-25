@@ -61,11 +61,21 @@ def next_queued():
             d = json.loads(p.read_text())
         except Exception:
             continue
-        if d.get("post_at") and d["post_at"] > now:
+        pa = post_at_of(p, d)
+        if pa and pa > now:
             continue
         if d.get("post_after", "") <= now:
             return p, d
     return None
+
+
+def post_at_of(p, d):
+    """Exact post time for a queue file: post_times.json (repo root) overrides the file's own "post_at"."""
+    try:
+        over = json.loads((ROOT / "post_times.json").read_text())
+    except Exception:
+        over = {}
+    return over.get(p.name, d.get("post_at"))
 
 
 def _utc(s):
@@ -99,16 +109,17 @@ def schedule_gate(cfg, st):
             d = json.loads(p.read_text())
         except Exception:
             continue
-        if d.get("post_at"):
-            t = _utc(d["post_at"])
+        if post_at_of(p, d):
+            t = _utc(post_at_of(p, d))
             if now - late <= t <= now + ahead:
                 PREFER = p
                 return max(0.0, (t - now).total_seconds())
     fixed = []
     for p in (ROOT / "queue").glob("*.json"):
         try:
-            if json.loads(p.read_text()).get("post_at"):
-                fixed.append(_utc(json.loads(p.read_text())["post_at"]))
+            pa = post_at_of(p, json.loads(p.read_text()))
+            if pa:
+                fixed.append(_utc(pa))
         except Exception:
             pass
     # 2) paused?
