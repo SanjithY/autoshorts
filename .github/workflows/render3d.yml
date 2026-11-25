@@ -9,7 +9,7 @@ on:
         description: "Explainer script, e.g. explainers/pin-tumbler-lock.json"
         required: true
       post_at:
-        description: "When to post (UTC, YYYY-MM-DDTHH:MM). 4:52 PM Central slot = 22:45 UTC"
+        description: "Exact time to post (UTC, YYYY-MM-DDTHH:MM), e.g. 5:00 PM Central = 23:00 UTC"
         required: true
 
 permissions:
@@ -71,7 +71,7 @@ jobs:
           slug = os.path.basename(os.environ["SCRIPT"])[:-5]
           d = json.load(open(os.environ["SCRIPT"]))
           meta = {k: d[k] for k in ("title", "description", "hashtags") if k in d}
-          meta.update({"format": "explainer3d", "prebuilt_asset": f"{slug}.mp4", "post_after": os.environ["POST_AT"]})
+          meta.update({"format": "explainer3d", "prebuilt_asset": f"{slug}.mp4", "post_at": os.environ["POST_AT"], "post_after": os.environ["POST_AT"]})
           # "0-" sorts before dated queue files, so it's the first thing posted once its time comes
           json.dump(meta, open(f"queue/0-x3d-{slug}.json", "w"), indent=1)
           PY

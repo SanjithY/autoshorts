@@ -44,19 +44,88 @@ def load_ideas(st):
     return [i for i in ideas if i not in st["used_ideas"]]
 
 
+PREFER = None   # a fixed-time queue file chosen by the scheduler for this run
+
+
 def next_queued():
-    """Oldest script the daily writer left in queue/ whose post_after time has passed."""
+    """The scheduler's fixed-time pick, else the oldest queued script whose post_after time has passed.
+    Files with an exact "post_at" time are only ever posted by the scheduler at that time."""
     q = ROOT / "queue"
     if not q.exists():
         return None
+    if PREFER and PREFER.exists():
+        return PREFER, json.loads(PREFER.read_text())
     now = time.strftime("%Y-%m-%dT%H:%M", time.gmtime())
     for p in sorted(q.glob("*.json")):
         try:
             d = json.loads(p.read_text())
         except Exception:
             continue
+        if d.get("post_at") and d["post_at"] > now:
+            continue
         if d.get("post_after", "") <= now:
             return p, d
+    return None
+
+
+def _utc(s):
+    import datetime as dt
+    return dt.datetime.strptime(s.rstrip("Z")[:16], "%Y-%m-%dT%H:%M").replace(tzinfo=dt.timezone.utc)
+
+
+def schedule_gate(cfg, st):
+    """Decide whether this run should post, and when. Returns seconds to wait, or None to skip.
+
+    - Queue files with "post_at" go out at exactly that time.
+    - Otherwise the day has a few posting windows (local time); each window gets one post at a random
+      time inside it, chosen fresh every day. Runs fire hourly, so a run posts if its window's time falls
+      within the next ~65 minutes (it waits until then) and that window hasn't posted yet.
+    - Nothing regular posts before "pause_until".
+    """
+    import datetime as dt
+    from zoneinfo import ZoneInfo
+    sch = cfg.get("schedule")
+    if not sch:
+        return 0
+    global PREFER
+    now = dt.datetime.now(dt.timezone.utc)
+    ahead = dt.timedelta(minutes=int(sch.get("lookahead_min", 65)))
+    late = dt.timedelta(minutes=40)
+    posted = [dt.datetime.strptime(p["time"], "%Y%m%d-%H%M").replace(tzinfo=dt.timezone.utc)
+              for p in st["posts"] if any("id" in r for r in p.get("results", []))]
+    # 1) fixed-time posts
+    for p in sorted((ROOT / "queue").glob("*.json")):
+        try:
+            d = json.loads(p.read_text())
+        except Exception:
+            continue
+        if d.get("post_at"):
+            t = _utc(d["post_at"])
+            if now - late <= t <= now + ahead:
+                PREFER = p
+                return max(0.0, (t - now).total_seconds())
+    # 2) paused?
+    if sch.get("pause_until") and now < _utc(sch["pause_until"]):
+        print(f"[run] uploads paused until {sch['pause_until']} UTC")
+        return None
+    # 3) random time inside each daily window
+    tz = ZoneInfo(sch.get("timezone", "America/Chicago"))
+    local = now.astimezone(tz)
+    for day in (local.date() - dt.timedelta(days=1), local.date()):
+        for i, (a, b) in enumerate(sch["windows"]):
+            ha, ma = map(int, a.split(":"))
+            hb, mb = map(int, b.split(":"))
+            start = dt.datetime(day.year, day.month, day.day, ha, ma, tzinfo=tz)
+            end = dt.datetime(day.year, day.month, day.day, hb, mb, tzinfo=tz)
+            rnd = random.Random(f"{day.isoformat()}-{i}")
+            target = start + (end - start) * rnd.random()
+            if not (now - late <= target <= now + ahead):
+                continue
+            if any(start - dt.timedelta(minutes=30) <= t <= end + dt.timedelta(minutes=45) for t in posted):
+                continue   # this window already has its post
+            print(f"[run] window {a}-{b}: today's post time is {target.astimezone(tz):%H:%M} local")
+            return max(0.0, (target - now).total_seconds())
+    print("[run] not a posting time")
     return None
 
 
@@ -81,8 +150,15 @@ def main():
     dry = args.dry_run or cfg.get("dry_run", False)
     st = load_state()
     OUT.mkdir(exist_ok=True)
-    # Two timers (GitHub's schedule + a backup) can both fire: never post twice within an hour.
-    if not dry and not args.force:
+    if not dry and not args.force and not args.prebuilt and not args.script and not args.format:
+        wait = schedule_gate(cfg, st)
+        if wait is None:
+            return
+        if wait > 0:
+            print(f"[run] waiting {wait / 60:.0f} min for the scheduled time")
+            time.sleep(wait)
+    # Several timers can fire: never post twice too close together (fixed-time posts are exempt).
+    if not dry and not args.force and PREFER is None:
         last = [p for p in st["posts"] if any("id" in r for r in p.get("results", []))]
         if last:
             import datetime as _dt

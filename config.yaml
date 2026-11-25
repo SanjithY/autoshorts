@@ -19,9 +19,16 @@ focus:
   until: "2026-11-23"    # GTA week ended early: owner asked for a broader mix
   share: 0.0             # share of videos on the focus topic while it's active
 
-# Posts go out every 3 hours at :15 past 1,4,7,10 AM/PM Central. Any run less than this many
-# minutes after the last post skips, so the retry timers never double-post or bunch videos up.
-min_gap_minutes: 170
+# Posting schedule: 3 posts a day, each at a random time inside its window (new times every day).
+# Hourly runs check whether a window's time is coming up and wait for it. Queue files with "post_at"
+# (e.g. 3D explainers) go out at exactly that time. Nothing regular posts before pause_until (UTC).
+schedule:
+  timezone: America/Chicago
+  windows: [["11:00", "12:45"], ["16:00", "17:45"], ["19:00", "21:00"]]
+  pause_until: "2026-11-25T23:00Z"
+  lookahead_min: 65
+# Safety net against double posts from overlapping timers.
+min_gap_minutes: 100
 
 # ─── Format rotation ──────────────────────────────────────────────────────
 # Relative weights. A format is never repeated back-to-back, and the last

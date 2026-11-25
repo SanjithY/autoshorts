@@ -2,8 +2,7 @@ name: autopost
 
 on:
   schedule:
-    - cron: "15 1-22/3 * * *"   # every 3 hours = 1:15, 4:15, 7:15, 10:15 AM/PM US Central
-    - cron: "40 1-22/3 * * *"   # retry 25 min later in case GitHub drops the first; min_gap_minutes prevents double posts
+    - cron: "23 * * * *"   # hourly check; run.py decides if a posting window is coming up and waits for it
   workflow_dispatch:          # "Run workflow" button for manual tests
     inputs:
       dry_run:
@@ -35,7 +34,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
 

@@ -6,6 +6,13 @@ The poster (GitHub Actions, every 3 hours) takes the oldest file in `queue/` who
 
 ## 1. Pick topics
 
+- **Posting is now 3 a day** at random times in three windows (late morning, late afternoon, evening).
+  Write fewer, stronger scripts: quality over volume.
+- **Vary every description.** Don't reuse one template ("X happened. Sources: A, B, C."). Mix styles: a
+  one-line teaser, a question, a fun extra fact, then sources in different wording ("Info from...",
+  "Read more: ..."). Vary title shapes and hashtag sets too, so uploads don't look mass-produced.
+- **Ease off GTA gradually**: for the next few days include about 1 GTA/gaming script per day between the
+  stories and other topics, so the audience that found the channel through GTA keeps getting videos.
 - **The GTA 6 run is over** (owner's call, Nov 23). Build a diverse portfolio: no more than
   1 of 8 scripts per day about GTA, and never two videos on the same topic back to back.
   Spread across: true stories, trending pop culture, streamers, gaming news, sports moments,
