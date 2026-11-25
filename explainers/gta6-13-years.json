@@ -1,0 +1,1026 @@
+{
+ "format": "explainer3d",
+ "model": "gta_timeline",
+ "pedestal": false,
+ "res": [
+  640,
+  1136
+ ],
+ "samples": 12,
+ "title": "13 years of GTA 6 waiting, in 40 seconds #gta6 #shorts",
+ "description": "From GTA 5 in 2013 to launch day on November 19, 2026: one tourist, one very long walk, and a beard that kept growing.\n\nDates from Rockstar's announcements; trailer record from Guinness World Records; day-one sales from Take-Two (via AP).",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#3danimation",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "say": "How long did people wait for GTA 6? Thirteen years. Let's walk it.",
+   "key": [
+    "Thirteen",
+    "years"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       0.25,
+       -3.0,
+       0.35
+      ],
+      "target": [
+       0,
+       0,
+       0.35
+      ],
+      "lens": 38,
+      "fstop": 3
+     },
+     "to": {
+      "pos": [
+       0.15,
+       -2.3,
+       0.4
+      ],
+      "target": [
+       0,
+       0,
+       0.4
+      ],
+      "lens": 42,
+      "fstop": 3
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": 0,
+     "x": -16.0,
+     "face": 1,
+     "walk": 0,
+     "beard": 0,
+     "tv": 0,
+     "stamp1": 0,
+     "stamp2": 0,
+     "arch": 0,
+     "cash": 0,
+     "confetti": 0,
+     "cheer": 0
+    },
+    {
+     "u": [
+      0.85,
+      1
+     ],
+     "face": 0
+    }
+   ],
+   "sfx": [
+    {
+     "u": 0.05,
+     "sound": "drum"
+    }
+   ]
+  },
+  {
+   "say": "2013. GTA 5 comes out. Surely the next one is close.",
+   "key": [
+    "2013"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "from": {
+      "pos": [
+       -13.0,
+       -5.4,
+       -0.5
+      ],
+      "target": [
+       -13.4,
+       1.2,
+       -1.1
+      ],
+      "lens": 28,
+      "fstop": 7
+     },
+     "to": {
+      "pos": [
+       -13.2,
+       -4.8,
+       -0.6
+      ],
+      "target": [
+       -13.4,
+       1.2,
+       -1.1
+      ],
+      "lens": 30,
+      "fstop": 7
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.55
+     ],
+     "x": -14.5,
+     "walk": 1
+    },
+    {
+     "u": [
+      0.55,
+      0.62
+     ],
+     "walk": 0
+    },
+    {
+     "u": [
+      0.6,
+      0.75
+     ],
+     "face": 1
+    }
+   ],
+   "sfx": [
+    {
+     "on": "2013",
+     "sound": "thud"
+    }
+   ]
+  },
+  {
+   "say": "Then nothing. For nine years.",
+   "key": [
+    "nine"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       0.9,
+       -4.2,
+       0.5
+      ],
+      "target": [
+       0.9,
+       0,
+       0.1
+      ],
+      "lens": 30,
+      "fstop": 5
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.12
+     ],
+     "face": 0
+    },
+    {
+     "u": [
+      0,
+      0.15
+     ],
+     "walk": 1
+    },
+    {
+     "u": [
+      0,
+      1
+     ],
+     "x": -9.2,
+     "beard": 0.3
+    },
+    {
+     "u": [
+      0.9,
+      1
+     ],
+     "walk": 0
+    }
+   ],
+   "sfx": [
+    {
+     "on": "nine",
+     "sound": "boing"
+    },
+    {
+     "u": [
+      0.1,
+      0.85
+     ],
+     "n": 6,
+     "sound": "click"
+    }
+   ]
+  },
+  {
+   "say": "In 2022, Rockstar finally confirms it's in development.",
+   "key": [
+    "2022"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "from": {
+      "pos": [
+       -8.6,
+       -5.3,
+       -0.5
+      ],
+      "target": [
+       -8.9,
+       1.2,
+       -1.1
+      ],
+      "lens": 28,
+      "fstop": 7
+     },
+     "to": {
+      "pos": [
+       -8.7,
+       -4.7,
+       -0.6
+      ],
+      "target": [
+       -9.0,
+       1.2,
+       -1.1
+      ],
+      "lens": 30,
+      "fstop": 7
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.2
+     ],
+     "face": 1
+    }
+   ],
+   "sfx": [
+    {
+     "on": "2022",
+     "sound": "thud"
+    },
+    {
+     "on": "confirms",
+     "sound": "clank"
+    }
+   ]
+  },
+  {
+   "say": "December 2023. The first trailer leaks, so Rockstar drops it early.",
+   "key": [
+    "2023",
+    "trailer"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      0.55
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       0.9,
+       -4.0,
+       0.5
+      ],
+      "target": [
+       0.9,
+       0,
+       0.1
+      ],
+      "lens": 30,
+      "fstop": 5
+     }
+    },
+    {
+     "u": [
+      0.55,
+      1
+     ],
+     "from": {
+      "pos": [
+       -0.6,
+       -3.8,
+       -0.7
+      ],
+      "target": [
+       0.1,
+       1.4,
+       -0.8
+      ],
+      "lens": 32,
+      "fstop": 6
+     },
+     "to": {
+      "pos": [
+       -0.4,
+       -3.3,
+       -0.6499999999999999
+      ],
+      "target": [
+       0.1,
+       1.4,
+       -0.75
+      ],
+      "lens": 34,
+      "fstop": 6
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.1
+     ],
+     "face": 0
+    },
+    {
+     "u": [
+      0,
+      0.1
+     ],
+     "walk": 1
+    },
+    {
+     "u": [
+      0,
+      0.6
+     ],
+     "x": -3.7,
+     "beard": 0.45
+    },
+    {
+     "u": [
+      0.55,
+      0.62
+     ],
+     "walk": 0
+    },
+    {
+     "u": [
+      0.6,
+      0.7
+     ],
+     "face": 1
+    },
+    {
+     "u": [
+      0.8,
+      0.9
+     ],
+     "tv": 0.4
+    }
+   ],
+   "sfx": [
+    {
+     "on": "leaks",
+     "sound": "slide"
+    },
+    {
+     "on": "early",
+     "sound": "click"
+    }
+   ]
+  },
+  {
+   "say": "Ninety million views in one day.",
+   "key": [
+    "Ninety",
+    "million"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "from": {
+      "pos": [
+       -0.4,
+       -3.3,
+       -0.6499999999999999
+      ],
+      "target": [
+       0.1,
+       1.4,
+       -0.6000000000000001
+      ],
+      "lens": 34,
+      "fstop": 6
+     },
+     "to": {
+      "pos": [
+       -0.3,
+       -2.9,
+       -0.3999999999999999
+      ],
+      "target": [
+       0.1,
+       1.3,
+       -0.3500000000000001
+      ],
+      "lens": 36,
+      "fstop": 6
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.25
+     ],
+     "tv": 1
+    }
+   ],
+   "sfx": [
+    {
+     "on": "Ninety",
+     "sound": "boing"
+    },
+    {
+     "on": "record",
+     "sound": "jingle"
+    }
+   ]
+  },
+  {
+   "say": "It promised 2025.",
+   "key": [
+    "2025"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      0.5
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       0.9,
+       -3.9,
+       0.5
+      ],
+      "target": [
+       1.1,
+       0,
+       0.1
+      ],
+      "lens": 30,
+      "fstop": 5
+     }
+    },
+    {
+     "u": [
+      0.5,
+      1
+     ],
+     "from": {
+      "pos": [
+       4.0,
+       -4.6,
+       -0.5
+      ],
+      "target": [
+       4.4,
+       1.4,
+       -1.05
+      ],
+      "lens": 30,
+      "fstop": 7
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.12
+     ],
+     "face": 0
+    },
+    {
+     "u": [
+      0,
+      0.12
+     ],
+     "walk": 1
+    },
+    {
+     "u": [
+      0,
+      0.85
+     ],
+     "x": 2.1,
+     "beard": 0.55
+    },
+    {
+     "u": [
+      0.8,
+      0.9
+     ],
+     "walk": 0
+    },
+    {
+     "u": [
+      0.85,
+      1
+     ],
+     "face": 1
+    }
+   ],
+   "sfx": [
+    {
+     "on": "2025",
+     "sound": "thud"
+    }
+   ]
+  },
+  {
+   "say": "Then it got delayed to May 2026.",
+   "key": [
+    "delayed"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      0.45
+     ],
+     "from": {
+      "pos": [
+       4.4,
+       -4.9,
+       -0.3999999999999999
+      ],
+      "target": [
+       4.6,
+       1.4,
+       -1.05
+      ],
+      "lens": 28,
+      "fstop": 7
+     },
+     "to": {
+      "pos": [
+       4.5,
+       -4.6,
+       -0.3999999999999999
+      ],
+      "target": [
+       4.7,
+       1.4,
+       -1.05
+      ],
+      "lens": 29,
+      "fstop": 7
+     },
+     "shake": 0.0
+    },
+    {
+     "u": [
+      0.45,
+      1
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       0.2,
+       -2.5,
+       0.5
+      ],
+      "target": [
+       0,
+       0,
+       0.5
+      ],
+      "lens": 40,
+      "fstop": 3
+     },
+     "to": {
+      "pos": [
+       0.12,
+       -2.1,
+       0.55
+      ],
+      "target": [
+       0,
+       0,
+       0.55
+      ],
+      "lens": 44,
+      "fstop": 3
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0.25,
+      0.33
+     ],
+     "stamp1": 1
+    },
+    {
+     "u": [
+      0.3,
+      1
+     ],
+     "beard": 0.7
+    }
+   ],
+   "sfx": [
+    {
+     "on": "delayed",
+     "sound": "crash"
+    }
+   ]
+  },
+  {
+   "say": "Then delayed again, to November 19th.",
+   "key": [
+    "again"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      0.45
+     ],
+     "from": {
+      "pos": [
+       4.6,
+       -5.1,
+       -0.3999999999999999
+      ],
+      "target": [
+       4.8,
+       1.4,
+       -1.05
+      ],
+      "lens": 28,
+      "fstop": 7
+     },
+     "to": {
+      "pos": [
+       4.7,
+       -4.8,
+       -0.5
+      ],
+      "target": [
+       4.9,
+       1.4,
+       -1.05
+      ],
+      "lens": 29,
+      "fstop": 7
+     }
+    },
+    {
+     "u": [
+      0.45,
+      1
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       0.2,
+       -2.5,
+       0.5
+      ],
+      "target": [
+       0,
+       0,
+       0.5
+      ],
+      "lens": 40,
+      "fstop": 3
+     },
+     "to": {
+      "pos": [
+       0.12,
+       -2.1,
+       0.55
+      ],
+      "target": [
+       0,
+       0,
+       0.55
+      ],
+      "lens": 44,
+      "fstop": 3
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0.12,
+      0.2
+     ],
+     "stamp2": 1
+    },
+    {
+     "u": [
+      0.2,
+      1
+     ],
+     "beard": 0.85
+    }
+   ],
+   "sfx": [
+    {
+     "on": "delayed",
+     "sound": "crash"
+    }
+   ]
+  },
+  {
+   "say": "And on November 19th, 2026, it finally came out.",
+   "key": [
+    "finally"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      0.5
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       1.2,
+       -4.6,
+       0.7
+      ],
+      "target": [
+       1.0,
+       0,
+       0.2
+      ],
+      "lens": 28,
+      "fstop": 5
+     }
+    },
+    {
+     "u": [
+      0.5,
+      1
+     ],
+     "from": {
+      "pos": [
+       10.6,
+       -6.2,
+       0.0
+      ],
+      "target": [
+       10.7,
+       0.8,
+       -0.8999999999999999
+      ],
+      "lens": 26,
+      "fstop": 8
+     },
+     "orbit": 10
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.1
+     ],
+     "face": 0
+    },
+    {
+     "u": [
+      0,
+      0.1
+     ],
+     "walk": 1
+    },
+    {
+     "u": [
+      0,
+      0.62
+     ],
+     "x": 10.4,
+     "beard": 1.0
+    },
+    {
+     "u": [
+      0.58,
+      0.66
+     ],
+     "walk": 0
+    },
+    {
+     "u": [
+      0.62,
+      0.72
+     ],
+     "face": 1
+    },
+    {
+     "u": [
+      0.6,
+      0.75
+     ],
+     "arch": 1
+    },
+    {
+     "u": [
+      0.7,
+      0.85
+     ],
+     "cheer": 1
+    },
+    {
+     "u": [
+      0.68,
+      1
+     ],
+     "confetti": 0.4
+    }
+   ],
+   "sfx": [
+    {
+     "on": "finally",
+     "sound": "jingle"
+    },
+    {
+     "on": "came",
+     "sound": "drum"
+    }
+   ]
+  },
+  {
+   "say": "Three point seven nine billion dollars on day one.",
+   "key": [
+    "billion"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "from": {
+      "pos": [
+       11.4,
+       -5.0,
+       -0.10000000000000009
+      ],
+      "target": [
+       12.1,
+       1.3,
+       -0.8
+      ],
+      "lens": 28,
+      "fstop": 8
+     },
+     "to": {
+      "pos": [
+       11.6,
+       -4.4,
+       0.10000000000000009
+      ],
+      "target": [
+       12.2,
+       1.4,
+       -0.5
+      ],
+      "lens": 28,
+      "fstop": 8
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      0.8
+     ],
+     "cash": 1
+    },
+    {
+     "u": [
+      0,
+      1
+     ],
+     "confetti": 0.85
+    },
+    {
+     "u": [
+      0.6,
+      1
+     ],
+     "cheer": 0.0
+    }
+   ],
+   "sfx": [
+    {
+     "u": [
+      0.05,
+      0.7
+     ],
+     "n": 5,
+     "sound": "cash"
+    }
+   ]
+  },
+  {
+   "say": "Thirteen years of waiting. Worth the beard?",
+   "key": [
+    "beard"
+   ],
+   "shots": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "anchor": "hero",
+     "from": {
+      "pos": [
+       0.25,
+       -2.6,
+       0.5
+      ],
+      "target": [
+       0,
+       0,
+       0.5
+      ],
+      "lens": 40,
+      "fstop": 3
+     },
+     "to": {
+      "pos": [
+       0.15,
+       -2.1,
+       0.55
+      ],
+      "target": [
+       0,
+       0,
+       0.55
+      ],
+      "lens": 44,
+      "fstop": 3
+     }
+    }
+   ],
+   "set": [
+    {
+     "u": [
+      0,
+      1
+     ],
+     "confetti": 1
+    }
+   ],
+   "sfx": [
+    {
+     "on": "beard",
+     "sound": "boing"
+    }
+   ]
+  }
+ ]
+}
