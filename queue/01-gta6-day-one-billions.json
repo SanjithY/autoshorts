@@ -1,0 +1,68 @@
+{
+ "format": "stat_shock",
+ "kicker": "GTA 6 \u00b7 launch week",
+ "theme": "gaming",
+ "topic_key": "gta6",
+ "title": "GTA 6 made more in ONE day than most movies ever do #gta6 #shorts",
+ "description": "One day. $3.79 billion. Rockstar says GTA 6 had the biggest launch day in entertainment history, and that's before counting the 39 million people who jumped in on PlayStation in the first four days.\n\nNumbers from Take-Two/Rockstar (via AP) and the PlayStation Blog.",
+ "hashtags": [
+  "#gta6",
+  "#gtavi",
+  "#rockstargames",
+  "#gaming",
+  "#shorts"
+ ],
+ "scenes": [
+  {
+   "type": "hook",
+   "text": "$3.79 BILLION IN ONE DAY",
+   "highlight": [
+    "3.79"
+   ],
+   "say": "GTA 6 made three point seven nine billion dollars in a single day."
+  },
+  {
+   "type": "stat",
+   "value": 3.79,
+   "prefix": "$",
+   "suffix": "B",
+   "label": "day-one sales",
+   "sub": "Rockstar estimate, Nov 19",
+   "say": "Rockstar says that's the biggest launch day for anything in entertainment, ever.",
+   "decimals": 2
+  },
+  {
+   "type": "stat",
+   "value": 32.5,
+   "suffix": "M",
+   "label": "copies sold before launch",
+   "sub": "per Take-Two",
+   "say": "Thirty two and a half million copies were sold before the game even unlocked.",
+   "decimals": 1
+  },
+  {
+   "type": "stat",
+   "value": 39,
+   "suffix": "M",
+   "label": "players on PlayStation",
+   "sub": "first 4 days, per Sony",
+   "say": "And thirty nine million people played it on PlayStation in just four days."
+  },
+  {
+   "type": "text",
+   "text": "13 years of waiting",
+   "highlight": [
+    "13"
+   ],
+   "say": "Turns out thirteen years of waiting builds up a little demand."
+  },
+  {
+   "type": "outro",
+   "text": "Played it yet?",
+   "cta": "Tell me below",
+   "say": "So, have you played it yet?"
+  }
+ ],
+ "post_at": "2026-11-25T23:00",
+ "post_after": "2026-11-25T23:00"
+}

@@ -104,6 +104,13 @@ def schedule_gate(cfg, st):
             if now - late <= t <= now + ahead:
                 PREFER = p
                 return max(0.0, (t - now).total_seconds())
+    fixed = []
+    for p in (ROOT / "queue").glob("*.json"):
+        try:
+            if json.loads(p.read_text()).get("post_at"):
+                fixed.append(_utc(json.loads(p.read_text())["post_at"]))
+        except Exception:
+            pass
     # 2) paused?
     if sch.get("pause_until") and now < _utc(sch["pause_until"]):
         print(f"[run] uploads paused until {sch['pause_until']} UTC")
@@ -127,8 +134,8 @@ def schedule_gate(cfg, st):
             target = start + (end - start) * rnd.random()
             if not (now - late <= target <= now + ahead):
                 continue
-            if any(start - dt.timedelta(minutes=30) <= t <= end + dt.timedelta(minutes=45) for t in posted):
-                continue   # this window already has its post
+            if any(start - dt.timedelta(minutes=30) <= t <= end + dt.timedelta(minutes=45) for t in posted + fixed):
+                continue   # this window already has its post (or a fixed-time post is scheduled in it)
             print(f"[run] window {a}-{b}: today's post time is {target.astimezone(tz):%H:%M} local")
             return max(0.0, (target - now).total_seconds())
     print("[run] not a posting time")
