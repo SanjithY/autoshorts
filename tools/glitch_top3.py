@@ -117,15 +117,7 @@ def main(srcs, out):
         timeline.append(seg)
         t += dur
     total = t
-    # game audio: the cut ranges, back to back, quiet under the voice
-    parts = []
-    for seg in SEGMENTS:
-        for a, b in seg["cuts"]:
-            pth = work / f"g{len(parts)}.wav"
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(a), "-to", str(b), "-i", srcs[seg["src"]],
-                            "-vn", "-ac", "1", "-ar", str(A.SR), str(pth)], check=True)
-            parts.append(sf.read(pth, dtype="float32")[0])
-    base = np.concatenate(parts)[: int(total * A.SR)] * 0.30
+    base = None   # original clip audio muted (only narration, music and sound effects)
     mix = A.mix(total, voice_ev, sfx_ev, music_seed=7, music_gain=0.12, base_audio=base)
     sf.write(work / "mix.wav", mix, A.SR)
 
@@ -154,10 +146,10 @@ def main(srcs, out):
                     p = min(1, max(0, (tt - s2["t0"]) / (s2["t1"] - s2["t0"])))
                     if p > 0:
                         d.rounded_rectangle([x0, 46, x0 + max(12, int(320 * p)), 58], 6, fill=PINK)
-                intro = tt < 1.9
+                intro = tt < 2.3
                 # rank banner
                 if not intro:
-                    pop = min(1, (tt - max(seg["t0"], 1.9)) / 0.18)
+                    pop = min(1, (tt - max(seg["t0"], 2.3)) / 0.18)
                     f_rank = font(int(150 * (0.7 + 0.3 * pop)))
                     outlined(d, (W // 2, 205), f"#{seg['rank']}", f_rank, YEL, 12)
                     outlined(d, (W // 2, 340), seg["label"], font(70), (255, 255, 255), 8)
@@ -189,14 +181,13 @@ def main(srcs, out):
                         xx += wd
                 # intro title over the first glitch, then it flies away
                 if tt < 2.3:
-                    k = 1 if tt < 1.7 else 1 - (tt - 1.7) / 0.6
+                    k = 1 if tt < 1.9 else 1 - (tt - 1.9) / 0.4
                     yoff = (1 - k) * -500
                     ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
                     od = ImageDraw.Draw(ov)
                     sc = min(1, 0.6 + tt * 2.5)
-                    outlined(od, (W // 2, VY + 300 + yoff), "TOP 3", font(int(230 * sc)), YEL, 14)
-                    outlined(od, (W // 2, VY + 520 + yoff), "CRAZIEST", font(int(130 * sc)), (255, 255, 255), 10)
-                    outlined(od, (W // 2, VY + 670 + yoff), "GTA 6 GLITCHES", font(int(110 * sc)), PINK, 10)
+                    outlined(od, (W // 2, 190 + yoff), "TOP 3 CRAZIEST", font(int(118 * sc)), YEL, 10)
+                    outlined(od, (W // 2, 330 + yoff), "GTA 6 GLITCHES", font(int(112 * sc)), PINK, 10)
                     frame = Image.alpha_composite(frame.convert("RGBA"), ov).convert("RGB")
                 enc.stdin.write(frame.tobytes())
                 fi += 1
