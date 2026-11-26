@@ -19,7 +19,6 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from pipeline import audio as A  # noqa: E402
-from pipeline.render import lit_stage  # noqa: E402
 
 W, H, FPS = 1080, 1920, 30
 VY, VH = 430, 1020                     # video band
