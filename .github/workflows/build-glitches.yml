@@ -1,0 +1,76 @@
+name: build-glitches
+
+# Builds "Top 3 craziest GTA 6 glitches" from the creator-permitted clips in footage/custom/,
+# stores it in prebuilt/ and queues it to post at an exact time.
+on:
+  workflow_dispatch:
+    inputs:
+      post_at:
+        description: "Exact time to post (UTC, YYYY-MM-DDTHH:MM)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -r requirements.txt
+
+      - name: Cache voice model
+        uses: actions/cache@v4
+        with:
+          path: models
+          key: kokoro-v1.0-int8
+
+      - name: Download voice model (fallback voice, first run only)
+        run: |
+          mkdir -p models
+          [ -f models/kokoro.onnx ] || curl -sL -o models/kokoro.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx
+          [ -f models/voices.bin ] || curl -sL -o models/voices.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+
+      - name: Build the video
+        run: |
+          F=footage/custom
+          python tools/glitch_top3.py $F/glitch-lucia.mp4 $F/glitch-flyingcar.mp4 $F/glitch-firstperson.mp4 out.mp4 | tee build.log
+          ! grep -q "using Kokoro" build.log   # must use the channel voice
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gta6-top3-glitches
+          path: out.mp4
+          retention-days: 14
+
+      - name: Store the video and queue it
+        env:
+          POST_AT: ${{ inputs.post_at }}
+        run: |
+          mkdir -p prebuilt && cp out.mp4 prebuilt/gta6-top3-glitches.mp4
+          python - <<'PY'
+          import json, os
+          meta = {
+            "title": "Top 3 craziest GTA 6 glitches so far 😭 #gta6 #shorts",
+            "description": "Vice City is beautiful... and a little broken. Which glitch got you? Drop yours below and it might make the next one.\n\nClips used with permission from their creators (first-person clip: TheJizzy).",
+            "hashtags": ["#gta6", "#gtavi", "#gta6glitches", "#gaming", "#shorts"],
+            "format": "glitch_top3", "topic_key": "gta6",
+            "prebuilt_asset": "gta6-top3-glitches.mp4",
+            "post_at": os.environ["POST_AT"], "post_after": os.environ["POST_AT"],
+          }
+          json.dump(meta, open("queue/0-gta6-top3-glitches.json", "w"), indent=1)
+          PY
+          git config user.name "autopost-bot"
+          git config user.email "autopost-bot@users.noreply.github.com"
+          git add prebuilt queue
+          git commit -m "GTA 6 top 3 glitches built (posts $POST_AT UTC)"
+          for i in 1 2 3; do git pull --rebase --autostash && git push && break; sleep 5; done
