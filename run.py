@@ -122,8 +122,9 @@ def schedule_gate(cfg, st):
                 fixed.append(_utc(pa))
         except Exception:
             pass
-    # 2) paused?
-    if sch.get("pause_until") and now < _utc(sch["pause_until"]):
+    # 2) paused? A window that the pause only partly covers still gets its post, after the pause ends.
+    pause_end = _utc(sch["pause_until"]) if sch.get("pause_until") else None
+    if pause_end and now + ahead < pause_end:
         print(f"[run] uploads paused until {sch['pause_until']} UTC")
         return None
     # 3) random time inside each daily window
@@ -142,13 +143,22 @@ def schedule_gate(cfg, st):
             start = dt.datetime(day.year, day.month, day.day, ha, ma, tzinfo=tz)
             end = dt.datetime(day.year, day.month, day.day, hb, mb, tzinfo=tz)
             rnd = random.Random(f"{day.isoformat()}-{i}")
-            target = start + (end - start) * rnd.random()
-            if not (now - late <= target <= now + ahead):
-                continue
+            frac = rnd.random()
+            target = start + (end - start) * frac
+            if pause_end and pause_end >= end:
+                continue   # the whole window is paused
+            if pause_end and target < pause_end:
+                # pause ends mid-window: pick the time inside the part of the window after the pause
+                target = pause_end + (end - pause_end) * frac
             if any(start - dt.timedelta(minutes=30) <= t <= end + dt.timedelta(minutes=45) for t in posted + fixed):
                 continue   # this window already has its post (or a fixed-time post is scheduled in it)
-            print(f"[run] window {a}-{b}: today's post time is {target.astimezone(tz):%H:%M} local")
-            return max(0.0, (target - now).total_seconds())
+            if now - late <= target <= now + ahead:
+                print(f"[run] window {a}-{b}: today's post time is {target.astimezone(tz):%H:%M} local")
+                return max(0.0, (target - now).total_seconds())
+            if target < now - late and now < end:
+                # the run that should have posted never happened (missed hourly start): post now, still in-window
+                print(f"[run] window {a}-{b}: missed post time {target.astimezone(tz):%H:%M} local, posting now")
+                return 0.0
     print("[run] not a posting time")
     return None
 
