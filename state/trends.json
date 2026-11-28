@@ -1,114 +1,108 @@
 {
- "ts": 1795665901.5787942,
- "updated": "2026-11-26 04:05 UTC",
+ "ts": 1795827612.3212242,
+ "updated": "2026-11-28 01:00 UTC",
  "google_trends": [
   {
-   "query": "john madden",
+   "query": "grizzlies vs timberwolves",
    "traffic": "5000+",
    "news": [
     {
-     "title": "Madden: Christian Bale and Nicolas Cage have quietly made the worst film of 2026",
-     "url": "https://www.the-independent.com/arts-entertainment/films/features/madden-nicolas-cage-christian-bale-review-b3090110.html",
-     "source": "The Independent"
+     "title": "T-Wolves rule out LaMelo Ball for NBA Cup game against Grizzlies due to ankle sprain",
+     "url": "https://sports.yahoo.com/nba/breaking-news/article/t-wolves-rule-out-lamelo-ball-for-nba-cup-game-against-grizzlies-due-to-ankle-sprain-190412110.html",
+     "source": "Yahoo Sports"
     }
    ]
   },
   {
-   "query": "damian lillard",
+   "query": "ncaa football (fbs i)",
+   "traffic": "2000+",
+   "news": [
+    {
+     "title": "Latest Bowl Projections, 2026 CFP Playoff Bracket Scenarios and Week 13 Predictions",
+     "url": "https://bleacherreport.com/articles/25536913-latest-bowl-projections-2026-cfp-playoff-bracket-scenarios-and-week-13-predictions",
+     "source": "Bleacher Report"
+    }
+   ]
+  },
+  {
+   "query": "colin simmons",
+   "traffic": "500+",
+   "news": [
+    {
+     "title": "EDGE Colin Simmons, OL Andre Cojoe listed as questionable for Texas on Tuesday's SEC Availability Report",
+     "url": "https://247sports.com/college/texas/article/edge-colin-simmons-ol-andre-cojoe-listed-as-questionable-for-texas-on-tuesdays-sec-availability-report-293279522/",
+     "source": "247Sports"
+    }
+   ]
+  },
+  {
+   "query": "crown jewel 2026",
+   "traffic": "500+",
+   "news": []
+  },
+  {
+   "query": "ronald reagan washington national airport",
+   "traffic": "500+",
+   "news": [
+    {
+     "title": "2 American Airlines flights bound for Dallas, Chicago clip wings at DCA",
+     "url": "https://wjla.com/news/local/dc-flights-american-airlines-clip-wings-thanksgiving-black-friday-washington-arlington-va-travel-dallas-chicago-dfw-ord-injuries-faa-damage-pilot-audio-national-airport-taxiway-runway",
+     "source": "WJLA"
+    }
+   ]
+  },
+  {
+   "query": "andrew wiggins",
+   "traffic": "500+",
+   "news": [
+    {
+     "title": "Andrew Wiggins News: Good to go Friday",
+     "url": "https://www.rotowire.com/basketball/headlines/andrew-wiggins-news-good-to-go-friday-541154",
+     "source": "RotoWire"
+    }
+   ]
+  },
+  {
+   "query": "landry shamet",
+   "traffic": "500+",
+   "news": [
+    {
+     "title": "NYK start Brunson, Bridges, Shamet, Hart, Drummond",
+     "url": "https://www.nbcsports.com/fantasy/basketball/player-news/2026-11-21/nyk-start-brunson-bridges-shamet-hart-drummond",
+     "source": "NBC Sports"
+    }
+   ]
+  },
+  {
+   "query": "oba femi",
    "traffic": "1000+",
    "news": [
     {
-     "title": "Damian Lillard reveals focus on weight loss and conditioning during injury recovery",
-     "url": "https://www.hoopshype.com/story/sports/nba/rumors/2026/11/22/damian-lillard-reveals-focus-on-weight-loss-and-conditioning-during-injury-recovery/92913702007/",
-     "source": "HoopsHype"
+     "title": "WWE Rumors on The Rock's Return & Oba Femi Backstage Heat, Trick Williams Talks Gunther 'Punishment'",
+     "url": "https://bleacherreport.com/articles/25536536-wwe-rumors-rocks-return-oba-femi-backstage-heat-trick-williams-talks-gunther-punishment",
+     "source": "Bleacher Report"
     }
    ]
   },
   {
-   "query": "pedro pascal",
+   "query": "smackdown",
    "traffic": "1000+",
    "news": [
     {
-     "title": "The Last of Us gets exciting season 3 update \u2013 does this hint at a highly-anticipated release date?",
-     "url": "https://www.digitalspy.com/tv/ustv/a74501139/last-of-us-gabriel-luna-season-3-update/",
-     "source": "Digital Spy"
+     "title": "WWE SmackDown Tonight Is Pre-Taped \u2014 Here Are the Spoilers",
+     "url": "https://sports.yahoo.com/wrestling/articles/wwe-smackdown-tonight-pre-taped-153120262.html",
+     "source": "Yahoo Sports"
     }
    ]
   },
   {
-   "query": "mike lafleur",
+   "query": "michael douglas",
    "traffic": "1000+",
    "news": [
     {
-     "title": "Week 12 Wednesday night inactives: Green Bay Packers at Los Angeles Rams",
-     "url": "https://www.nfl.com/news/week-12-wednesday-night-inactives-green-bay-packers-at-los-angeles-rams",
-     "source": "NFL.com"
-    }
-   ]
-  },
-  {
-   "query": "tyson fury schizophrenia",
-   "traffic": "500+",
-   "news": [
-    {
-     "title": "Tyson Fury, former boxing champ, reveals schizophrenia diagnosis",
-     "url": "https://www.nbcnews.com/pop-culture/pop-culture-news/tyson-fury-former-boxing-champ-reveals-schizophrenia-diagnosis-rcna610901",
-     "source": "NBC News"
-    }
-   ]
-  },
-  {
-   "query": "de'anthony melton",
-   "traffic": "500+",
-   "news": [
-    {
-     "title": "De'Anthony Melton Records 7 Assists in Warriors' Win Over Celtics",
-     "url": "https://knup.com/sports/nba/player-news/performance/de-anthony-melton-performance-11-22-2026-715224/",
-     "source": "knup.com"
-    }
-   ]
-  },
-  {
-   "query": "vcu basketball",
-   "traffic": "500+",
-   "news": [
-    {
-     "title": "VCU vs Washington Prediction on 11/25/2026 - CBB Betting Tips & Pick",
-     "url": "https://knup.com/sports/cbb/predictions/vcu-vs-washington-prediction-betting-tips-11-25-2026/",
-     "source": "knup.com"
-    }
-   ]
-  },
-  {
-   "query": "tyson fury age",
-   "traffic": "200+",
-   "news": [
-    {
-     "title": "Tyson Fury\u2019s 15-year-old son set to make boxing debut on PPV this Saturday",
-     "url": "https://bloodyelbow.com/2026/11/23/tyson-furys-15-year-old-son-set-to-make-boxing-debut-on-ppv-this-saturday/",
-     "source": "Bloody Elbow"
-    }
-   ]
-  },
-  {
-   "query": "brandon williams",
-   "traffic": "200+",
-   "news": [
-    {
-     "title": "Brandon Williams to return Wednesday against Kings",
-     "url": "https://www.goldenstateofmind.com/warriors-news/113634/brandon-williams-to-return-wednesday-against-kings",
-     "source": "Golden State Of Mind"
-    }
-   ]
-  },
-  {
-   "query": "gui santos",
-   "traffic": "500+",
-   "news": [
-    {
-     "title": "Nothing against Morez Johnson Jr., but Mavs could have used a guy like Yaxel Lendeborg",
-     "url": "https://www.dallasnews.com/sports/mavericks/article/yaxel-lendeborg-morez-johnson-mavericks-draft-22536356.php",
-     "source": "Dallas News"
+     "title": "Michael Douglas Reveals Family Struggles and Cameron's Recovery",
+     "url": "https://suaragarut.id/en/michael-douglas-family-struggles",
+     "source": "SuaraGarut.ID"
     }
    ]
   }
